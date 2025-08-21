@@ -25,10 +25,10 @@ def test_optimize_route():
         {"segment_id": 2, "lat": 13.0, "lon": 75.0, "dist_nm": 50}
     ]
     vessel = {"name": "DemoVessel", "base_speed_kn": 12.0}
-    forecasts = [
-        {"segment_id": 1, "forecast": {"wind_speed_ms": 8.4, "Hs_m": 1.2}},
-        {"segment_id": 2, "forecast": {"wind_speed_ms": 10.0, "Hs_m": 2.0}}
-    ]
+    forecasts = {
+    "1": [{"waves": {"Hs_m": 1.2}}],
+    "2": [{"waves": {"Hs_m": 2.0}}]
+}
     
     result = optimize_route(route, forecasts, vessel)
     
