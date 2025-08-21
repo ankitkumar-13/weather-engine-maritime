@@ -28,6 +28,4 @@ jobs:
 
       - name: Run tests
         run: |
-          cd backend
-          pytest --disable-warnings -q
-          bash tests/run_all.sh
+          PYTHONPATH=. pytest --disable-warnings -q backend/tests
