@@ -847,7 +847,7 @@
                         <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
                             <div id="timelineProgress" class="h-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 rounded-full transition-all duration-1000" style="width: 25%"></div>
                         </div>
-                        <div class="absolute -top-8 left-1/4 transform -translate-x-1/2">
+                        <div class="absolute -top-8 timeline-current-indicator transform -translate-x-1/2 transition-all duration-1000" style="left: 25%;">
                             <div class="glass px-3 py-1 rounded-lg text-xs">
                                 <i class="fas fa-ship mr-1"></i>Current Position
                             </div>
@@ -1785,6 +1785,35 @@
                 progress.style.width = currentProgress + '%';
             }, 1000);
         }
+
+        // Set timeline progress
+        function setTimelineProgress(percent) {
+            percent = Math.max(0, Math.min(100, percent));
+            document.getElementById('timelineProgress').style.width = percent + '%';
+            var indicator = document.querySelector('.timeline-current-indicator');
+            if (indicator) {
+                indicator.style.left = percent + '%';
+            }
+        }
+
+        // Automatically sync indicator with progress bar
+        function syncTimelineIndicator() {
+            var progressBar = document.getElementById('timelineProgress');
+            var indicator = document.querySelector('.timeline-current-indicator');
+            if (!progressBar || !indicator) return;
+            // Observe style changes
+            var observer = new MutationObserver(function() {
+                var width = progressBar.style.width;
+                if (width && width.endsWith('%')) {
+                    indicator.style.left = width;
+                }
+            });
+            observer.observe(progressBar, { attributes: true, attributeFilter: ['style'] });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            syncTimelineIndicator();
+        });
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
