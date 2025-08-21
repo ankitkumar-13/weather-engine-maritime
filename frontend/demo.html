@@ -672,21 +672,25 @@
                     
                     <!-- Alert Types Selector -->
                     <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button id="weatherAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center border border-yellow-500/50">
+                        <button id="weatherAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-yellow-500/50 relative" data-type="weather">
                             <i class="fas fa-cloud-bolt mr-1 text-yellow-400"></i>
                             Weather
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center">
+                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-blue-400/50 relative" data-type="navigation">
                             <i class="fas fa-compass mr-1 text-blue-400"></i>
                             Navigation
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="securityAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center">
+                        <button id="securityAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-red-400/50 relative" data-type="security">
                             <i class="fas fa-lock mr-1 text-red-400"></i>
                             Security
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="mechanicalAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center">
+                        <button id="mechanicalAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-gray-400/50 relative" data-type="mechanical">
                             <i class="fas fa-cog mr-1 text-gray-400"></i>
                             Mechanical
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
                     </div>
                     
@@ -1909,7 +1913,15 @@
                 const button = document.getElementById(alertType);
                 if (button) {
                     button.addEventListener('click', () => {
-                        button.classList.toggle('border-yellow-500');
+                        const checkmark = button.querySelector('.checkmark');
+                        const selected = button.classList.contains('selected-alert');
+                        if (!selected) {
+                            button.classList.add('selected-alert', 'font-bold', 'border-2');
+                            checkmark.classList.remove('hidden');
+                        } else {
+                            button.classList.remove('selected-alert', 'font-bold', 'border-2');
+                            checkmark.classList.add('hidden');
+                        }
                         loadAlerts();
                     });
                 }
