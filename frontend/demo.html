@@ -824,7 +824,7 @@
                 </h3>
                 
                 <!-- Timeline Controls -->
-                <div class="flex flex-wrap gap-4 mb-6">
+                <div class="flex flex-wrap gap-4 mb-16">
                     <button class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center">
                         <i class="fas fa-play mr-2"></i>Play Timeline
                     </button>
@@ -847,10 +847,13 @@
                         <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
                             <div id="timelineProgress" class="h-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 rounded-full transition-all duration-1000" style="width: 25%"></div>
                         </div>
-                        <div class="absolute -top-8 timeline-current-indicator transform -translate-x-1/2 transition-all duration-1000" style="left: 25%;">
-                            <div class="glass px-3 py-1 rounded-lg text-xs">
+                        <div class="absolute timeline-current-indicator transform -translate-x-1/2 transition-all duration-1000 flex flex-col items-center" style="left: 25%; bottom: 100%;">
+                            <div class="glass px-3 py-1 rounded-lg text-xs mb-1 text-center" style="white-space: normal;">
                                 <i class="fas fa-ship mr-1"></i>Current Position
                             </div>
+                            <svg width="18" height="10" viewBox="0 0 18 10" fill="#38bdf8" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 5px;">
+                                <polygon points="1,1 9,9 17,1" />
+                            </svg>
                         </div>
                     </div>
                     
