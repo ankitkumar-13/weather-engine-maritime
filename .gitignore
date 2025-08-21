@@ -83,3 +83,6 @@ README_old.md
 # Temporary files
 *.tmp
 *.temp
+
+#Temporary batch files.
+*.bat
