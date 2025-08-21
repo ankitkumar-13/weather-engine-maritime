@@ -86,3 +86,6 @@ README_old.md
 
 #Temporary batch files.
 *.bat
+
+#Package JSON - Current Configuration
+package-lock.json
