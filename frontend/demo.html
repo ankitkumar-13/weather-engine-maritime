@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Engine Maritime - MVP Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                🚢 Weather Engine Maritime
+            </h1>
+            <p class="text-gray-300">Real-time Maritime Weather Intelligence & Route Optimization</p>
+            <div id="mockBanner" class="mt-4 bg-yellow-600 text-black px-4 py-2 rounded-lg inline-block">
+                ⚠️ Using Mock Data for Demo
+            </div>
+        </div>
+
+        <!-- Status Panel -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-2">API Status</h3>
+                <div id="apiStatus" class="text-red-400">Checking...</div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-2">Route</h3>
+                <div id="routeInfo" class="text-gray-300">Mumbai → Kochi</div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-2">Forecast</h3>
+                <div id="forecastInfo" class="text-gray-300">10 days ahead</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Map Panel -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">Route Map</h2>
+                <div id="map" class="h-96 rounded-lg bg-gray-700"></div>
+            </div>
+
+            <!-- Controls Panel -->
+            <div class="space-y-6">
+                <!-- Weather Data -->
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">Weather Forecast</h2>
+                    <button id="loadForecast" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4">
+                        Load Route Forecast
+                    </button>
+                    <div id="forecastData" class="text-sm text-gray-300"></div>
+                </div>
+
+                <!-- Optimization -->
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">Speed Optimization</h2>
+                    <button id="optimizeRoute" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg mb-4">
+                        Optimize Speed Profile
+                    </button>
+                    <div id="optimizationResult" class="text-sm text-gray-300"></div>
+                </div>
+
+                <!-- Alerts -->
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">Weather Alerts</h2>
+                    <button id="loadAlerts" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg mb-4">
+                        Check Alerts
+                    </button>
+                    <div id="alertsData" class="text-sm text-gray-300"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        // Initialize map
+        const map = L.map('map').setView([15.0, 75.0], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Route coordinates
+        const routeCoords = [
+            [19.0760, 72.8777], // Mumbai
+            [15.3173, 75.7139], // Goa
+            [9.9312, 76.2673]   // Kochi
+        ];
+
+        // Add route to map
+        const routeLine = L.polyline(routeCoords, {color: 'cyan', weight: 3}).addTo(map);
+        routeCoords.forEach((coord, i) => {
+            const names = ['Mumbai Port', 'Mid-point Goa', 'Kochi Port'];
+            L.marker(coord).addTo(map).bindPopup(names[i]);
+        });
+
+        // API Functions
+        async function checkAPI() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                const data = await response.json();
+                document.getElementById('apiStatus').innerHTML = 
+                    `<span class="text-green-400">✅ ${data.status}</span>`;
+                return true;
+            } catch (error) {
+                document.getElementById('apiStatus').innerHTML = 
+                    `<span class="text-red-400">❌ Offline</span>`;
+                return false;
+            }
+        }
+
+        async function loadForecast() {
+            try {
+                const response = await fetch(`${API_BASE}/route_forecast`);
+                const data = await response.json();
+                
+                document.getElementById('forecastData').innerHTML = `
+                    <div class="space-y-2">
+                        <p><strong>Segments:</strong> ${data.length}</p>
+                        <p><strong>Sample Data:</strong></p>
+                        <div class="bg-gray-700 p-3 rounded text-xs">
+                            Segment 1: ${data[0]?.forecast?.times?.length || 0} forecast points<br>
+                            Wind: ${data[0]?.forecast?.times?.[0]?.wind_speed_ms?.toFixed(1) || 'N/A'} m/s<br>
+                            Waves: ${data[0]?.forecast?.times?.[0]?.waves?.Hs_m?.toFixed(1) || 'N/A'} m
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('forecastData').innerHTML = 
+                    `<span class="text-red-400">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function optimizeRoute() {
+            try {
+                const optimizeData = {
+                    route: [
+                        {segment_id: 1, lat: 19.076, lon: 72.8777, dist_nm: 120},
+                        {segment_id: 2, lat: 15.3173, lon: 75.7139, dist_nm: 150},
+                        {segment_id: 3, lat: 9.9312, lon: 76.2673, dist_nm: 180}
+                    ],
+                    vessel: {name: "DemoVessel", base_speed_kn: 12.0},
+                    constraints: {}
+                };
+
+                const response = await fetch(`${API_BASE}/optimize`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(optimizeData)
+                });
+                const data = await response.json();
+                
+                document.getElementById('optimizationResult').innerHTML = `
+                    <div class="space-y-2">
+                        <p><strong>Total Fuel:</strong> ${data.total_fuel?.toFixed(3)} tons</p>
+                        <p><strong>Naive Fuel:</strong> ${data.naive_fuel?.toFixed(3)} tons</p>
+                        <p><strong>Savings:</strong> ${data.savings_pct?.toFixed(1)}%</p>
+                        <div class="bg-gray-700 p-3 rounded text-xs">
+                            Speed Profile: ${data.speed_profile?.length || 0} segments optimized
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('optimizationResult').innerHTML = 
+                    `<span class="text-red-400">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function loadAlerts() {
+            try {
+                const response = await fetch(`${API_BASE}/alerts`);
+                const data = await response.json();
+                
+                if (data.length === 0) {
+                    document.getElementById('alertsData').innerHTML = 
+                        `<span class="text-green-400">✅ No active alerts</span>`;
+                } else {
+                    const alertsHTML = data.map(alert => `
+                        <div class="bg-red-900/50 p-2 rounded mb-2">
+                            <strong>${alert.type}</strong><br>
+                            ${alert.message}
+                        </div>
+                    `).join('');
+                    document.getElementById('alertsData').innerHTML = alertsHTML;
+                }
+            } catch (error) {
+                document.getElementById('alertsData').innerHTML = 
+                    `<span class="text-red-400">Error: ${error.message}</span>`;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('loadForecast').addEventListener('click', loadForecast);
+        document.getElementById('optimizeRoute').addEventListener('click', optimizeRoute);
+        document.getElementById('loadAlerts').addEventListener('click', loadAlerts);
+
+        // Initialize
+        checkAPI();
+    </script>
+</body>
+</html>

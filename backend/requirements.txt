@@ -1,0 +1,7 @@
+FastAPI
+uvicorn
+requests
+httpx
+pydantic
+pytest
+python-dotenv

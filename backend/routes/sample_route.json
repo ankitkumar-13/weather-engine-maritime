@@ -1,0 +1,27 @@
+{
+  "route_id": 1,
+  "name": "Mumbai to Kochi",
+  "route_points": [
+    {
+      "segment_id": 1,
+      "lat": 19.0760,
+      "lon": 72.8777,
+      "dist_nm": 120,
+      "name": "Mumbai Port"
+    },
+    {
+      "segment_id": 2,
+      "lat": 15.3173,
+      "lon": 75.7139,
+      "dist_nm": 150,
+      "name": "Mid-point Goa"
+    },
+    {
+      "segment_id": 3,
+      "lat": 9.9312,
+      "lon": 76.2673,
+      "dist_nm": 180,
+      "name": "Kochi Port"
+    }
+  ]
+}
