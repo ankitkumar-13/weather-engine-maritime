@@ -207,10 +207,21 @@
                 <br>
                 <span class="text-ocean-300">Powered by Advanced Physics & AI Algorithms</span>
             </p>
-            <div id="mockBanner" class="mt-6 glass px-8 py-4 rounded-2xl inline-block animate-glow">
-                <i class="fas fa-exclamation-triangle text-yellow-400 mr-2"></i>
-                <span class="text-yellow-100">⚠️ DEMO MODE: Using Deterministic Mock Data</span>
+            <div>
+                <div id="mockBanner" class="mt-6 glass px-8 py-4 rounded-2xl inline-block animate-glow">
+                    <div class="flex flex-row items-center space-x-6">
+                        <div class="flex flex-col">
+                            <span class="text-md text-ocean-300 text-left block">PostgreSQL</span>
+                            <span class="text-lg font-semibold mr-2">Connectivity Status</span>
+                        </div>
+                        <span class="text-lg text-green-400 flex items-center" id="dbStatus">
+                            <i class="fas fa-check mr-1 text-green-400"></i>
+                            Online
+                        </span>
+                    </div>
+                </div>
             </div>
+            
         </div>
 
         <!-- Live Metrics Dashboard -->
