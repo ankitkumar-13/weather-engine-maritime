@@ -650,29 +650,32 @@
             button.disabled = true;
 
             try {
-                const response = await fetch(`${API_BASE}/route_forecast?route_file=route_mumbai_kochi.json`);
+                const response = await fetch(`${API_BASE}/route_forecast`);
                 const data = await response.json();
                 
-                if (data.forecast && data.forecast.length > 0) {
-                    const summary = data.forecast.slice(0, 5).map(point => 
+                if (data && Array.isArray(data) && data.length > 0) {
+                    const firstSegment = data[0];
+                    const forecastTimes = firstSegment.forecast?.times || [];
+                    
+                    const summary = forecastTimes.slice(0, 5).map(point => 
                         `<div class="flex justify-between items-center py-2 border-b border-ocean-700/50">
-                            <span class="text-xs">${new Date(point.dt * 1000).toLocaleDateString()}</span>
-                            <span class="text-ocean-300">${point.weather[0].description}</span>
-                            <span class="text-sm font-semibold">${Math.round(point.main.temp - 273.15)}°C</span>
+                            <span class="text-xs">${new Date(point.t_iso).toLocaleDateString()}</span>
+                            <span class="text-ocean-300">Wind: ${point.wind_deg}°</span>
+                            <span class="text-sm font-semibold">${point.wind_speed_ms.toFixed(1)} m/s</span>
                         </div>`
                     ).join('');
                     
                     resultDiv.innerHTML = `
                         <div class="text-green-400 mb-3 flex items-center">
                             <i class="fas fa-check-circle mr-2"></i>
-                            Loaded ${data.forecast.length} forecasts
+                            Loaded ${data.length} segments, ${forecastTimes.length} forecasts
                         </div>
                         ${summary}
                     `;
 
                     // Update weather chart with real data
-                    const chartData = data.forecast.slice(0, 5).map(point => 
-                        point.wind?.speed || Math.random() * 3 + 1
+                    const chartData = forecastTimes.slice(0, 5).map(point => 
+                        point.waves?.Hs_m || 2.0
                     );
                     if (weatherChart) {
                         weatherChart.data.datasets[0].data = chartData;
@@ -703,48 +706,68 @@
             button.disabled = true;
 
             try {
+                // Prepare the request data in the correct format
+                const optimizeRequest = {
+                    route: [
+                        { segment_id: 1, lat: 19.0760, lon: 72.8777, dist_nm: 0 },
+                        { segment_id: 2, lat: 17.5000, lon: 73.1500, dist_nm: 150 },
+                        { segment_id: 3, lat: 15.2993, lon: 74.1240, dist_nm: 280 },
+                        { segment_id: 4, lat: 12.2958, lon: 76.2999, dist_nm: 450 },
+                        { segment_id: 5, lat: 9.9312, lon: 76.2673, dist_nm: 580 }
+                    ],
+                    vessel: {
+                        name: "Container Ship MV Mumbai Express",
+                        base_speed_kn: 14.0
+                    },
+                    constraints: {
+                        deadline_iso: null
+                    }
+                };
+
                 const response = await fetch(`${API_BASE}/optimize`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        route_file: "route_mumbai_kochi.json",
-                        vessel_file: "sample_vessel.json"
-                    })
+                    body: JSON.stringify(optimizeRequest)
                 });
                 
                 const data = await response.json();
                 
-                if (data.optimization) {
-                    const opt = data.optimization;
+                if (data.speed_profile) {
                     resultDiv.innerHTML = `
                         <div class="space-y-3">
                             <div class="flex justify-between">
                                 <span class="text-ocean-300">Fuel Savings:</span>
-                                <span class="text-green-400 font-bold">${opt.fuel_savings_percentage.toFixed(1)}%</span>
+                                <span class="text-green-400 font-bold">${data.savings_pct.toFixed(1)}%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-ocean-300">Total Distance:</span>
-                                <span class="text-white">${opt.total_distance_nm.toFixed(0)} nm</span>
+                                <span class="text-ocean-300">Total Fuel:</span>
+                                <span class="text-white">${data.total_fuel.toFixed(2)} tons</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-ocean-300">Optimized Speeds:</span>
-                                <span class="text-cyan-400">${opt.optimized_speeds.length} segments</span>
+                                <span class="text-ocean-300">Optimized Segments:</span>
+                                <span class="text-cyan-400">${data.speed_profile.length} segments</span>
                             </div>
                             <div class="text-xs text-ocean-300 mt-2">
-                                Average: ${(opt.optimized_speeds.reduce((a,b) => a+b, 0) / opt.optimized_speeds.length).toFixed(1)}kts
+                                Average: ${(data.speed_profile.reduce((a,b) => a + b.speed_kn, 0) / data.speed_profile.length).toFixed(1)} kts
                             </div>
                         </div>
                     `;
 
                     // Update efficiency gauge
-                    const efficiency = Math.min(opt.fuel_savings_percentage, 50);
+                    const efficiency = Math.min(data.savings_pct, 50);
                     const circumference = 2 * Math.PI * 40;
                     const offset = circumference - (efficiency / 50) * circumference;
                     const circle = document.getElementById('efficiencyCircle');
                     if (circle) {
                         circle.style.strokeDashoffset = offset;
+                    }
+                    
+                    // Update the efficiency percentage display
+                    const efficiencyText = circle?.parentElement?.querySelector('span');
+                    if (efficiencyText) {
+                        efficiencyText.textContent = `${efficiency.toFixed(0)}%`;
                     }
                 } else {
                     throw new Error('No optimization data');
