@@ -527,10 +527,10 @@
                     <div class="mb-4">
                         <label class="block text-xs font-semibold text-ocean-200 mb-2">Forecast Timeline</label>
                         <select id="weatherTimeline" class="w-full glass rounded-lg px-3 py-2 text-sm text-white bg-white/10 border border-white/20 focus:border-ocean-400">
-                            <option value="6h">Next 6 Hours</option>
-                            <option value="24h" selected>Next 24 Hours</option>
-                            <option value="72h">Next 3 Days</option>
-                            <option value="168h">Next 7 Days</option>
+                            <option class="text-black" value="6h">Next 6 Hours</option>
+                            <option class="text-black" value="24h" selected>Next 24 Hours</option>
+                            <option class="text-black" value="72h">Next 3 Days</option>
+                            <option class="text-black" value="168h">Next 7 Days</option>
                         </select>
                     </div>
                     
@@ -578,10 +578,10 @@
                         <div>
                             <label class="block text-xs font-semibold text-ocean-200 mb-1">Optimization Priority</label>
                             <select id="optimizationMode" class="w-full glass rounded-lg px-3 py-2 text-sm text-white bg-white/10 border border-white/20">
-                                <option value="fuel">⛽ Fuel Efficiency</option>
-                                <option value="time">⏱️ Fastest Route</option>
-                                <option value="safety">🛡️ Safety Priority</option>
-                                <option value="balanced" selected>⚖️ Balanced</option>
+                                <option class="text-black" value="fuel">⛽ Fuel Efficiency</option>
+                                <option class="text-black" value="time">⏱️ Fastest Route</option>
+                                <option class="text-black" value="safety">🛡️ Safety Priority</option>
+                                <option class="text-black" value="balanced" selected>⚖️ Balanced</option>
                             </select>
                         </div>
                         <div>
@@ -672,21 +672,25 @@
                     
                     <!-- Alert Types Selector -->
                     <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button id="weatherAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center border border-yellow-500/50">
+                        <button id="weatherAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-yellow-500/50 relative" data-type="weather">
                             <i class="fas fa-cloud-bolt mr-1 text-yellow-400"></i>
                             Weather
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center">
+                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-blue-400/50 relative" data-type="navigation">
                             <i class="fas fa-compass mr-1 text-blue-400"></i>
                             Navigation
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="securityAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center">
+                        <button id="securityAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-red-400/50 relative" data-type="security">
                             <i class="fas fa-lock mr-1 text-red-400"></i>
                             Security
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="mechanicalAlerts" class="glass px-3 py-2 rounded-lg text-xs hover:bg-white/10 transition-all flex items-center justify-center">
+                        <button id="mechanicalAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-gray-400/50 relative" data-type="mechanical">
                             <i class="fas fa-cog mr-1 text-gray-400"></i>
                             Mechanical
+                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
                     </div>
                     
@@ -824,7 +828,7 @@
                 </h3>
                 
                 <!-- Timeline Controls -->
-                <div class="flex flex-wrap gap-4 mb-6">
+                <div class="flex flex-wrap gap-4 mb-16">
                     <button class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center">
                         <i class="fas fa-play mr-2"></i>Play Timeline
                     </button>
@@ -847,10 +851,13 @@
                         <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
                             <div id="timelineProgress" class="h-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 rounded-full transition-all duration-1000" style="width: 25%"></div>
                         </div>
-                        <div class="absolute -top-8 left-1/4 transform -translate-x-1/2">
-                            <div class="glass px-3 py-1 rounded-lg text-xs">
+                        <div class="absolute timeline-current-indicator transform -translate-x-1/2 transition-all duration-1000 flex flex-col items-center" style="left: 25%; bottom: 100%;">
+                            <div class="glass px-3 py-1 rounded-lg text-xs mb-1 text-center" style="white-space: normal;">
                                 <i class="fas fa-ship mr-1"></i>Current Position
                             </div>
+                            <svg width="18" height="10" viewBox="0 0 18 10" fill="#38bdf8" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 5px;">
+                                <polygon points="1,1 9,9 17,1" />
+                            </svg>
                         </div>
                     </div>
                     
@@ -1786,6 +1793,35 @@
             }, 1000);
         }
 
+        // Set timeline progress
+        function setTimelineProgress(percent) {
+            percent = Math.max(0, Math.min(100, percent));
+            document.getElementById('timelineProgress').style.width = percent + '%';
+            var indicator = document.querySelector('.timeline-current-indicator');
+            if (indicator) {
+                indicator.style.left = percent + '%';
+            }
+        }
+
+        // Automatically sync indicator with progress bar
+        function syncTimelineIndicator() {
+            var progressBar = document.getElementById('timelineProgress');
+            var indicator = document.querySelector('.timeline-current-indicator');
+            if (!progressBar || !indicator) return;
+            // Observe style changes
+            var observer = new MutationObserver(function() {
+                var width = progressBar.style.width;
+                if (width && width.endsWith('%')) {
+                    indicator.style.left = width;
+                }
+            });
+            observer.observe(progressBar, { attributes: true, attributeFilter: ['style'] });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            syncTimelineIndicator();
+        });
+
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Weather Engine Maritime - Initializing...');
@@ -1877,7 +1913,15 @@
                 const button = document.getElementById(alertType);
                 if (button) {
                     button.addEventListener('click', () => {
-                        button.classList.toggle('border-yellow-500');
+                        const checkmark = button.querySelector('.checkmark');
+                        const selected = button.classList.contains('selected-alert');
+                        if (!selected) {
+                            button.classList.add('selected-alert', 'font-bold', 'border-2');
+                            checkmark.classList.remove('hidden');
+                        } else {
+                            button.classList.remove('selected-alert', 'font-bold', 'border-2');
+                            checkmark.classList.add('hidden');
+                        }
                         loadAlerts();
                     });
                 }
