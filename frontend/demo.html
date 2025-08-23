@@ -1407,8 +1407,7 @@
                                 <div class="text-xs text-green-400">✓ Completed</div>
                             </div>
                             <i class="fas fa-check-circle text-green-400"></i>
-                        </div>
-                        
+                        </div>                        
                         <div class="flex items-center space-x-4 p-4 glass rounded-xl border border-yellow-400/30">
                             <div class="w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
                             <div class="flex-1">
@@ -1417,8 +1416,7 @@
                                 <div class="text-xs text-yellow-400">⏳ In Progress</div>
                             </div>
                             <i class="fas fa-clock text-yellow-400"></i>
-                        </div>
-                        
+                        </div>                        
                         <div class="flex items-center space-x-4 p-4 glass rounded-xl opacity-60">
                             <div class="w-4 h-4 bg-gray-400 rounded-full"></div>
                             <div class="flex-1">
@@ -1436,7 +1434,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Footer -->
         <footer class="mt-16 text-center glass rounded-2xl p-8" data-aos="fade-up">
             <div class="flex items-center justify-center mb-4">
@@ -1462,7 +1459,6 @@
             </div>
         </footer>
     </div>
-
     <script>
         // Global variables
         let map;
@@ -1471,8 +1467,7 @@
         let weatherTrendChart;
         let fuelChart;
         let activeMapLayers = [];
-        const API_BASE = 'http://localhost:8000';
-        
+        const API_BASE = 'http://localhost:8000';        
         // Port coordinates database
         const PORTS = {
             mumbai: { name: 'Mumbai Port (INMUN)', coords: [19.0760, 72.8777], country: '🇮🇳', code: 'INMUN' },
@@ -1484,37 +1479,30 @@
             hambantota: { name: 'Hambantota Port (LKHBT)', coords: [6.1240, 81.1185], country: '🇱🇰', code: 'LKHBT' },
             kochi: { name: 'Kochi Port (INCOK)', coords: [9.9312, 76.2673], country: '🇮🇳', code: 'INCOK' }
         };
-
         // Initialize AOS animations
         AOS.init({
             duration: 1000,
             once: true,
             offset: 100
         });
-
         // Live time display
         // Enhanced metrics animation with more realistic values
         function animateMetrics() {
-            const time = Date.now();
-            
+            const time = Date.now();            
             // Wave height (1.8 - 3.2m)
             const waveHeight = (2.0 + Math.sin(time / 10000) * 0.6 + Math.random() * 0.4).toFixed(1);
             document.getElementById('waveHeight').textContent = waveHeight + 'm';
-            document.getElementById('currentWaves').textContent = waveHeight + 'm';
-            
+            document.getElementById('currentWaves').textContent = waveHeight + 'm';            
             // Wind speed (8 - 18 kts)
             const windSpeed = (13 + Math.cos(time / 8000) * 3 + Math.random() * 2).toFixed(1);
             document.getElementById('windSpeed').textContent = windSpeed + ' kts';
-            document.getElementById('currentWind').textContent = windSpeed + ' kts';
-            
+            document.getElementById('currentWind').textContent = windSpeed + ' kts';            
             // Fuel savings (12 - 20%)
             const fuelSavings = (15 + Math.sin(time / 12000) * 2.5 + Math.random() * 1).toFixed(1);
-            document.getElementById('fuelSavings').textContent = fuelSavings + '%';
-            
+            document.getElementById('fuelSavings').textContent = fuelSavings + '%';            
             // Visibility (10 - 25 km)
             const visibility = (15 + Math.cos(time / 15000) * 5 + Math.random() * 3).toFixed(1);
-            document.getElementById('currentVisibility').textContent = visibility + ' km';
-            
+            document.getElementById('currentVisibility').textContent = visibility + ' km';            
             // Update optimization results
             document.getElementById('fuelSavings').textContent = fuelSavings + '%';
             document.getElementById('timeSaved').textContent = (2 + Math.random() * 1).toFixed(0) + 'h ' + (Math.random() * 59).toFixed(0) + 'm';
@@ -1522,17 +1510,14 @@
         }
         setInterval(animateMetrics, 2000);
         animateMetrics();
-
         // Enhanced map initialization with multiple layers
         function initMap() {
             try {
                 // Show loader initially
                 const loader = document.getElementById('mapLoader');
-                const fallback = document.getElementById('mapFallback');
-                
+                const fallback = document.getElementById('mapFallback');                
                 if (loader) loader.style.display = 'flex';
                 if (fallback) fallback.style.display = 'none';
-
                 map = L.map('map', {
                     zoomControl: true,
                     scrollWheelZoom: true,
@@ -1543,8 +1528,7 @@
                     tap: true,
                     touchZoom: true,
                     preferCanvas: true
-                }).setView([15.0, 74.0], 6);
-                
+                }).setView([15.0, 74.0], 6);                
                 // Multiple tile layer options with fallbacks
                 const OPENWEATHER_API_KEY = "3662ed76c1566a5fef2ac5a9d71c820a";
                 const tileLayers = {
@@ -1577,31 +1561,26 @@
                         errorTileUrl: 'data:image/svg+xml;base64,...'
                     })
                 };
-
                 // Try satellite first, fallback to ocean theme
                 let currentLayer = tileLayers.satellite;
-                currentLayer.addTo(map);
-                
+                currentLayer.addTo(map);                
                 // Handle tile loading errors
                 currentLayer.on('tileerror', function() {
                     console.warn('Satellite tiles failed, switching to ocean theme...');
                     map.removeLayer(currentLayer);
                     currentLayer = tileLayers.ocean;
-                    currentLayer.addTo(map);
-                    
+                    currentLayer.addTo(map);                    
                     currentLayer.on('tileerror', function() {
                         console.warn('Ocean tiles failed, switching to OpenStreetMap...');
                         map.removeLayer(currentLayer);
                         currentLayer = tileLayers.openstreet;
-                        currentLayer.addTo(map);
-                        
+                        currentLayer.addTo(map);                        
                         currentLayer.on('tileerror', function() {
                             console.error('All tile sources failed, showing fallback...');
                             showMapFallback();
                         });
                     });
                 });
-
                 // Map ready event
                 map.whenReady(function() {
                     console.log('Map successfully initialized');
@@ -1611,44 +1590,36 @@
                         drawRoute();
                     }, 1000);
                 });
-
                 // Map event listeners
                 map.on('zoomend', () => {
                     document.getElementById('mapZoom').textContent = map.getZoom();
-                });
-                
+                });                
                 map.on('moveend', () => {
                     console.log('Map moved to:', map.getCenter());
                 });
-
                 // Load timeout fallback
                 setTimeout(() => {
                     if (loader && loader.style.display !== 'none') {
                         console.warn('Map loading timeout, showing fallback');
                         showMapFallback();
                     }
-                }, 5000);
-                
+                }, 5000);                
             } catch (error) {
                 console.error('Map initialization failed:', error);
                 showMapFallback();
             }
         }
-
         // Show fallback map visualization
         function showMapFallback() {
             const loader = document.getElementById('mapLoader');
-            const fallback = document.getElementById('mapFallback');
-            
+            const fallback = document.getElementById('mapFallback');            
             if (loader) loader.style.display = 'none';
             if (fallback) {
                 fallback.style.display = 'block';
                 fallback.classList.remove('hidden');
-            }
-            
+            }            
             // Update map type indicator
-            document.getElementById('mapType').textContent = 'Fallback';
-            
+            document.getElementById('mapType').textContent = 'Fallback';            
             // Animate fallback elements
             setTimeout(() => {
                 const markers = fallback.querySelectorAll('.animate-pulse');
@@ -1657,35 +1628,28 @@
                 });
             }, 500);
         }
-
         // Update route display and calculations
         function updateRouteDisplay() {
             const sourcePort = document.getElementById('sourcePort').value;
-            const destPort = document.getElementById('destinationPort').value;
-            
+            const destPort = document.getElementById('destinationPort').value;            
             const source = PORTS[sourcePort];
-            const destination = PORTS[destPort];
-            
+            const destination = PORTS[destPort];            
             if (source && destination) {
                 document.getElementById('currentRoute').textContent = 
-                    `${source.name.split('(')[0].trim()} → ${destination.name.split('(')[0].trim()}`;
-                
+                    `${source.name.split('(')[0].trim()} → ${destination.name.split('(')[0].trim()}`;                
                 // Calculate distance (rough estimation)
                 const distance = calculateDistance(source.coords, destination.coords);
-                document.getElementById('routeDistance').textContent = distance.toFixed(0) + ' nm';
-                
+                document.getElementById('routeDistance').textContent = distance.toFixed(0) + ' nm';                
                 // Calculate duration (based on 18 kts average)
                 const duration = distance / 18;
                 const hours = Math.floor(duration);
                 const minutes = Math.floor((duration - hours) * 60);
-                document.getElementById('routeDuration').textContent = `${hours}h ${minutes}m`;
-                
+                document.getElementById('routeDuration').textContent = `${hours}h ${minutes}m`;                
                 // Calculate fuel cost (rough estimation)
                 const fuelCost = distance * 42; // $42 per nautical mile rough estimate
                 document.getElementById('fuelCost').textContent = '$' + fuelCost.toFixed(0);
             }
         }
-
         // Calculate distance between two coordinates (Haversine formula)
         function calculateDistance(coord1, coord2) {
             const R = 3440; // Earth's radius in nautical miles
@@ -1693,15 +1657,12 @@
             const lat2 = coord2[0] * Math.PI / 180;
             const deltaLat = (coord2[0] - coord1[0]) * Math.PI / 180;
             const deltaLon = (coord2[1] - coord1[1]) * Math.PI / 180;
-
             const a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
                     Math.cos(lat1) * Math.cos(lat2) *
                     Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
             return R * c;
         }
-
         // Enhanced route drawing
         function drawRoute() {
             // Show immediate fallback if map is not ready
@@ -1709,8 +1670,7 @@
                 console.log('Map not ready, showing route in fallback mode');
                 showMapFallback();
                 return;
-            }
-            
+            }            
             try {
                 // Clear existing route
                 map.eachLayer(layer => {
@@ -1718,31 +1678,25 @@
                         map.removeLayer(layer);
                     }
                 });
-
                 const sourcePort = document.getElementById('sourcePort').value;
-                const destPort = document.getElementById('destinationPort').value;
-                
+                const destPort = document.getElementById('destinationPort').value;                
                 const source = PORTS[sourcePort];
-                const destination = PORTS[destPort];
-                
+                const destination = PORTS[destPort];                
                 if (!source || !destination) {
                     console.warn('Source or destination port not found');
                     return;
                 }
-
                 // Add enhanced markers
                 const sourceIcon = L.divIcon({
                     html: `<div class="bg-green-500 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold animate-pulse shadow-lg">S</div>`,
                     iconSize: [24, 24],
                     className: 'custom-marker'
-                });
-                
+                });                
                 const destIcon = L.divIcon({
                     html: `<div class="bg-red-500 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold shadow-lg">D</div>`,
                     iconSize: [24, 24],
                     className: 'custom-marker'
                 });
-
                 const sourceMarker = L.marker(source.coords, {icon: sourceIcon}).addTo(map)
                     .bindPopup(`
                         <div class="text-center p-2 min-w-48">
@@ -1753,7 +1707,6 @@
                             <div class="mt-2 text-xs text-green-600">🚢 Ready for departure</div>
                         </div>
                     `);
-
                 const destMarker = L.marker(destination.coords, {icon: destIcon}).addTo(map)
                     .bindPopup(`
                         <div class="text-center p-2 min-w-48">
@@ -1764,11 +1717,9 @@
                             <div class="mt-2 text-xs text-red-600">⚓ Arrival expected</div>
                         </div>
                     `);
-
                 // Create route with waypoints
                 const waypoints = generateWaypoints(source.coords, destination.coords);
                 const fullRoute = [source.coords, ...waypoints, destination.coords];
-
                 // Add route line with animation
                 const routeLine = L.polyline(fullRoute, {
                     color: '#0ea5e9',
@@ -1777,15 +1728,13 @@
                     dashArray: '10, 10',
                     className: 'route-line'
                 }).addTo(map);
-
                 // Add waypoint markers
                 waypoints.forEach((point, index) => {
                     const waypointIcon = L.divIcon({
                         html: `<div class="bg-cyan-500 w-4 h-4 rounded-full border border-white shadow-md animate-ping"></div>`,
                         iconSize: [16, 16],
                         className: 'waypoint-marker'
-                    });
-                    
+                    });                    
                     L.marker(point, {icon: waypointIcon}).addTo(map)
                         .bindPopup(`
                             <div class="text-center">
@@ -1795,42 +1744,32 @@
                             </div>
                         `);
                 });
-
                 // Fit map to show full route
-                map.fitBounds(fullRoute, { padding: [20, 20] });
-                
+                map.fitBounds(fullRoute, { padding: [20, 20] });                
                 // Update map status
-                document.getElementById('mapType').textContent = 'Satellite';
-                
-                console.log(`Route drawn: ${source.name} → ${destination.name}`);
-                
+                document.getElementById('mapType').textContent = 'Satellite';                
+                console.log(`Route drawn: ${source.name} → ${destination.name}`);                
             } catch (error) {
                 console.error('Error drawing route:', error);
                 showMapFallback();
             }
         }
-
         // Generate waypoints between source and destination
         function generateWaypoints(start, end) {
             const waypoints = [];
-            const steps = 3; // Number of waypoints
-            
+            const steps = 3; // Number of waypoints            
             for (let i = 1; i <= steps; i++) {
                 const ratio = i / (steps + 1);
                 const lat = start[0] + (end[0] - start[0]) * ratio;
-                const lon = start[1] + (end[1] - start[1]) * ratio;
-                
+                const lon = start[1] + (end[1] - start[1]) * ratio;                
                 // Add some variation to make route more realistic
                 const variation = 0.5;
                 const latVar = (Math.random() - 0.5) * variation;
-                const lonVar = (Math.random() - 0.5) * variation;
-                
+                const lonVar = (Math.random() - 0.5) * variation;                
                 waypoints.push([lat + latVar, lon + lonVar]);
-            }
-            
+            }            
             return waypoints;
         }
-
         // Enhanced weather chart
         function initWeatherChart() {
             const ctx = document.getElementById('weatherChart').getContext('2d');
