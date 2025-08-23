@@ -165,6 +165,30 @@
             }
         }
         }
+        
+        /* Exact Dark Ocean Background from Index.html */
+        .bg-ocean-gradient {
+            background: linear-gradient(135deg, 
+                #001122 0%, 
+                #002244 25%, 
+                #003366 50%, 
+                #002244 75%, 
+                #001122 100%);
+        }
+        
+        /* Exact Animated Background from Index.html */
+        .animated-bg {
+            background: linear-gradient(-45deg, #001122, #002244, #003366, #004488);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
         .ocean-waves {
             background: linear-gradient(45deg, #0c4a6e, #075985, #0369a1, #0284c7);
             background-size: 400% 400%;
@@ -414,7 +438,7 @@
             opacity: 0.3;
         }
 
-        /* Enhanced Dynamic Background */
+        /* Enhanced Dynamic Background - RE-ENABLED WITH TOPOLOGY */
         .vanta-background {
             position: fixed;
             top: 0;
@@ -422,7 +446,8 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 1;
+            opacity: 1 !important;
+            display: block !important;
             background: transparent !important;
         }
 
@@ -535,7 +560,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen text-white overflow-x-hidden relative font-sans" style="font-family: 'Helvetica Neue', 'Inter', 'Helvetica', sans-serif;">
+<body class="animated-bg text-white font-helvetica overflow-x-hidden" style="font-family: 'Helvetica Neue', 'Inter', 'Helvetica', sans-serif;">
     <!-- Low-Poly Dynamic Background -->
     <div class="polygon-shapes">
         <div class="polygon"></div>
@@ -2843,7 +2868,7 @@
             } catch (error) {
                 console.log('Vanta.js WAVES not available, trying TOPOLOGY...');
                 try {
-                    // Fallback to TOPOLOGY with more visible settings
+                    // TOPOLOGY with transparent background and dark blue lines
                     vantaEffect = VANTA.TOPOLOGY({
                         el: "#vanta-background",
                         mouseControls: true,
@@ -2853,10 +2878,10 @@
                         minWidth: 200.00,
                         scale: 1.00,
                         scaleMobile: 1.00,
-                        color: 0x4a90e2,
-                        backgroundColor: 0x0a1929,
-                        size: 2.00,
-                        spacing: 20.00
+                        color: 0x224466,        // Subtle dark blue lines
+                        backgroundColor: 0x00000000, // Fully transparent background
+                        size: 1.20,              // Smaller wave size for more detail
+                        spacing: 15.00           // Tighter spacing for more waves
                     });
                     console.log('TOPOLOGY effect initialized successfully');
                 } catch (error2) {
