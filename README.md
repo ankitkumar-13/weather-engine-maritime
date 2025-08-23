@@ -150,25 +150,16 @@ chmod +x test_api.sh
 <td align="center">
 <img src="https://github.com/savetree-1.png" width="100px" style="border-radius: 50%"/>
 <br>
-<img src="https://img.shields.io/badge/Ankush_Rawat-Project_Lead-00D4FF?style=for-the-badge&logo=github"/>
+<img src="https://img.shields.io/badge/Ankush_Rawat-AI_Engineer-00D4FF?style=for-the-badge&logo=github"/>
 <br>
 <a href="https://github.com/savetree-1">
 <img src="https://img.shields.io/badge/@savetree--1-100000?style=social&logo=github"/>
 </a>
 </td>
 <td align="center">
-<img src="https://github.com/ShivamSinghRawat.png" width="100px" style="border-radius: 50%"/>
-<br>
-<img src="https://img.shields.io/badge/Shivam_Singh_Rawat-Full_Stack_Dev-00FF88?style=for-the-badge&logo=github"/>
-<br>
-<a href="https://github.com/ShivamSinghRawat">
-<img src="https://img.shields.io/badge/@ShivamSinghRawat-100000?style=social&logo=github"/>
-</a>
-</td>
-<td align="center">
 <img src="https://github.com/ankitkumar-13.png" width="100px" style="border-radius: 50%"/>
 <br>
-<img src="https://img.shields.io/badge/Ankit_Kumar-AI_Engineer-FF6B35?style=for-the-badge&logo=github"/>
+<img src="https://img.shields.io/badge/Ankit_Kumar-Project_Lead-FF6B35?style=for-the-badge&logo=github"/>
 <br>
 <a href="https://github.com/ankitkumar-13">
 <img src="https://img.shields.io/badge/@ankitkumar--13-100000?style=social&logo=github"/>
@@ -177,7 +168,7 @@ chmod +x test_api.sh
 <td align="center">
 <img src="https://github.com/GOLUBEST.png" width="100px" style="border-radius: 50%"/>
 <br>
-<img src="https://img.shields.io/badge/GOLUBEST-Systems_Architect-9932CC?style=for-the-badge&logo=github"/>
+<img src="https://img.shields.io/badge/Shivam Singh Rawat-Systems_Architect-9932CC?style=for-the-badge&logo=github"/>
 <br>
 <a href="https://github.com/GOLUBEST">
 <img src="https://img.shields.io/badge/@GOLUBEST-100000?style=social&logo=github"/>
