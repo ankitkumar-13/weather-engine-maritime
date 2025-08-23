@@ -662,9 +662,119 @@
                 rgba(34, 211, 238, 1) 100%
             );
         }
+
+        /* Alert Popup Notifications */
+        .alert-popup-container {
+            position: fixed;
+            z-index: 1000;
+            max-width: 350px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .alert-popup-container.top-right {
+            top: 20px;
+            right: 20px;
+        }
+
+        .alert-popup-container.bottom-right {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .alert-popup {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(59, 130, 246, 0.1);
+            transform: translateX(400px);
+            opacity: 0;
+            animation: slideInAlert 0.5s ease-out forwards;
+        }
+
+        .alert-popup.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .alert-popup.hide {
+            animation: slideOutAlert 0.3s ease-in forwards;
+        }
+
+        @keyframes slideInAlert {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutAlert {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .alert-popup .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ef4444;
+            transition: all 0.2s ease;
+        }
+
+        .alert-popup .close-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Position Toggle Button */
+        .position-toggle {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: #3b82f6;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .position-toggle:hover {
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
     </style>
 </head>
 <body class="animated-bg text-white font-helvetica overflow-x-hidden" style="font-family: 'Helvetica Neue', 'Inter', 'Helvetica', sans-serif;">
+    <!-- Alert Popup Container -->
+    <div id="alertPopupContainer" class="alert-popup-container top-right"></div>
+
     <!-- Low-Poly Dynamic Background -->
     <div class="polygon-shapes">
         <div class="polygon"></div>
@@ -1196,6 +1306,15 @@
                             All Clear
                         </div>
                     </h3>
+                    
+                    <!-- Popup Position Toggle -->
+                    <div class="mb-4 flex items-center justify-between">
+                        <span class="text-sm text-ocean-300">Alert Notifications:</span>
+                        <div id="positionToggle" class="position-toggle">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            <span id="positionText">Top Right</span>
+                        </div>
+                    </div>
                     
                     <!-- Alert Types Selector -->
                     <div class="grid grid-cols-2 gap-2 mb-4">
@@ -2213,6 +2332,200 @@
             }
         }
 
+        // Alert Popup System
+        let alertPopupPosition = 'top-right';
+        let popupCounter = 0;
+
+        function togglePopupPosition() {
+            const container = document.getElementById('alertPopupContainer');
+            const positionText = document.getElementById('positionText');
+            
+            if (alertPopupPosition === 'top-right') {
+                alertPopupPosition = 'bottom-right';
+                container.className = 'alert-popup-container bottom-right';
+                positionText.textContent = 'Bottom Right';
+            } else {
+                alertPopupPosition = 'top-right';
+                container.className = 'alert-popup-container top-right';
+                positionText.textContent = 'Top Right';
+            }
+        }
+
+        // Alert Sound System
+        function playAlertSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Longer beep sound with pleasant tone
+                oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                // Increased duration from 0.2 to 0.4 seconds
+                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.4);
+            } catch (error) {
+                console.log('Web Audio API not supported:', error);
+            }
+        }
+
+        function showAlertPopup(alertData) {
+            const container = document.getElementById('alertPopupContainer');
+            const popupId = `popup-${++popupCounter}`;
+            
+            // Play alert sound
+            playAlertSound();
+            
+            const severityColors = {
+                'weather': { bg: 'rgba(234, 179, 8, 0.2)', border: '#eab308', icon: 'fa-cloud-bolt' },
+                'navigation': { bg: 'rgba(249, 115, 22, 0.2)', border: '#f97316', icon: 'fa-compass' },
+                'security': { bg: 'rgba(239, 68, 68, 0.2)', border: '#ef4444', icon: 'fa-shield-alt' },
+                'mechanical': { bg: 'rgba(168, 85, 247, 0.2)', border: '#a855f7', icon: 'fa-cog' },
+                'traffic': { bg: 'rgba(59, 130, 246, 0.2)', border: '#3b82f6', icon: 'fa-ship' },
+                'fuel': { bg: 'rgba(239, 68, 68, 0.2)', border: '#ef4444', icon: 'fa-gas-pump' }
+            };
+
+            const colorData = severityColors[alertData.type] || severityColors['weather'];
+            
+            const popup = document.createElement('div');
+            popup.id = popupId;
+            popup.className = 'alert-popup';
+            popup.style.borderLeftColor = colorData.border;
+            popup.style.background = colorData.bg;
+            
+            popup.innerHTML = `
+                <div class="close-btn" onclick="closeAlertPopup('${popupId}')">
+                    <i class="fas fa-times text-xs"></i>
+                </div>
+                <div class="flex items-start">
+                    <i class="fas ${colorData.icon} mr-3 mt-1" style="color: ${colorData.border}"></i>
+                    <div class="flex-1">
+                        <div class="mb-2">
+                            <span class="font-semibold text-xs" style="color: ${colorData.border}">${alertData.title}</span>
+                        </div>
+                        <p class="text-ocean-100 text-sm mb-2">${alertData.description}</p>
+                        ${alertData.metric ? `
+                            <div class="flex items-center justify-between text-xs text-ocean-300">
+                                <div class="flex items-center">
+                                    <i class="fas ${alertData.metricIcon} mr-1"></i>
+                                    <span>${alertData.metric}</span>
+                                </div>
+                                <span>${alertData.time}</span>
+                            </div>
+                        ` : `
+                            <div class="flex justify-end text-xs text-ocean-300">
+                                <span>${alertData.time}</span>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+            
+            if (alertPopupPosition === 'bottom-right') {
+                container.insertBefore(popup, container.firstChild);
+            } else {
+                container.appendChild(popup);
+            }
+            
+            // Trigger animation
+            setTimeout(() => popup.classList.add('show'), 10);
+            
+            // Auto-remove after 6 seconds
+            setTimeout(() => closeAlertPopup(popupId), 6000);
+        }
+
+        function closeAlertPopup(popupId) {
+            const popup = document.getElementById(popupId);
+            if (popup) {
+                popup.classList.add('hide');
+                setTimeout(() => {
+                    if (popup.parentNode) {
+                        popup.parentNode.removeChild(popup);
+                    }
+                }, 300);
+            }
+        }
+
+        function triggerAlertPopups(selectedCategories) {
+            const alertsData = {
+                'weather': {
+                    type: 'weather',
+                    title: 'WEATHER WARNING',
+                    time: '14:30 UTC',
+                    description: 'High winds (25-30 knots) expected in sector 7-9. Recommend reduced speed.',
+                    metric: 'Wind Speed: 28 knots',
+                    metricIcon: 'fa-wind'
+                },
+                'navigation': [
+                    {
+                        type: 'navigation',
+                        title: 'NAVIGATION ALERT',
+                        time: '12:45 UTC',
+                        description: 'Dense fog reported in approach channels. Visibility reduced to 0.5 nautical miles.',
+                        metric: 'Visibility: 0.5 nm',
+                        metricIcon: 'fa-eye-slash'
+                    },
+                    {
+                        type: 'traffic',
+                        title: 'TRAFFIC ALERT',
+                        time: '16:20 UTC',
+                        description: 'Heavy traffic congestion at Port Mumbai. Expected delay: 2-3 hours.',
+                        metric: 'Queue: 12 vessels',
+                        metricIcon: 'fa-ship'
+                    }
+                ],
+                'mechanical': [
+                    {
+                        type: 'mechanical',
+                        title: 'MAINTENANCE',
+                        time: '18:00 UTC',
+                        description: 'Engine temperature slightly elevated. Schedule maintenance check at next port.',
+                        metric: 'Temperature: 85°C',
+                        metricIcon: 'fa-thermometer-half'
+                    },
+                    {
+                        type: 'fuel',
+                        title: 'FUEL WARNING',
+                        time: '20:15 UTC',
+                        description: 'Fuel consumption 15% higher than optimal. Consider route optimization.',
+                        metric: 'Efficiency: 85%',
+                        metricIcon: 'fa-gas-pump'
+                    }
+                ],
+                'security': {
+                    type: 'security',
+                    title: 'SECURITY ALERT',
+                    time: '22:30 UTC',
+                    description: 'Piracy risk elevated in coordinates 18°N, 69°E. Maintain safe distance from coast.',
+                    metric: 'Risk Level: High',
+                    metricIcon: 'fa-shield-alt'
+                }
+            };
+
+            let delay = 0;
+            selectedCategories.forEach(category => {
+                const categoryAlerts = alertsData[category];
+                if (categoryAlerts) {
+                    if (Array.isArray(categoryAlerts)) {
+                        categoryAlerts.forEach(alert => {
+                            setTimeout(() => showAlertPopup(alert), delay);
+                            delay += 1500; // 1.5 second delay between alerts
+                        });
+                    } else {
+                        setTimeout(() => showAlertPopup(categoryAlerts), delay);
+                        delay += 1500;
+                    }
+                }
+            });
+        }
+
         // Enhanced alerts with different types
         async function loadAlerts() {
             const button = document.getElementById('loadAlerts');
@@ -2300,7 +2613,7 @@
                             <div class="glass rounded-lg p-3 border-l-4 border-yellow-500">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-yellow-400 font-semibold text-xs">WEATHER WARNING</span>
-                                    <span class="text-xs text-ocean-300">2 hours ago</span>
+                                    <span class="text-xs text-ocean-300">14:30 UTC</span>
                                 </div>
                                 <p class="text-ocean-100 text-sm">High winds (25-30 knots) expected in sector 7-9. Recommend reduced speed.</p>
                                 <div class="flex items-center mt-2 text-xs text-ocean-300">
@@ -2317,7 +2630,7 @@
                             <div class="glass rounded-lg p-3 border-l-4 border-orange-500">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-orange-400 font-semibold text-xs">NAVIGATION ALERT</span>
-                                    <span class="text-xs text-ocean-300">4 hours ago</span>
+                                    <span class="text-xs text-ocean-300">12:45 UTC</span>
                                 </div>
                                 <p class="text-ocean-100 text-sm">Dense fog reported in approach channels. Visibility reduced to 0.5 nautical miles.</p>
                                 <div class="flex items-center mt-2 text-xs text-ocean-300">
@@ -2332,7 +2645,7 @@
                             <div class="glass rounded-lg p-3 border-l-4 border-blue-500">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-blue-400 font-semibold text-xs">TRAFFIC ALERT</span>
-                                    <span class="text-xs text-ocean-300">6 hours ago</span>
+                                    <span class="text-xs text-ocean-300">16:20 UTC</span>
                                 </div>
                                 <p class="text-ocean-100 text-sm">Heavy traffic congestion at Port Mumbai. Expected delay: 2-3 hours.</p>
                                 <div class="flex items-center mt-2 text-xs text-ocean-300">
@@ -2349,7 +2662,7 @@
                             <div class="glass rounded-lg p-3 border-l-4 border-purple-500">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-purple-400 font-semibold text-xs">MAINTENANCE</span>
-                                    <span class="text-xs text-ocean-300">8 hours ago</span>
+                                    <span class="text-xs text-ocean-300">18:00 UTC</span>
                                 </div>
                                 <p class="text-ocean-100 text-sm">Engine temperature slightly elevated. Schedule maintenance check at next port.</p>
                                 <div class="flex items-center mt-2 text-xs text-ocean-300">
@@ -2364,7 +2677,7 @@
                             <div class="glass rounded-lg p-3 border-l-4 border-red-500">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-red-400 font-semibold text-xs">FUEL WARNING</span>
-                                    <span class="text-xs text-ocean-300">12 hours ago</span>
+                                    <span class="text-xs text-ocean-300">20:15 UTC</span>
                                 </div>
                                 <p class="text-ocean-100 text-sm">Fuel consumption 15% higher than optimal. Consider route optimization.</p>
                                 <div class="flex items-center mt-2 text-xs text-ocean-300">
@@ -2381,7 +2694,7 @@
                             <div class="glass rounded-lg p-3 border-l-4 border-red-600">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-red-500 font-semibold text-xs">SECURITY ALERT</span>
-                                    <span class="text-xs text-ocean-300">1 day ago</span>
+                                    <span class="text-xs text-ocean-300">22:30 UTC</span>
                                 </div>
                                 <p class="text-ocean-100 text-sm">Piracy risk elevated in coordinates 18°N, 69°E. Maintain safe distance from coast.</p>
                                 <div class="flex items-center mt-2 text-xs text-ocean-300">
@@ -2409,6 +2722,11 @@
                     alertBadge.className = totalAlerts > 0 ? 
                         'text-xs px-2 py-1 bg-orange-500/20 rounded-full border border-orange-400/30 text-orange-400' :
                         'text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400';
+                    
+                    // Trigger popup alerts if there are alerts to show
+                    if (totalAlerts > 0) {
+                        triggerAlertPopups(selectedCategories);
+                    }
                     
                     // Update main dashboard alert count
                     const mainAlertCount = document.getElementById('alertCount');
@@ -2959,6 +3277,9 @@
                 loadAlerts();
             });
             document.getElementById('refreshWeather').addEventListener('click', loadForecast);
+            
+            // Position toggle listener for alert popups
+            document.getElementById('positionToggle').addEventListener('click', togglePopupPosition);
             
             // Map control listeners
             document.getElementById('centerMap').addEventListener('click', () => {
