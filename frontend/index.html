@@ -1281,14 +1281,11 @@
             { name: "Safety Alerts", icon: "fas fa-exclamation-triangle", color: "#ef5350" },
             { name: "Interactive Maps", icon: "fas fa-map", color: "#26a69a" }
         ];
-        
         function generateSkillCards() {
             const skillsContainer = document.getElementById("skillsMarquee");
-            if (!skillsContainer) return;
-            
+            if (!skillsContainer) return;         
             // Create multiple sets for seamless loop
             const duplicatedSkills = [...skillsData, ...skillsData];
-            
             duplicatedSkills.forEach(skill => {
                 const card = document.createElement("div");
                 card.className = "skill-card";
@@ -1307,13 +1304,11 @@
                 `;
                 skillsContainer.appendChild(card);
             });
-        }
-        
+        }        
         // Initialize skills when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             generateSkillCards();
-        });
-        
+        });      
         // Also run immediately in case DOM is already loaded
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', generateSkillCards);
