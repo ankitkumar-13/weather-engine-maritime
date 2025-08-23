@@ -312,7 +312,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .scope-card::after {
             content: '';
             position: absolute;
@@ -325,16 +324,13 @@
             border-color: transparent rgba(0, 212, 255, 0.5) transparent transparent;
             transition: all 0.3s ease;
         }
-        
         .scope-card:hover::after {
             border-width: 0 40px 40px 0;
         }
-        
         .scope-card:hover {
             transform: rotateY(5deg) rotateX(5deg);
             border-color: rgba(0, 255, 136, 0.6);
-        }
-        
+        }   
         /* Advanced Particle Background */
         #particles-js {
             position: fixed;
@@ -343,8 +339,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-        }
-        
+        }      
         /* Vanta Background Containers */
         .vanta-bg {
             position: absolute;
@@ -353,8 +348,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-        }
-        
+        }       
         /* Floating Action Button */
         .floating-action {
             position: fixed;
@@ -371,22 +365,19 @@
             animation: float 3s ease-in-out infinite;
             cursor: pointer;
             z-index: 1000;
-        }
-        
+        }       
         /* Interactive Info Cards */
         .info-card {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(0, 212, 255, 0.3);
             transition: all 0.3s ease;
-        }
-        
+        }       
         .info-card:hover {
             background: rgba(0, 212, 255, 0.1);
             border-color: rgba(0, 255, 136, 0.5);
             transform: scale(1.05);
-        }
-        
+        }       
         /* Neon Text Effect */
         .neon-text {
             text-shadow: 
@@ -395,20 +386,17 @@
                 0 0 20px currentColor,
                 0 0 40px currentColor;
             animation: neon-flicker 2s infinite alternate;
-        }
-        
+        }      
         @keyframes neon-flicker {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.8; }
         }
     </style>
 </head>
-<body class="animated-bg text-white font-helvetica overflow-x-hidden">
-    
+<body class="animated-bg text-white font-helvetica overflow-x-hidden">    
     <!-- Advanced Dynamic Backgrounds -->
     <div id="particles-js"></div>
-    <div id="vanta-waves" class="vanta-bg"></div>
-    
+    <div id="vanta-waves" class="vanta-bg"></div>    
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-30 backdrop-blur-md border-b border-cyan-500/20">
         <div class="container mx-auto px-6 py-4">
@@ -428,34 +416,29 @@
                 </button>
             </div>
         </div>
-    </nav>
-    
+    </nav>    
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center pt-20">
-        <div class="container mx-auto px-6 text-center">
-            
+        <div class="container mx-auto px-6 text-center">          
             <!-- Main Hero Content -->
             <div data-aos="fade-up" data-aos-duration="1000">
                 <div class="mb-6">
                     <span class="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-green-500/20 rounded-full text-sm font-semibold border border-cyan-500/30 glow-cyan">
                         🏆 MariTHON Hackathon Project
                     </span>
-                </div>
-                
+                </div>              
                 <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight" style="font-family: 'Helvetica Neue', Arial, sans-serif;">
                     <span class="text-white">Weather Engine</span>
                     <br>
                     <span class="bg-gradient-to-r from-cyan-400 via-green-400 to-purple-400 bg-clip-text text-transparent">
                         Maritime
                     </span>
-                </h1>
-                
+                </h1>               
                 <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-4xl mx-auto leading-relaxed">
                     Revolutionary <span class="text-cyan-400 font-semibold">AI-Powered Maritime Intelligence</span> 
                     delivering up to <span class="text-green-400 font-semibold">15% fuel savings</span> 
                     through intelligent weather integration and route optimization.
-                </p>
-                
+                </p>                
                 <div class="flex flex-wrap justify-center gap-4 mb-8">
                     <div class="flex items-center space-x-2 text-green-400">
                         <span class="text-xl">✅</span>
@@ -470,8 +453,7 @@
                         <span>Safety Alert System</span>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
             <!-- Action Buttons -->
             <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <a href="demo.html" class="btn-primary px-8 py-4 rounded-xl font-semibold text-black text-lg inline-flex items-center justify-center space-x-3 wave">
@@ -483,8 +465,7 @@
                     <span class="text-xl">ℹ️</span>
                     <span>Explore Features</span>
                 </a>
-            </div>
-            
+            </div>            
             <!-- Live Stats -->
             <div data-aos="fade-up" data-aos-delay="400" class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
                 <div class="text-center">
@@ -504,19 +485,16 @@
                     <div class="text-sm text-gray-400">Sec Demo</div>
                 </div>
             </div>
-        </div>
-        
+        </div>        
         <!-- Floating Ship Icon -->
         <div class="absolute bottom-20 left-1/2 transform -translate-x-1/2 float">
             <div class="text-6xl opacity-50">🚢</div>
-        </div>
-        
+        </div>        
         <!-- Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
             <span class="text-2xl text-cyan-400">⬇️</span>
         </div>
-    </section>
-    
+    </section>    
     <!-- Features Section -->
     <section id="features" class="py-20 bg-black bg-opacity-50">
         <div class="container mx-auto px-6">
@@ -527,8 +505,7 @@
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                     Transforming maritime navigation with cutting-edge AI intelligence and real-time weather integration
                 </p>
-            </div>
-            
+            </div>            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Feature 1: Weather Intelligence -->
                 <div class="feature-card bg-gradient-to-br from-cyan-900/30 to-blue-900/30 p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
@@ -543,8 +520,7 @@
                         <li>• Ocean current data</li>
                         <li>• Real-time updates</li>
                     </ul>
-                </div>
-                
+                </div>                
                 <!-- Feature 2: AI Optimization -->
                 <div class="feature-card bg-gradient-to-br from-green-900/30 to-emerald-900/30 p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
                     <div class="text-5xl mb-4 text-green-400">⚡</div>
@@ -558,8 +534,7 @@
                         <li>• Fuel efficiency analysis</li>
                         <li>• Cost reduction metrics</li>
                     </ul>
-                </div>
-                
+                </div>                
                 <!-- Feature 3: Safety Alerts -->
                 <div class="feature-card bg-gradient-to-br from-orange-900/30 to-red-900/30 p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
                     <div class="text-5xl mb-4 text-orange-400">🚨</div>
@@ -573,8 +548,7 @@
                         <li>• Strong wind notifications</li>
                         <li>• Route recommendations</li>
                     </ul>
-                </div>
-                
+                </div>                
                 <!-- Feature 4: Interactive Maps -->
                 <div class="feature-card bg-gradient-to-br from-purple-900/30 to-indigo-900/30 p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
                     <div class="text-5xl mb-4 text-purple-400">🗺️</div>
@@ -591,8 +565,7 @@
                 </div>
             </div>
         </div>
-    </section>
-    
+    </section>  
     <!-- Project Scope Section -->
     <section class="py-20 bg-black bg-opacity-30 relative">
         <div id="vanta-net" class="vanta-bg"></div>
@@ -604,8 +577,7 @@
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                     Comprehensive maritime intelligence platform transforming the shipping industry
                 </p>
-            </div>
-            
+            </div>          
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Scope Card 1 -->
                 <div class="scope-card enhanced-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
@@ -618,8 +590,7 @@
                         <li>• 24/7 maritime weather monitoring</li>
                     </ul>
                     <div class="mt-4 bg-gradient-to-r from-cyan-500 to-green-500 h-1 rounded-full"></div>
-                </div>
-                
+                </div>              
                 <!-- Scope Card 2 -->
                 <div class="scope-card enhanced-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
                     <div class="text-5xl mb-4 flash-effect" style="animation-delay: 0.5s;">🚢</div>
@@ -631,8 +602,7 @@
                         <li>• Port arrival time optimization</li>
                     </ul>
                     <div class="mt-4 bg-gradient-to-r from-green-500 to-purple-500 h-1 rounded-full"></div>
-                </div>
-                
+                </div>               
                 <!-- Scope Card 3 -->
                 <div class="scope-card enhanced-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
                     <div class="text-5xl mb-4 flash-effect" style="animation-delay: 1s;">🔬</div>
@@ -644,8 +614,7 @@
                         <li>• Interactive visualization</li>
                     </ul>
                     <div class="mt-4 bg-gradient-to-r from-purple-500 to-cyan-500 h-1 rounded-full"></div>
-                </div>
-                
+                </div>               
                 <!-- Scope Card 4 -->
                 <div class="scope-card enhanced-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
                     <div class="text-5xl mb-4 flash-effect" style="animation-delay: 1.5s;">💰</div>
@@ -657,8 +626,7 @@
                         <li>• $1000+ saved per voyage</li>
                     </ul>
                     <div class="mt-4 bg-gradient-to-r from-yellow-500 to-orange-500 h-1 rounded-full"></div>
-                </div>
-                
+                </div>               
                 <!-- Scope Card 5 -->
                 <div class="scope-card enhanced-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
                     <div class="text-5xl mb-4 flash-effect" style="animation-delay: 2s;">🛡️</div>
@@ -670,8 +638,7 @@
                         <li>• Crew safety monitoring</li>
                     </ul>
                     <div class="mt-4 bg-gradient-to-r from-orange-500 to-red-500 h-1 rounded-full"></div>
-                </div>
-                
+                </div>                
                 <!-- Scope Card 6 -->
                 <div class="scope-card enhanced-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="600">
                     <div class="text-5xl mb-4 flash-effect" style="animation-delay: 2.5s;">🎯</div>
@@ -686,8 +653,7 @@
                 </div>
             </div>
         </div>
-    </section>
-    
+    </section>    
     <!-- Demo Section -->
     <section id="demo" class="py-20">
         <div class="container mx-auto px-6">
@@ -698,8 +664,7 @@
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                     Experience the power of Weather Engine Maritime with our interactive demo showcasing Mumbai to Kochi route optimization
                 </p>
-            </div>
-            
+            </div>      
             <div class="max-w-4xl mx-auto">
                 <!-- Demo Preview -->
                 <div class="relative bg-gradient-to-br from-gray-900/50 to-blue-900/30 rounded-3xl p-8 glow-cyan" data-aos="fade-up">
@@ -713,8 +678,7 @@
                                 <p class="text-gray-300 mb-6">
                                     Our flagship demo showcases real maritime route optimization between Mumbai and Kochi ports, 
                                     featuring live weather data, AI-powered speed optimization, and interactive map visualization.
-                                </p>
-                                
+                                </p>                     
                                 <!-- Demo Steps -->
                                 <div class="space-y-3 mb-6">
                                     <div class="flex items-center space-x-3">
@@ -733,15 +697,13 @@
                                         <div class="w-8 h-8 bg-purple-400 text-black rounded-full flex items-center justify-center font-bold">4</div>
                                         <span>Explore interactive route map</span>
                                     </div>
-                                </div>
-                                
+                                </div>                      
                                 <a href="demo.html" class="btn-primary px-6 py-3 rounded-xl font-semibold text-black inline-flex items-center space-x-3">
                                     <span class="text-lg">▶️</span>
                                     <span>Start Demo (60-90 sec)</span>
                                     <span class="text-lg">🔗</span>
                                 </a>
-                            </div>
-                            
+                            </div>                  
                             <div class="relative">
                                 <!-- Mac-style Demo Interface with Real Screenshot -->
                                 <div class="bg-gray-800 rounded-2xl p-3 border border-gray-700 shadow-2xl">
@@ -754,14 +716,12 @@
                                         </div>
                                         <div class="text-xs text-gray-400 font-mono">Weather Engine Maritime Demo</div>
                                         <div class="w-16"></div> <!-- Spacer for balance -->
-                                    </div>
-                                    
+                                    </div>                            
                                     <!-- Real Demo Screenshot -->
                                     <div class="rounded-lg overflow-hidden border border-gray-600">
                                         <img src="images/demo-screenshot.png" alt="Weather Engine Maritime Demo" 
                                              class="w-full h-auto object-cover rounded-lg hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    
+                                    </div>                            
                                     <!-- Interactive Overlays -->
                                     <div class="absolute top-20 left-8 bg-cyan-400/90 text-black px-3 py-1 rounded-lg text-xs font-semibold animate-pulse">
                                         Live Demo
@@ -769,8 +729,7 @@
                                     <div class="absolute bottom-8 right-8 bg-green-400/90 text-black px-3 py-1 rounded-lg text-xs font-semibold">
                                         15.3% Fuel Saved
                                     </div>
-                                </div>
-                                
+                                </div>                          
                                 <!-- Demo Features Overlay -->
                                 <div class="absolute -bottom-4 -right-4 bg-gradient-to-br from-purple-600 to-indigo-700 rounded-xl p-3 border border-purple-400/50 shadow-lg">
                                     <div class="text-xs text-white font-semibold mb-1">Live Features</div>
@@ -783,8 +742,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
+                </div>           
                 <!-- Demo Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="text-center bg-gradient-to-br from-cyan-900/30 to-blue-900/30 p-6 rounded-2xl">
@@ -806,7 +764,6 @@
             </div>
         </div>
     </section>
-    
     <!-- Team Section -->
     <section id="team" class="py-20 bg-black bg-opacity-50">
         <div class="container mx-auto px-6">
@@ -817,8 +774,7 @@
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                     The brilliant minds behind Weather Engine Maritime, dedicated to revolutionizing maritime intelligence
                 </p>
-            </div>
-            
+            </div>       
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <!-- Team Member 1 - Ankush Rawat -->
                 <div class="feature-card bg-gradient-to-br from-cyan-900/30 to-blue-900/30 p-6 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="100">
@@ -834,8 +790,7 @@
                     <a href="https://github.com/savetree-1" class="text-cyan-400 hover:text-cyan-300 transition-colors">
                         <span class="text-2xl">🐙</span>
                     </a>
-                </div>
-                
+                </div>             
                 <!-- Team Member 2 - Ankit Kumar -->
                 <div class="feature-card bg-gradient-to-br from-green-900/30 to-emerald-900/30 p-6 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-green-400/50 shadow-lg">
@@ -850,8 +805,7 @@
                     <a href="https://github.com/ankitkumar-13" class="text-green-400 hover:text-green-300 transition-colors">
                         <span class="text-2xl">🐙</span>
                     </a>
-                </div>
-                
+                </div>               
                 <!-- Team Member 3 - Shivam Singh Rawat -->
                 <div class="feature-card bg-gradient-to-br from-purple-900/30 to-indigo-900/30 p-6 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-purple-400/50 shadow-lg">
@@ -870,19 +824,16 @@
             </div>
         </div>
     </section>
-    
     <!-- Technology Stack -->
     <section id="skills" class="relative z-50 border-t my-12 lg:my-24 border-[#25213b] py-20">
         <!-- Background Blur Effect -->
         <div class="w-[100px] h-[100px] bg-violet-100 rounded-full absolute top-6 left-[42%] translate-x-1/2 filter blur-3xl opacity-20"></div>
-        
         <!-- Top Gradient Line -->
         <div class="flex justify-center -translate-y-[1px]">
             <div class="w-3/4">
                 <div class="h-[1px] bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full"></div>
             </div>
-        </div>
-        
+        </div>   
         <!-- Section Title -->
         <div class="flex justify-center my-5 lg:py-8" data-aos="fade-up">
             <div class="flex items-center">
@@ -890,21 +841,18 @@
                 <span class="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md font-orbitron font-bold">Technology Stack</span>
                 <span class="w-24 h-[2px] bg-[#1a1443]"></span>
             </div>
-        </div>
-        
+        </div>   
         <!-- Skills Description -->
         <div class="text-center mb-12" data-aos="fade-up" data-aos-delay="100">
             <p class="text-lg text-gray-300 max-w-3xl mx-auto">
                 Built with cutting-edge technologies for performance, scalability, and reliability
             </p>
-        </div>
-        
+        </div>       
         <!-- Marquee Skills Container -->
         <div class="w-full my-12 overflow-hidden" data-aos="fade-up" data-aos-delay="200">
             <div id="skillsMarquee" class="flex gap-6 animate-marquee"></div>
         </div>
-    </section>
-    
+    </section>   
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-black bg-opacity-50">
         <div class="container mx-auto px-6">
@@ -915,8 +863,7 @@
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                     Interested in Weather Engine Maritime? Let's discuss how we can revolutionize maritime navigation together
                 </p>
-            </div>
-            
+            </div>            
             <div class="max-w-4xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                     <div class="text-center" data-aos="fade-up" data-aos-delay="100">
@@ -925,16 +872,14 @@
                         </div>
                         <h3 class="font-orbitron text-lg font-bold mb-2 text-cyan-400">Email Us</h3>
                         <p class="text-gray-300">team@maritimeweather.ai</p>
-                    </div>
-                    
+                    </div>                 
                     <div class="text-center" data-aos="fade-up" data-aos-delay="200">
                         <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                             <span class="text-2xl text-white">🐙</span>
                         </div>
                         <h3 class="font-orbitron text-lg font-bold mb-2 text-green-400">GitHub</h3>
                         <p class="text-gray-300">Open Source Project</p>
-                    </div>
-                    
+                    </div>                 
                     <div class="text-center" data-aos="fade-up" data-aos-delay="300">
                         <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                             <span class="text-2xl text-white">🏆</span>
@@ -942,8 +887,7 @@
                         <h3 class="font-orbitron text-lg font-bold mb-2 text-purple-400">MariTHON</h3>
                         <p class="text-gray-300">Hackathon Project</p>
                     </div>
-                </div>
-                
+                </div>                
                 <!-- CTA Section -->
                 <div class="text-center" data-aos="fade-up" data-aos-delay="400">
                     <div class="bg-gradient-to-r from-cyan-900/30 to-green-900/30 p-8 rounded-3xl border border-cyan-500/30 glow-cyan">
@@ -971,7 +915,6 @@
             </div>
         </div>
     </section>
-    
     <!-- Footer -->
     <footer class="py-12 border-t border-cyan-500/20">
         <div class="container mx-auto px-6">
@@ -982,8 +925,7 @@
                         <div class="font-orbitron text-lg font-bold text-cyan-400">Weather Engine Maritime</div>
                         <div class="text-sm text-gray-400">AI-Powered Maritime Intelligence</div>
                     </div>
-                </div>
-                
+                </div>             
                 <div class="flex items-center space-x-6">
                     <a href="https://github.com/savetree-1/weather-engine-maritime" class="text-cyan-400 hover:text-cyan-300 transition-colors">
                         <span class="text-xl">🐙</span>
@@ -994,29 +936,24 @@
                 </div>
             </div>
         </div>
-    </footer>
-    
+    </footer> 
     <!-- Back to Top Button -->
     <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full flex items-center justify-center text-black shadow-lg opacity-0 transition-all duration-300 hover:shadow-xl hover:scale-110 z-50">
         <i class="fas fa-arrow-up"></i>
     </button>
-    
     <!-- Floating Action Button -->
     <div class="floating-action" id="floatingAction" title="Quick Demo Access">
         <i class="fas fa-rocket text-white text-xl"></i>
     </div>
-    
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    
     <script>
         // Initialize AOS
         AOS.init({
             duration: 1000,
             once: true,
             offset: 100
-        });
-        
+        });     
         // Initialize Particles.js
         particlesJS('particles-js', {
             "particles": {
@@ -1119,8 +1056,7 @@
                 }
             },
             "retina_detect": true
-        });
-        
+        });    
         // Initialize Vanta.js backgrounds
         if (typeof VANTA !== 'undefined') {
             // Waves background for hero section
@@ -1142,8 +1078,7 @@
                 });
             } catch (e) {
                 console.log('Vanta Waves initialization failed:', e);
-            }
-            
+            }           
             // Net background for project scope section
             try {
                 VANTA.NET({
@@ -1164,8 +1099,7 @@
             } catch (e) {
                 console.log('Vanta Net initialization failed:', e);
             }
-        }
-        
+        }        
         // Counter Animation
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
@@ -1173,8 +1107,7 @@
                 const target = parseInt(counter.dataset.target);
                 const duration = 2000;
                 const increment = target / (duration / 16);
-                let current = 0;
-                
+                let current = 0;                
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
@@ -1184,8 +1117,7 @@
                     counter.textContent = Math.floor(current);
                 }, 16);
             });
-        }
-        
+        }        
         // Intersection Observer for counters
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1194,13 +1126,11 @@
                     counterObserver.unobserve(entry.target);
                 }
             });
-        });
-        
+        });        
         const statsSection = document.querySelector('.counter').closest('div');
         if (statsSection) {
             counterObserver.observe(statsSection);
-        }
-        
+        }        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1213,11 +1143,9 @@
                     });
                 }
             });
-        });
-        
+        });        
         // Back to top button
-        const backToTopButton = document.getElementById('backToTop');
-        
+        const backToTopButton = document.getElementById('backToTop');        
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 300) {
                 backToTopButton.style.opacity = '1';
@@ -1226,43 +1154,36 @@
                 backToTopButton.style.opacity = '0';
                 backToTopButton.style.transform = 'translateY(10px)';
             }
-        });
-        
+        });        
         backToTopButton.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
-        
         // Floating Action Button
         const floatingAction = document.getElementById('floatingAction');
         if (floatingAction) {
             floatingAction.addEventListener('click', () => {
                 window.open('demo.html', '_blank');
             });
-        }
-        
+        }        
         // Enhanced Card Interactions
         document.querySelectorAll('.enhanced-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transform = 'translateY(-10px) scale(1.02) rotateY(5deg)';
-            });
-            
+            });            
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0) scale(1) rotateY(0deg)';
             });
-        });
-        
+        });        
         // Dynamic Background Color Changes
         let colorIndex = 0;
-        const colors = ['#001122', '#002244', '#003366', '#004488'];
-        
+        const colors = ['#001122', '#002244', '#003366', '#004488'];        
         setInterval(() => {
             document.body.style.background = `linear-gradient(-45deg, ${colors[colorIndex]}, ${colors[(colorIndex + 1) % colors.length]}, ${colors[(colorIndex + 2) % colors.length]}, ${colors[(colorIndex + 3) % colors.length]})`;
             colorIndex = (colorIndex + 1) % colors.length;
-        }, 5000);
-        
+        }, 5000);    
         // Enhanced Particle Creation
         function createAdvancedParticle() {
             const particle = document.createElement('div');
@@ -1277,19 +1198,15 @@
             particle.style.borderRadius = '50%';
             particle.style.opacity = '0.6';
             particle.style.animation = `particle ${Math.random() * 3 + 2}s linear forwards`;
-            particle.style.zIndex = '-1';
-            
-            document.body.appendChild(particle);
-            
+            particle.style.zIndex = '-1';           
+            document.body.appendChild(particle);           
             // Remove particle after animation
             setTimeout(() => {
                 particle.remove();
             }, 5000);
-        }
-        
+        }        
         // Create particles periodically
-        setInterval(createAdvancedParticle, 1000);
-        
+        setInterval(createAdvancedParticle, 1000);        
         // Mobile menu toggle (placeholder for future implementation)
         const mobileMenuButton = document.querySelector('.md\\:hidden button');
         if (mobileMenuButton) {
@@ -1297,8 +1214,7 @@
                 // Add mobile menu functionality here
                 console.log('Mobile menu toggled');
             });
-        }
-        
+        }        
         // Add loading state to demo button
         const demoButtons = document.querySelectorAll('a[href="demo.html"]');
         demoButtons.forEach(button => {
@@ -1311,8 +1227,7 @@
                     button.innerHTML = originalText;
                 }, 3000);
             });
-        });
-        
+        });      
         // Particle system enhancement
         function createParticle() {
             const particle = document.createElement('div');
@@ -1321,39 +1236,30 @@
             particle.style.top = Math.random() * 100 + '%';
             particle.style.width = (Math.random() * 4 + 2) + 'px';
             particle.style.height = particle.style.width;
-            particle.style.animationDelay = Math.random() * 4 + 's';
-            
+            particle.style.animationDelay = Math.random() * 4 + 's';      
             const particlesContainer = document.querySelector('.fixed.inset-0.pointer-events-none');
-            particlesContainer.appendChild(particle);
-            
+            particlesContainer.appendChild(particle);       
             // Remove particle after animation
             setTimeout(() => {
                 particle.remove();
             }, 4000);
-        }
-        
+        } 
         // Create particles periodically
-        setInterval(createParticle, 2000);
-        
+        setInterval(createParticle, 2000);  
         // Console welcome message
         console.log(`
         🌊⚡ Weather Engine Maritime ⚡🌊
-        ================================
-        
-        Welcome to the future of maritime intelligence!
-        
+        ================================  
+        Welcome to the future of maritime intelligence!  
         🚀 Features:
         • AI-Powered Route Optimization
         • 10-Day Weather Forecasting  
         • Real-time Safety Alerts
-        • Interactive Map Visualization
-        
+        • Interactive Map Visualization   
         💡 Built for MariTHON Hackathon
-        👥 Team: Ankush, Ankit, Shivam
-        
+        👥 Team: Ankush, Ankit, Shivam  
         Ready to revolutionize maritime navigation? 🚢
         `);
-        
         // Dynamic Skills Generation
         const skillsData = [
             { name: "Python 3.11+", icon: "fab fa-python", color: "#3776ab" },
