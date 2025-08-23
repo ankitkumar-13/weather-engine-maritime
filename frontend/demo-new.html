@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Engine Maritime - Live Demo</title>
+    <meta name="description" content="Live demonstration of AI-powered maritime weather intelligence and route optimization system.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+    
+    <!-- External Dependencies -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <!-- TailwindCSS Configuration -->
+    <script src="assets/css/tailwind-config.js"></script>
+</head>
+
+<body class="min-h-screen ocean-waves text-white overflow-x-hidden relative">
+    <!-- Floating Particles Animation -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="floating-particles" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-particles" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="floating-particles" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="floating-particles" style="left: 40%; animation-delay: 6s;"></div>
+        <div class="floating-particles" style="left: 50%; animation-delay: 8s;"></div>
+        <div class="floating-particles" style="left: 60%; animation-delay: 10s;"></div>
+        <div class="floating-particles" style="left: 70%; animation-delay: 12s;"></div>
+        <div class="floating-particles" style="left: 80%; animation-delay: 14s;"></div>
+        <div class="floating-particles" style="left: 90%; animation-delay: 16s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass fixed top-0 left-0 right-0 z-50 p-4" data-aos="fade-down">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-ship text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="font-bold gradient-text text-lg">Weather Engine</div>
+                    <div class="text-xs text-ocean-300">Maritime Intelligence</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 text-xs">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-ocean-300">Live</span>
+                    <span id="liveTime" class="text-cyan-400 font-mono">--:--:-- UTC</span>
+                </div>
+                <button onclick="window.location.href='index.html'" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 px-4 py-2 rounded-lg font-semibold transition-all">
+                    ← Back to Home
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-20 px-4 pb-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8" data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-bold gradient-text mb-4">
+                    Live Maritime Demo
+                </h1>
+                <p class="text-xl text-ocean-300 max-w-3xl mx-auto">
+                    Real-time weather intelligence and route optimization in action
+                </p>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-3xl mb-2">⛽</div>
+                    <div class="text-2xl font-bold gradient-text">
+                        <span id="fuelSavings">0.0</span>%
+                    </div>
+                    <div class="text-sm text-ocean-300">Fuel Savings</div>
+                </div>
+                
+                <div class="glass rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-3xl mb-2">🎯</div>
+                    <div class="text-2xl font-bold gradient-text">
+                        <span id="routeEfficiency">0.0</span>%
+                    </div>
+                    <div class="text-sm text-ocean-300">Route Efficiency</div>
+                </div>
+                
+                <div class="glass rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-3xl mb-2">🌦️</div>
+                    <div class="text-2xl font-bold gradient-text">
+                        <span id="weatherAccuracy">0.0</span>%
+                    </div>
+                    <div class="text-sm text-ocean-300">Weather Accuracy</div>
+                </div>
+                
+                <div class="glass rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-3xl mb-2">🌱</div>
+                    <div class="text-2xl font-bold gradient-text">
+                        <span id="co2Reduction">0.0</span>%
+                    </div>
+                    <div class="text-sm text-ocean-300">CO₂ Reduction</div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Map Container (takes 2 columns on large screens) -->
+                <div class="glass rounded-xl p-6 lg:col-span-2" data-aos="fade-up">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-map text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Interactive Route Map</div>
+                                <div class="text-sm text-ocean-300">Real-time navigation</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-ocean-300">Active Layers:</span>
+                                <div id="activeLayers" class="text-sm font-bold text-green-400">0</div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-ocean-300">Zoom:</span>
+                                <span id="mapZoom" class="text-cyan-400 font-mono">6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layer Controls -->
+                    <div class="mb-4">
+                        <div class="text-sm font-medium text-ocean-300 mb-3">Map Layers</div>
+                        <div class="flex flex-wrap gap-3">
+                            <button id="weatherLayer" class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center border border-gray-500/50">
+                                <i class="fas fa-cloud-rain mr-2 text-cyan-400"></i>Weather Overlay
+                            </button>
+                            <button id="windLayer" class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center border border-gray-500/50">
+                                <i class="fas fa-wind mr-2"></i>Wind Patterns
+                            </button>
+                            <button id="waveLayer" class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center border border-gray-500/50">
+                                <i class="fas fa-water mr-2"></i>Wave Height
+                            </button>
+                            <button id="trafficLayer" class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center border border-gray-500/50">
+                                <i class="fas fa-ship mr-2"></i>Vessel Traffic
+                            </button>
+                            <button id="safetyLayer" class="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition-all flex items-center border border-gray-500/50">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>Safety Zones
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div id="map" class="h-96 xl:h-[500px] rounded-xl map-glow relative overflow-hidden bg-gray-900">
+                        <!-- Map Loading Overlay -->
+                        <div id="mapLoader" class="absolute inset-0 bg-gradient-to-br from-ocean-800 to-ocean-900 z-20 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+                                <div class="text-cyan-300 mb-2">Loading Interactive Map...</div>
+                                <div class="text-xs text-ocean-400">Initializing satellite view</div>
+                            </div>
+                        </div>
+
+                        <!-- Map Fallback -->
+                        <div id="mapFallback" class="absolute inset-0 hidden"></div>
+                    </div>
+
+                    <!-- Route Information -->
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+                        <div class="text-center">
+                            <div class="text-ocean-300">Origin</div>
+                            <div id="routeOrigin" class="font-semibold text-green-400">Mumbai Port</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-ocean-300">Destination</div>
+                            <div id="routeDestination" class="font-semibold text-red-400">Kochi Port</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-ocean-300">Distance</div>
+                            <div id="routeDistance" class="font-semibold text-cyan-400">842 nm</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-ocean-300">Duration</div>
+                            <div id="routeDuration" class="font-semibold text-yellow-400">3.2 days</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-ocean-300">Fuel</div>
+                            <div id="routeFuel" class="font-semibold text-orange-400">156.3 MT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Dashboard -->
+                <div class="glass rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cloud text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Weather Conditions</div>
+                                <div class="text-sm text-ocean-300">Current marine weather</div>
+                            </div>
+                        </div>
+                        <div class="text-2xl">🌊</div>
+                    </div>
+
+                    <!-- Current Weather -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="text-center p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg">
+                            <div class="text-3xl mb-2">⛅</div>
+                            <div class="text-sm text-ocean-300">Conditions</div>
+                            <div class="font-semibold">Partly Cloudy</div>
+                        </div>
+                        <div class="text-center p-4 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-lg">
+                            <div class="text-2xl mb-2">🌡️</div>
+                            <div class="text-sm text-ocean-300">Temperature</div>
+                            <div class="font-semibold">26°C</div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Metrics -->
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-ocean-300">Wind Speed</span>
+                            <span class="font-semibold text-cyan-400">12 kts</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-ocean-300">Wave Height</span>
+                            <span class="font-semibold text-blue-400">1.8 m</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-ocean-300">Visibility</span>
+                            <span class="font-semibold text-green-400">15 km</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-ocean-300">Pressure</span>
+                            <span class="font-semibold text-yellow-400">1013 hPa</span>
+                        </div>
+                    </div>
+
+                    <!-- Weather Chart -->
+                    <div class="mt-6">
+                        <div class="text-sm font-medium text-ocean-300 mb-3">Conditions Distribution</div>
+                        <div class="h-48 relative">
+                            <canvas id="weatherChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Performance Chart -->
+                <div class="glass rounded-xl p-6" data-aos="fade-up">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">Performance Metrics</div>
+                            <div class="text-sm text-ocean-300">Speed & fuel consumption</div>
+                        </div>
+                    </div>
+                    <div class="h-64 relative">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Weather Trend Chart -->
+                <div class="glass rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-wave-square text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">Weather Trends</div>
+                            <div class="text-sm text-ocean-300">5-day forecast</div>
+                        </div>
+                    </div>
+                    <div class="h-64 relative">
+                        <canvas id="weatherTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript Dependencies -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/map.js"></script>
+    <script src="assets/js/layers.js"></script>
+    <script src="assets/js/charts.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
