@@ -1049,6 +1049,18 @@
                         attribution: '© OpenStreetMap',
                         maxZoom: 19,
                         errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDI1NiAyNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNTYiIGhlaWdodD0iMjU2IiBmaWxsPSIjMGY0Yzc1Ii8+CjwvSXZnPgo='
+                    }),
+                    precipitation: L.tileLayer('https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=YOUR_API_KEY', {
+                        attribution: '© OpenWeatherMap',
+                        maxZoom: 19,
+                        opacity: 0.6,
+                        errorTileUrl: 'data:image/svg+xml;base64,...'
+                    }),
+                    wind: L.tileLayer('https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=YOUR_API_KEY', {
+                        attribution: '© OpenWeatherMap',
+                        maxZoom: 19,
+                        opacity: 0.6,
+                        errorTileUrl: 'data:image/svg+xml;base64,...'
                     })
                 };
 
