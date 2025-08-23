@@ -11,10 +11,29 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Three.js and Vanta.js for dynamic backgrounds -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+                        'display': ['Space Grotesk', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        'body': ['Poppins', 'Inter', 'Helvetica', 'Arial', 'sans-serif'],
+                        'modern': ['Outfit', 'Inter', 'Helvetica Neue', 'sans-serif'],
+                        'helvetica': ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif']
+                    },
                     colors: {
                         ocean: {
                             50: '#f0f9ff',
@@ -68,21 +87,83 @@
     </script>
     <style>
         .glass {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(22, 40, 56, 0.15);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(63, 124, 172, 0.2);
         }
         .gradient-text {
-            background: linear-gradient(45deg, #0ea5e9, #06b6d4, #3b82f6);
+            background: linear-gradient(45deg, #ffffff, #f0f9ff, #e0f2fe, #bae6fd);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 300% 300%;
             animation: gradient 3s ease infinite;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         @keyframes gradient {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+        }
+        
+        /* Dynamic Text Animations */
+        .dynamic-subtitle {
+            background: linear-gradient(45deg, 
+                #ffffff, #e0f2fe, #b3e5fc, #81d4fa, 
+                #4fc3f7, #29b6f6, #03a9f4, #039be5);
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: dynamicFlow 4s ease-in-out infinite;
+            text-shadow: 0 4px 20px rgba(3, 169, 244, 0.3);
+            filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.1));
+        }
+        
+        .dynamic-powered {
+            background: linear-gradient(90deg, 
+                #ffd700, #ffeb3b, #fff176, #ffffff, 
+                #e1f5fe, #b3e5fc, #4fc3f7, #03a9f4);
+            background-size: 600% 600%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: poweredFlow 5s ease-in-out infinite;
+            text-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        @keyframes dynamicFlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                transform: scale(1);
+            }
+            25% { 
+                background-position: 25% 50%;
+                transform: scale(1.02);
+            }
+            50% { 
+                background-position: 100% 50%;
+                transform: scale(1.04);
+            }
+            75% { 
+                background-position: 75% 50%;
+                transform: scale(1.02);
+            }
+        }
+        
+        @keyframes poweredFlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                filter: brightness(1) hue-rotate(0deg);
+            }
+            33% { 
+                background-position: 50% 50%;
+                filter: brightness(1.1) hue-rotate(30deg);
+            }
+            66% { 
+                background-position: 100% 50%;
+                filter: brightness(1.2) hue-rotate(60deg);
+            }
+        }
         }
         .ocean-waves {
             background: linear-gradient(45deg, #0c4a6e, #075985, #0369a1, #0284c7);
@@ -180,9 +261,292 @@
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
         }
+
+        /* Premium Card Effects & Modern Styling */
+        .premium-card {
+            background: rgba(22, 40, 56, 0.12);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(63, 124, 172, 0.25);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 1px 0 rgba(63, 124, 172, 0.15) inset,
+                0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .premium-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(63, 124, 172, 0.25),
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                0 1px 0 rgba(63, 124, 172, 0.3) inset;
+            border-color: rgba(63, 124, 172, 0.4);
+        }
+
+        .neo-glass {
+            background: linear-gradient(135deg, 
+                rgba(22, 40, 56, 0.18) 0%, 
+                rgba(12, 30, 38, 0.08) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(63, 124, 172, 0.3);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(63, 124, 172, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 16px;
+            padding: 2px;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #0ea5e9, #06b6d4, #3b82f6, #8b5cf6);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: gradient-rotation 3s linear infinite;
+        }
+
+        @keyframes gradient-rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .modern-button {
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            box-shadow: 
+                0 4px 15px rgba(14, 165, 233, 0.4),
+                0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .modern-button:hover::before {
+            left: 100%;
+        }
+
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(14, 165, 233, 0.5),
+                0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .premium-text {
+            font-family: 'Helvetica Neue', 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .modern-heading {
+            font-family: 'Helvetica Neue', 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+        }
+
+        .elegant-subtext {
+            font-family: 'Helvetica Neue', 'Poppins', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Interactive Elements */
+        .interactive-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 
+                0 20px 40px rgba(14, 165, 233, 0.2),
+                0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            opacity: 0;
+            background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+            filter: blur(20px);
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .glow-effect:hover::after {
+            opacity: 0.3;
+        }
+
+        /* Enhanced Dynamic Background */
+        .vanta-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 1;
+            background: transparent !important;
+        }
+
+        /* Low-Poly Background Base */
+        .low-poly-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #0a1929 0%, #162838 30%, #1a2332 60%, #0f1b28 100%);
+        }
+
+        .geometric-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(74, 144, 226, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(107, 182, 255, 0.04) 0%, transparent 35%),
+                radial-gradient(circle at 45% 60%, rgba(26, 84, 144, 0.03) 0%, transparent 45%);
+            opacity: 0.5;
+        }
+
+        .enhanced-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .enhanced-particles::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.15), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(14, 165, 233, 0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(6, 182, 212, 0.25), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(59, 130, 246, 0.2), transparent);
+            background-repeat: repeat;
+            background-size: 150px 150px;
+            animation: float-particles 20s linear infinite;
+        }
+
+        @keyframes float-particles {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-200px) rotate(360deg); }
+        }
+
+        /* Additional Low-Poly CSS Enhancements */
+        .polygon-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+        }
+
+        .polygon {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(63, 124, 172, 0.1), rgba(41, 98, 149, 0.05));
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: float-polygon 20s infinite linear;
+        }
+
+        .polygon:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+            background: linear-gradient(135deg, rgba(52, 109, 158, 0.08), rgba(63, 124, 172, 0.04));
+        }
+
+        .polygon:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 20%;
+            animation-delay: -5s;
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+            background: linear-gradient(135deg, rgba(41, 98, 149, 0.06), rgba(52, 109, 158, 0.03));
+        }
+
+        .polygon:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            right: 10%;
+            animation-delay: -10s;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            background: linear-gradient(135deg, rgba(63, 124, 172, 0.05), rgba(41, 98, 149, 0.02));
+        }
+
+        @keyframes float-polygon {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.6; }
+        }
     </style>
 </head>
-<body class="min-h-screen ocean-waves text-white overflow-x-hidden relative">
+<body class="min-h-screen text-white overflow-x-hidden relative font-sans" style="font-family: 'Helvetica Neue', 'Inter', 'Helvetica', sans-serif;">
+    <!-- Low-Poly Dynamic Background -->
+    <div class="polygon-shapes">
+        <div class="polygon"></div>
+        <div class="polygon"></div>
+        <div class="polygon"></div>
+    </div>
+    <div class="low-poly-bg"></div>
+    <div id="vanta-background" class="vanta-background"></div>
+    <div class="geometric-overlay"></div>
+    <div class="enhanced-particles"></div>
+    
     <!-- Floating Particles Animation -->
     <div class="fixed inset-0 pointer-events-none">
         <div class="floating-particles" style="left: 10%; animation-delay: 0s;"></div>
@@ -204,7 +568,7 @@
                 <span class="text-xl font-bold gradient-text">Weather Engine Maritime</span>
             </div>
             <div class="flex items-center space-x-4">
-                <div id="liveTime" class="text-ocean-200 text-sm"></div>
+                <div id="liveTime" class="glass px-3 py-2 rounded-lg border border-ocean-300/30 bg-ocean-900/20 backdrop-blur-sm"></div>
                 <div class="flex items-center space-x-2">
                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span class="text-sm">Live System</span>
@@ -216,15 +580,19 @@
     <div class="container mx-auto px-6 py-24">
         <!-- Hero Section -->
         <div class="text-center mb-16" data-aos="zoom-in" data-aos-duration="1000">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 animate-float">
-                <span class="gradient-text">⚓ MARITIME</span>
+            <h1 class="text-6xl md:text-8xl font-black mb-6 animate-float modern-heading">
+                <span class="gradient-text" style="font-family: 'Helvetica Neue', 'Space Grotesk', sans-serif;">⚓ MARITIME</span>
                 <br>
-                <span class="text-white">INTELLIGENCE</span>
+                <span class="text-white" style="font-family: 'Helvetica Neue', 'Space Grotesk', sans-serif;">INTELLIGENCE</span>
             </h1>
-            <p class="text-xl md:text-2xl text-ocean-200 mb-8 max-w-4xl mx-auto leading-relaxed">
-                Real-time Weather Intelligence • Route Optimization • Maritime Safety
-                <br>
-                <span class="text-ocean-300">Powered by Advanced Physics & AI Algorithms</span>
+            <p class="text-2xl md:text-4xl lg:text-5xl text-ocean-200 mb-8 max-w-6xl mx-auto leading-relaxed elegant-subtext">
+                <span class="dynamic-subtitle font-bold tracking-wide">
+                    Real-time Weather Intelligence • Route Optimization • Maritime Safety
+                </span>
+                <br><br>
+                <span class="dynamic-powered text-xl md:text-2xl lg:text-3xl font-semibold tracking-wider">
+                    Powered by Advanced Physics & AI Algorithms
+                </span>
             </p>
             <div>
                 <div id="mockBanner" class="mt-6 glass px-8 py-4 rounded-2xl inline-block animate-glow">
@@ -245,34 +613,34 @@
 
         <!-- Live Metrics Dashboard -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-            <div class="glass rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-4xl mb-2">🌊</div>
-                <div class="text-2xl font-bold metric-counter" id="waveHeight">2.4m</div>
-                <div class="text-ocean-300">Wave Height</div>
+                <div class="text-2xl font-bold metric-counter premium-text" id="waveHeight">2.4m</div>
+                <div class="text-ocean-300 elegant-subtext">Wave Height</div>
                 <div class="mt-2 text-sm text-green-400">
                     <i class="fas fa-arrow-down mr-1"></i>Decreasing
                 </div>
             </div>
-            <div class="glass rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="text-4xl mb-2">💨</div>
-                <div class="text-2xl font-bold metric-counter" id="windSpeed">12.8 kts</div>
-                <div class="text-ocean-300">Wind Speed</div>
+                <div class="text-2xl font-bold metric-counter premium-text" id="windSpeed">12.8 kts</div>
+                <div class="text-ocean-300 elegant-subtext">Wind Speed</div>
                 <div class="mt-2 text-sm text-yellow-400">
                     <i class="fas fa-arrow-right mr-1"></i>Stable
                 </div>
             </div>
-            <div class="glass rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="text-4xl mb-2">⛽</div>
-                <div class="text-2xl font-bold metric-counter text-green-400" id="fuelSavings">15.3%</div>
-                <div class="text-ocean-300">Fuel Savings</div>
+                <div class="text-2xl font-bold metric-counter premium-text text-green-400" id="fuelSavings">15.3%</div>
+                <div class="text-ocean-300 elegant-subtext">Fuel Savings</div>
                 <div class="mt-2 text-sm text-green-400">
                     <i class="fas fa-arrow-up mr-1"></i>Optimized
                 </div>
             </div>
-            <div class="glass rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="400">
                 <div class="text-4xl mb-2">🚨</div>
-                <div class="text-2xl font-bold metric-counter" id="alertCount">0</div>
-                <div class="text-ocean-300">Active Alerts</div>
+                <div class="text-2xl font-bold metric-counter premium-text" id="alertCount">0</div>
+                <div class="text-ocean-300 elegant-subtext">Active Alerts</div>
                 <div class="mt-2 text-sm text-green-400">
                     <i class="fas fa-check mr-1"></i>All Clear
                 </div>
@@ -280,7 +648,7 @@
         </div>
 
         <!-- API Status Panel -->
-        <div class="glass rounded-2xl p-6 mb-12" data-aos="fade-up">
+        <div class="premium-card neo-glass rounded-2xl p-6 mb-12" data-aos="fade-up">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold flex items-center">
                     <i class="fas fa-server mr-3 text-ocean-400"></i>
@@ -512,7 +880,7 @@
                         </div>
                         <div class="glass rounded-lg p-3 text-center">
                             <div class="text-xs text-ocean-300">Map Type</div>
-                            <div id="mapType" class="text-sm font-bold text-blue-400">Satellite</div>
+                            <div id="mapType" class="text-sm font-bold text-cyan-200">Satellite</div>
                         </div>
                         <div class="glass rounded-lg p-3 text-center">
                             <div class="text-xs text-ocean-300">Active Layers</div>
@@ -540,11 +908,11 @@
                     
                     <!-- Weather Control Buttons -->
                     <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button id="loadForecast" class="bg-gradient-to-r from-ocean-600 to-ocean-500 hover:from-ocean-700 hover:to-ocean-600 px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm">
+                        <button id="loadForecast" class="modern-button premium-text">
                             <i class="fas fa-download mr-2"></i>
                             Load Forecast
                         </button>
-                        <button id="refreshWeather" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm">
+                        <button id="refreshWeather" class="modern-button premium-text" style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);">
                             <i class="fas fa-sync-alt mr-2"></i>
                             Refresh
                         </button>
@@ -573,7 +941,7 @@
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-ocean-300">Wave Height:</span>
-                                <span id="currentWaves" class="text-blue-400">2.4m</span>
+                                <span id="currentWaves" class="text-cyan-200">2.4m</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-ocean-300">Visibility:</span>
@@ -638,7 +1006,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span>Time Saved:</span>
-                                <span id="timeSaved" class="text-blue-400 font-semibold">2h 15m</span>
+                                <span id="timeSaved" class="text-cyan-200 font-semibold">2h 15m</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Cost Reduction:</span>
@@ -681,8 +1049,8 @@
                                 <div class="text-yellow-400">Processing</div>
                             </div>
                             <div class="text-center">
-                                <div class="w-2 h-2 bg-blue-400 rounded-full mx-auto mb-1"></div>
-                                <div class="text-blue-400">Safe Route</div>
+                                <div class="w-2 h-2 bg-cyan-200 rounded-full mx-auto mb-1"></div>
+                                <div class="text-cyan-200">Safe Route</div>
                             </div>
                         </div>
                     </div>
@@ -707,8 +1075,8 @@
                             Weather
                             <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
-                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-blue-400/50 relative" data-type="navigation">
-                            <i class="fas fa-compass mr-1 text-blue-400"></i>
+                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-cyan-200/50 relative" data-type="navigation">
+                            <i class="fas fa-compass mr-1 text-cyan-200"></i>
                             Navigation
                             <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
                         </button>
@@ -770,13 +1138,13 @@
                         
                         <div class="flex justify-between items-center p-3 glass rounded-lg">
                             <div class="flex items-center">
-                                <div class="w-3 h-3 bg-blue-400 rounded-full mr-3"></div>
+                                <div class="w-3 h-3 bg-cyan-200 rounded-full mr-3"></div>
                                 <div>
                                     <div class="text-sm font-semibold">Navigation</div>
                                     <div class="text-xs text-ocean-300">GPS signal strong</div>
                                 </div>
                             </div>
-                            <i class="fas fa-satellite text-blue-400"></i>
+                            <i class="fas fa-satellite text-cyan-200"></i>
                         </div>
                         
                         <div class="flex justify-between items-center p-3 glass rounded-lg">
@@ -987,18 +1355,6 @@
         });
 
         // Live time display
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { 
-                hour12: false, 
-                timeZone: 'UTC' 
-            }) + ' UTC';
-            document.getElementById('liveTime').textContent = timeString;
-            document.getElementById('timelineTime').textContent = timeString;
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
         // Enhanced metrics animation with more realistic values
         function animateMetrics() {
             const time = Date.now();
@@ -1593,7 +1949,7 @@
                         </div>
                         <div class="flex justify-between">
                             <span class="text-ocean-300">Wave Height:</span>
-                            <span class="text-blue-400">2.4m</span>
+                            <span class="text-cyan-200">2.4m</span>
                         </div>
                     </div>
                 `;
@@ -1661,7 +2017,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span>Time Saved:</span>
-                                <span id="timeSaved" class="text-blue-400 font-semibold">2h 15m</span>
+                                <span id="timeSaved" class="text-cyan-200 font-semibold">2h 15m</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Cost Reduction:</span>
@@ -1696,7 +2052,7 @@
                         </div>
                         <div class="flex justify-between">
                             <span>Time Saved:</span>
-                            <span class="text-blue-400 font-semibold">2h 15m</span>
+                            <span class="text-cyan-200 font-semibold">2h 15m</span>
                         </div>
                         <div class="flex justify-between">
                             <span>Cost Reduction:</span>
@@ -1930,7 +2286,7 @@
             // Add animated weather particles
             for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'absolute w-3 h-3 bg-blue-400 rounded-full opacity-80';
+                particle.className = 'absolute w-3 h-3 bg-cyan-200 rounded-full opacity-80';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
                 particle.style.animation = `float ${3 + Math.random() * 2}s ease-in-out infinite`;
@@ -1958,7 +2314,7 @@
             const temps = ['22°C', '25°C', '19°C', '28°C', '21°C'];
             for (let i = 0; i < 5; i++) {
                 const temp = document.createElement('div');
-                temp.className = 'absolute text-white text-sm font-bold bg-blue-600/80 px-2 py-1 rounded-full border border-white/50';
+                temp.className = 'absolute text-white text-sm font-bold bg-slate-700/80 px-2 py-1 rounded-full border border-white/50';
                 temp.innerHTML = temps[i];
                 temp.style.left = Math.random() * 80 + '%';
                 temp.style.top = Math.random() * 80 + '%';
@@ -2000,7 +2356,7 @@
             // Add a prominent visual indicator that the layer is active
             const indicator = document.createElement('div');
             indicator.id = 'weatherLayerIndicator';
-            indicator.className = 'absolute top-2 left-2 bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-bold';
+            indicator.className = 'absolute top-2 left-2 bg-slate-700 text-white px-3 py-2 rounded-lg text-sm font-bold';
             indicator.style.zIndex = '1001'; // Even higher z-index for indicator
             indicator.textContent = '🌦️ WEATHER LAYER ACTIVE';
             indicator.style.animation = 'pulse 2s ease-in-out infinite';
@@ -2177,7 +2533,7 @@
             notification.className = `fixed top-20 right-6 z-50 p-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 ${
                 type === 'success' ? 'bg-green-600' : 
                 type === 'warning' ? 'bg-yellow-600' : 
-                type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+                type === 'error' ? 'bg-red-600' : 'bg-slate-700'
             } text-white max-w-sm`;
             
             notification.innerHTML = `
@@ -2405,6 +2761,140 @@
         setInterval(() => {
             document.getElementById('visibleVessels').textContent = Math.floor(Math.random() * 5) + 2;
         }, 10000);
+
+        // Live India Time Display
+        function updateIndiaTime() {
+            const now = new Date();
+            // Convert to India Standard Time (IST) - UTC+5:30
+            const indiaTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+            
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                timeZone: 'Asia/Kolkata'
+            };
+            
+            const timeOptions24 = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Kolkata'
+            };
+            
+            const dateOptions = {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                timeZone: 'Asia/Kolkata'
+            };
+            
+            const timeString = indiaTime.toLocaleTimeString('en-IN', timeOptions);
+            const timeString24 = indiaTime.toLocaleTimeString('en-IN', timeOptions24);
+            const dateString = indiaTime.toLocaleDateString('en-IN', dateOptions);
+            
+            // Update navigation time
+            const liveTimeElement = document.getElementById('liveTime');
+            if (liveTimeElement) {
+                liveTimeElement.innerHTML = `
+                    <div class="text-right">
+                        <div class="font-bold text-ocean-100">${timeString}</div>
+                        <div class="text-xs text-ocean-300">${dateString} IST</div>
+                    </div>
+                `;
+            }
+            
+            // Update timeline time
+            const timelineTimeElement = document.getElementById('timelineTime');
+            if (timelineTimeElement) {
+                timelineTimeElement.textContent = `${timeString24} IST`;
+            }
+        }
+        
+        // Update time immediately and then every second
+        updateIndiaTime();
+        setInterval(updateIndiaTime, 1000);
+
+        // Enhanced Dynamic Background with Vanta.js
+        let vantaEffect = null;
+        
+        function initializeBackground() {
+            try {
+                // Initialize Vanta.js WAVES effect for better visibility
+                vantaEffect = VANTA.WAVES({
+                    el: "#vanta-background",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x1a5490,
+                    shininess: 35.00,
+                    waveHeight: 25.00,
+                    waveSpeed: 0.75,
+                    zoom: 0.65
+                });
+                console.log('WAVES effect initialized successfully');
+            } catch (error) {
+                console.log('Vanta.js WAVES not available, trying TOPOLOGY...');
+                try {
+                    // Fallback to TOPOLOGY with more visible settings
+                    vantaEffect = VANTA.TOPOLOGY({
+                        el: "#vanta-background",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: 0x4a90e2,
+                        backgroundColor: 0x0a1929,
+                        size: 2.00,
+                        spacing: 20.00
+                    });
+                    console.log('TOPOLOGY effect initialized successfully');
+                } catch (error2) {
+                    console.log('Vanta.js TOPOLOGY not available, trying CELLS...');
+                    try {
+                        // Fallback to CELLS for similar low-poly effect
+                        vantaEffect = VANTA.CELLS({
+                            el: "#vanta-background",
+                            mouseControls: true,
+                            touchControls: true,
+                            gyroControls: false,
+                            minHeight: 200.00,
+                            minWidth: 200.00,
+                            scale: 1.00,
+                            color1: 0x4a90e2,
+                            color2: 0x6bb6ff,
+                            size: 2.00,
+                            speed: 1.50
+                        });
+                        console.log('CELLS effect initialized successfully');
+                    } catch (error3) {
+                        console.log('All Vanta.js effects failed, using CSS background');
+                        document.getElementById('vanta-background').style.display = 'none';
+                    }
+                }
+            }
+        }
+
+        // Initialize background when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a bit for Vanta.js to load
+            setTimeout(initializeBackground, 500);
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (vantaEffect) vantaEffect.destroy();
+        });
     </script>
 </body>
 </html>
