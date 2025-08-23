@@ -1,20 +1,15 @@
 #!/bin/bash
-
 echo "🚢 Testing Weather Engine Maritime API..."
 echo
-
 echo "1. Testing root endpoint:"
 curl -s http://localhost:8000/ | head -1
 echo
-
 echo "2. Testing route forecast endpoint:"
 curl -s http://localhost:8000/route_forecast | jq length 2>/dev/null || echo "✅ Route forecast data received"
 echo
-
 echo "3. Testing alerts endpoint:"
 curl -s http://localhost:8000/alerts | jq length 2>/dev/null || echo "✅ Alerts data received"
 echo
-
 echo "4. Testing optimize endpoint:"
 curl -s -X POST http://localhost:8000/optimize \
   -H "Content-Type: application/json" \
@@ -27,6 +22,5 @@ curl -s -X POST http://localhost:8000/optimize \
     "vessel": {"name": "DemoVessel", "base_speed_kn": 12.0},
     "constraints": {}
   }' | jq .total_fuel 2>/dev/null || echo "✅ Optimization data received"
-
 echo
 echo "🎉 Backend MVP is working!"
