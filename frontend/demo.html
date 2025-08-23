@@ -557,6 +557,111 @@
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
             50% { transform: translateY(-20px) rotate(180deg); opacity: 0.6; }
         }
+
+        /* Custom Scrollbar Styles */
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(59, 130, 246, 0.7) rgba(15, 23, 42, 0.3);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(
+                180deg,
+                rgba(59, 130, 246, 0.8) 0%,
+                rgba(37, 99, 235, 0.9) 50%,
+                rgba(29, 78, 216, 1) 100%
+            );
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(
+                180deg,
+                rgba(99, 179, 237, 0.9) 0%,
+                rgba(59, 130, 246, 1) 50%,
+                rgba(37, 99, 235, 1) 100%
+            );
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:active {
+            background: linear-gradient(
+                180deg,
+                rgba(29, 78, 216, 1) 0%,
+                rgba(37, 99, 235, 1) 50%,
+                rgba(59, 130, 246, 1) 100%
+            );
+        }
+
+        /* Alternative Maritime Theme Scrollbar */
+        .maritime-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(6, 182, 212, 0.7) rgba(8, 47, 73, 0.4);
+        }
+
+        .maritime-scrollbar::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .maritime-scrollbar::-webkit-scrollbar-track {
+            background: rgba(8, 47, 73, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .maritime-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(
+                45deg,
+                rgba(6, 182, 212, 0.8) 0%,
+                rgba(14, 165, 233, 0.9) 25%,
+                rgba(2, 132, 199, 1) 50%,
+                rgba(3, 105, 161, 1) 75%,
+                rgba(7, 89, 133, 1) 100%
+            );
+            border-radius: 12px;
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            box-shadow: 
+                0 2px 4px rgba(6, 182, 212, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .maritime-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(
+                45deg,
+                rgba(34, 211, 238, 0.9) 0%,
+                rgba(6, 182, 212, 1) 25%,
+                rgba(14, 165, 233, 1) 50%,
+                rgba(2, 132, 199, 1) 75%,
+                rgba(3, 105, 161, 1) 100%
+            );
+            box-shadow: 
+                0 4px 8px rgba(6, 182, 212, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .maritime-scrollbar::-webkit-scrollbar-thumb:active {
+            background: linear-gradient(
+                45deg,
+                rgba(3, 105, 161, 1) 0%,
+                rgba(7, 89, 133, 1) 25%,
+                rgba(14, 165, 233, 1) 50%,
+                rgba(6, 182, 212, 1) 75%,
+                rgba(34, 211, 238, 1) 100%
+            );
+        }
     </style>
 </head>
 <body class="animated-bg text-white font-helvetica overflow-x-hidden" style="font-family: 'Helvetica Neue', 'Inter', 'Helvetica', sans-serif;">
@@ -2114,6 +2219,12 @@
             const resultDiv = document.getElementById('alertsData');
             const alertBadge = document.getElementById('alertBadge');
             
+            // Check if this function was called by clicking the scan button
+            // (We'll track this with a flag)
+            if (!window.scanButtonClicked) {
+                return; // Don't show alerts unless scan button was clicked
+            }
+            
             button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Scanning...';
             button.disabled = true;
 
@@ -2153,17 +2264,168 @@
                     alertBadge.textContent = `${data.alerts.length} Active Alert${data.alerts.length !== 1 ? 's' : ''}`;
                     alertBadge.className = 'text-xs px-2 py-1 bg-red-500/20 rounded-full border border-red-400/30 text-red-400';
                 } else {
+                    // Check which alert categories are selected
+                    const selectedCategories = [];
+                    ['weatherAlerts', 'navigationAlerts', 'securityAlerts', 'mechanicalAlerts'].forEach(alertType => {
+                        const button = document.getElementById(alertType);
+                        if (button && button.classList.contains('selected-alert')) {
+                            selectedCategories.push(button.getAttribute('data-type'));
+                        }
+                    });
+
+                    // If no categories are selected, show "Select alert categories" message
+                    if (selectedCategories.length === 0) {
+                        resultDiv.innerHTML = `
+                            <div class="flex flex-col items-center justify-center py-6 text-ocean-300">
+                                <i class="fas fa-filter mb-2 text-2xl"></i>
+                                <p>Please select alert categories above</p>
+                                <p class="text-sm text-ocean-400 mt-1">Choose from Weather, Navigation, Security, or Mechanical</p>
+                            </div>
+                        `;
+                        document.getElementById('alertCount').textContent = '0';
+                        document.getElementById('warningCount').textContent = '0';
+                        document.getElementById('criticalCount').textContent = '0';
+                        alertBadge.textContent = 'Select Categories';
+                        alertBadge.className = 'text-xs px-2 py-1 bg-blue-500/20 rounded-full border border-blue-400/30 text-blue-400';
+                        return;
+                    }
+
+                    // Generate alerts based on selected categories
+                    let alertsToShow = [];
+                    let warningCount = 0;
+                    let criticalCount = 0;
+
+                    if (selectedCategories.includes('weather')) {
+                        alertsToShow.push(`
+                            <div class="glass rounded-lg p-3 border-l-4 border-yellow-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-yellow-400 font-semibold text-xs">WEATHER WARNING</span>
+                                    <span class="text-xs text-ocean-300">2 hours ago</span>
+                                </div>
+                                <p class="text-ocean-100 text-sm">High winds (25-30 knots) expected in sector 7-9. Recommend reduced speed.</p>
+                                <div class="flex items-center mt-2 text-xs text-ocean-300">
+                                    <i class="fas fa-wind mr-1"></i>
+                                    <span>Wind Speed: 28 knots</span>
+                                </div>
+                            </div>
+                        `);
+                        warningCount++;
+                    }
+
+                    if (selectedCategories.includes('navigation')) {
+                        alertsToShow.push(`
+                            <div class="glass rounded-lg p-3 border-l-4 border-orange-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-orange-400 font-semibold text-xs">NAVIGATION ALERT</span>
+                                    <span class="text-xs text-ocean-300">4 hours ago</span>
+                                </div>
+                                <p class="text-ocean-100 text-sm">Dense fog reported in approach channels. Visibility reduced to 0.5 nautical miles.</p>
+                                <div class="flex items-center mt-2 text-xs text-ocean-300">
+                                    <i class="fas fa-eye-slash mr-1"></i>
+                                    <span>Visibility: 0.5 nm</span>
+                                </div>
+                            </div>
+                        `);
+                        warningCount++;
+
+                        alertsToShow.push(`
+                            <div class="glass rounded-lg p-3 border-l-4 border-blue-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-400 font-semibold text-xs">TRAFFIC ALERT</span>
+                                    <span class="text-xs text-ocean-300">6 hours ago</span>
+                                </div>
+                                <p class="text-ocean-100 text-sm">Heavy traffic congestion at Port Mumbai. Expected delay: 2-3 hours.</p>
+                                <div class="flex items-center mt-2 text-xs text-ocean-300">
+                                    <i class="fas fa-ship mr-1"></i>
+                                    <span>Queue: 12 vessels</span>
+                                </div>
+                            </div>
+                        `);
+                        warningCount++;
+                    }
+
+                    if (selectedCategories.includes('mechanical')) {
+                        alertsToShow.push(`
+                            <div class="glass rounded-lg p-3 border-l-4 border-purple-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-purple-400 font-semibold text-xs">MAINTENANCE</span>
+                                    <span class="text-xs text-ocean-300">8 hours ago</span>
+                                </div>
+                                <p class="text-ocean-100 text-sm">Engine temperature slightly elevated. Schedule maintenance check at next port.</p>
+                                <div class="flex items-center mt-2 text-xs text-ocean-300">
+                                    <i class="fas fa-thermometer-half mr-1"></i>
+                                    <span>Temperature: 85°C</span>
+                                </div>
+                            </div>
+                        `);
+                        warningCount++;
+
+                        alertsToShow.push(`
+                            <div class="glass rounded-lg p-3 border-l-4 border-red-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-400 font-semibold text-xs">FUEL WARNING</span>
+                                    <span class="text-xs text-ocean-300">12 hours ago</span>
+                                </div>
+                                <p class="text-ocean-100 text-sm">Fuel consumption 15% higher than optimal. Consider route optimization.</p>
+                                <div class="flex items-center mt-2 text-xs text-ocean-300">
+                                    <i class="fas fa-gas-pump mr-1"></i>
+                                    <span>Efficiency: 85%</span>
+                                </div>
+                            </div>
+                        `);
+                        criticalCount++;
+                    }
+
+                    if (selectedCategories.includes('security')) {
+                        alertsToShow.push(`
+                            <div class="glass rounded-lg p-3 border-l-4 border-red-600">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-500 font-semibold text-xs">SECURITY ALERT</span>
+                                    <span class="text-xs text-ocean-300">1 day ago</span>
+                                </div>
+                                <p class="text-ocean-100 text-sm">Piracy risk elevated in coordinates 18°N, 69°E. Maintain safe distance from coast.</p>
+                                <div class="flex items-center mt-2 text-xs text-ocean-300">
+                                    <i class="fas fa-shield-alt mr-1"></i>
+                                    <span>Risk Level: High</span>
+                                </div>
+                            </div>
+                        `);
+                        criticalCount++;
+                    }
+
+                    // Show filtered alerts
                     resultDiv.innerHTML = `
-                        <div class="flex items-center justify-center py-6 text-green-400">
-                            <i class="fas fa-check-circle mr-2"></i>
-                            No active alerts detected
+                        <div class="text-sm text-ocean-200 space-y-2 max-h-64 overflow-y-auto maritime-scrollbar pr-3">
+                            ${alertsToShow.join('')}
                         </div>
                     `;
-                    document.getElementById('alertCount').textContent = '0';
-                    document.getElementById('warningCount').textContent = '0';
-                    document.getElementById('criticalCount').textContent = '0';
-                    alertBadge.textContent = 'All Clear';
-                    alertBadge.className = 'text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400';
+
+                    // Update counters
+                    const totalAlerts = alertsToShow.length;
+                    document.getElementById('alertCount').textContent = totalAlerts.toString();
+                    document.getElementById('warningCount').textContent = warningCount.toString();
+                    document.getElementById('criticalCount').textContent = criticalCount.toString();
+                    alertBadge.textContent = `${totalAlerts} Active Alert${totalAlerts !== 1 ? 's' : ''}`;
+                    alertBadge.className = totalAlerts > 0 ? 
+                        'text-xs px-2 py-1 bg-orange-500/20 rounded-full border border-orange-400/30 text-orange-400' :
+                        'text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400';
+                    
+                    // Update main dashboard alert count
+                    const mainAlertCount = document.getElementById('alertCount');
+                    const alertCard = mainAlertCount.closest('.weather-card');
+                    if (alertCard && totalAlerts > 0) {
+                        const statusDiv = alertCard.querySelector('.text-green-400, .text-orange-400');
+                        if (statusDiv) {
+                            statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i>Monitoring';
+                            statusDiv.className = statusDiv.className.replace('text-green-400', 'text-orange-400');
+                        }
+                    } else if (alertCard && totalAlerts === 0) {
+                        const statusDiv = alertCard.querySelector('.text-green-400, .text-orange-400');
+                        if (statusDiv) {
+                            statusDiv.innerHTML = '<i class="fas fa-check mr-1"></i>All Clear';
+                            statusDiv.className = statusDiv.className.replace('text-orange-400', 'text-green-400');
+                        }
+                    }
                 }
             } catch (error) {
                 resultDiv.innerHTML = `
@@ -2175,6 +2437,7 @@
             } finally {
                 button.innerHTML = '<i class="fas fa-search mr-2"></i>Scan for Alerts';
                 button.disabled = false;
+                window.scanButtonClicked = false; // Reset the flag
             }
         }
 
@@ -2691,7 +2954,10 @@
             // Action button listeners
             document.getElementById('loadForecast').addEventListener('click', loadForecast);
             document.getElementById('optimizeRoute').addEventListener('click', optimizeRoute);
-            document.getElementById('loadAlerts').addEventListener('click', loadAlerts);
+            document.getElementById('loadAlerts').addEventListener('click', () => {
+                window.scanButtonClicked = true; // Set flag to indicate scan button was clicked
+                loadAlerts();
+            });
             document.getElementById('refreshWeather').addEventListener('click', loadForecast);
             
             // Map control listeners
@@ -2732,7 +2998,7 @@
                             button.classList.remove('selected-alert', 'font-bold', 'border-2');
                             checkmark.classList.add('hidden');
                         }
-                        loadAlerts();
+                        // Don't call loadAlerts() here - only when scan button is clicked
                     });
                 }
             });
