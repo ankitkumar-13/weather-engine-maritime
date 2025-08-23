@@ -1,0 +1,57 @@
+<!-- Weather Dashboard Component -->
+<div class="glass rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-cloud text-white"></i>
+            </div>
+            <div>
+                <div class="font-semibold">Weather Conditions</div>
+                <div class="text-sm text-ocean-300">Current marine weather</div>
+            </div>
+        </div>
+        <div class="text-2xl">🌊</div>
+    </div>
+
+    <!-- Current Weather -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="text-center p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg">
+            <div class="text-3xl mb-2">⛅</div>
+            <div class="text-sm text-ocean-300">Conditions</div>
+            <div class="font-semibold">Partly Cloudy</div>
+        </div>
+        <div class="text-center p-4 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-lg">
+            <div class="text-2xl mb-2">🌡️</div>
+            <div class="text-sm text-ocean-300">Temperature</div>
+            <div class="font-semibold">26°C</div>
+        </div>
+    </div>
+
+    <!-- Weather Metrics -->
+    <div class="space-y-4">
+        <div class="flex justify-between items-center">
+            <span class="text-ocean-300">Wind Speed</span>
+            <span class="font-semibold text-cyan-400">12 kts</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="text-ocean-300">Wave Height</span>
+            <span class="font-semibold text-blue-400">1.8 m</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="text-ocean-300">Visibility</span>
+            <span class="font-semibold text-green-400">15 km</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="text-ocean-300">Pressure</span>
+            <span class="font-semibold text-yellow-400">1013 hPa</span>
+        </div>
+    </div>
+
+    <!-- Weather Chart -->
+    <div class="mt-6">
+        <div class="text-sm font-medium text-ocean-300 mb-3">Conditions Distribution</div>
+        <div class="h-48 relative">
+            <canvas id="weatherChart"></canvas>
+        </div>
+    </div>
+</div>
