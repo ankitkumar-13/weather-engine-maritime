@@ -180,6 +180,111 @@
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
         }
+        
+        /* Alert Notification Styles */
+        .alert-notification {
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .alert-notification:hover {
+            transform: scale(1.02);
+            transition: transform 0.2s ease;
+        }
+        
+        .alert-pulse {
+            animation: alertPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 8px 32px rgba(255, 0, 0, 0.5); }
+        }
+        
+        /* Position variants for alert container */
+        .alert-container-top-right {
+            top: 80px;
+            right: 24px;
+        }
+        
+        .alert-container-bottom-right {
+            bottom: 24px;
+            right: 24px;
+        }
+        
+        .alert-container-top-left {
+            top: 80px;
+            left: 24px;
+        }
+        
+        .alert-container-bottom-left {
+            bottom: 24px;
+            left: 24px;
+        }
+        
+        /* Custom Scrollbar Styles */
+        .scrollbar-thin {
+            scrollbar-width: thin;
+            scroll-behavior: smooth;
+        }
+        
+        .scrollbar-thumb-ocean-600::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .scrollbar-thumb-ocean-600::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.2);
+            border-radius: 3px;
+        }
+        
+        .scrollbar-thumb-ocean-600::-webkit-scrollbar-thumb {
+            background: rgba(71, 85, 105, 0.6);
+            border-radius: 3px;
+            transition: background 0.2s ease;
+        }
+        
+        .scrollbar-thumb-ocean-600::-webkit-scrollbar-thumb:hover {
+            background: rgba(71, 85, 105, 0.8);
+        }
+        
+        /* Smooth scrolling container */
+        .smooth-scroll {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            transform: translateZ(0);
+            will-change: scroll-position;
+        }
+        
+        /* Performance optimization for scrollable content */
+        .alerts-scroll-container {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            perspective: 1000px;
+            -webkit-perspective: 1000px;
+        }
+        
+        /* Optimize transitions for alert items */
+        .alert-item {
+            will-change: background-color;
+            contain: layout style;
+            transform: translateZ(0);
+        }
+        
+        .alert-item:hover {
+            transform: translateZ(0);
+        }
+        
+        /* Reduce paint on scroll */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body class="min-h-screen ocean-waves text-white overflow-x-hidden relative">
@@ -700,51 +805,70 @@
                         </div>
                     </h3>
                     
-                    <!-- Alert Types Selector -->
-                    <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button id="weatherAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-yellow-500/50 relative" data-type="weather">
-                            <i class="fas fa-cloud-bolt mr-1 text-yellow-400"></i>
-                            Weather
-                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
-                        </button>
-                        <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-blue-400/50 relative" data-type="navigation">
-                            <i class="fas fa-compass mr-1 text-blue-400"></i>
-                            Navigation
-                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
-                        </button>
-                        <button id="securityAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-red-400/50 relative" data-type="security">
-                            <i class="fas fa-lock mr-1 text-red-400"></i>
-                            Security
-                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
-                        </button>
-                        <button id="mechanicalAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-gray-400/50 relative" data-type="mechanical">
-                            <i class="fas fa-cog mr-1 text-gray-400"></i>
-                            Mechanical
-                            <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
-                        </button>
-                    </div>
-                    
-                    <button id="loadAlerts" class="w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 mb-4 flex items-center justify-center">
-                        <i class="fas fa-search mr-2"></i>
-                        Scan for Alerts
-                    </button>
-                    
-                    <div id="alertsData" class="text-sm text-ocean-200 space-y-2">
-                        <div class="flex items-center justify-center py-6 text-green-400">
-                            <i class="fas fa-check-circle mr-2"></i>
-                            No active alerts detected
+                    <!-- Alert Content -->
+                    <div id="alertsContent">
+                        <!-- Alert Types Selector -->
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <button id="weatherAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-yellow-500/50 relative" data-type="weather">
+                                <i class="fas fa-cloud-bolt mr-1 text-yellow-400"></i>
+                                Weather
+                                <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
+                            </button>
+                            <button id="navigationAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-blue-400/50 relative" data-type="navigation">
+                                <i class="fas fa-compass mr-1 text-blue-400"></i>
+                                Navigation
+                                <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
+                            </button>
+                            <button id="securityAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-red-400/50 relative" data-type="security">
+                                <i class="fas fa-lock mr-1 text-red-400"></i>
+                                Security
+                                <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
+                            </button>
+                            <button id="mechanicalAlerts" class="glass px-3 py-2 rounded-lg text-xs flex items-center justify-center border border-gray-400/50 relative" data-type="mechanical">
+                                <i class="fas fa-cog mr-1 text-gray-400"></i>
+                                Mechanical
+                                <span class="checkmark absolute right-2 top-2 hidden"><i class="fas fa-check text-green-500"></i></span>
+                            </button>
                         </div>
-                    </div>
-                    
-                    <!-- Alert Statistics -->
-                    <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
-                        <div class="glass rounded-lg p-2 text-center">
-                            <div class="text-yellow-400 font-bold" id="warningCount">0</div>
-                            <div class="text-ocean-300">Warnings</div>
+                        
+                        <button id="loadAlerts" class="w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 mb-4 flex items-center justify-center">
+                            <i class="fas fa-search mr-2"></i>
+                            Scan for Alerts
+                        </button>
+                        
+                        <!-- Alert Position Toggle -->
+                        <div class="flex items-center justify-between mb-4 text-xs">
+                            <span class="text-ocean-300">Alert Position:</span>
+                            <button id="alertPositionToggle" onclick="toggleAlertPosition()" class="glass px-2 py-1 rounded text-xs hover:bg-ocean-500/20 transition-colors">
+                                <i class="fas fa-arrows-alt mr-1"></i>
+                                <span id="positionText">Top Right</span>
+                            </button>
                         </div>
-                        <div class="glass rounded-lg p-2 text-center">
-                            <div class="text-red-400 font-bold" id="criticalCount">0</div>
-                            <div class="text-ocean-300">Critical</div>
+                        
+                        <!-- Scrollable Alerts Data Panel -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-semibold text-ocean-300">Active Alerts</span>
+                                <span class="text-xs text-ocean-400" id="alertsScrollHint">Scroll to view all</span>
+                            </div>
+                            <div id="alertsData" class="text-sm text-ocean-200 space-y-2 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-ocean-600 scrollbar-track-ocean-900/20 pr-2 smooth-scroll alerts-scroll-container">
+                                <div class="flex items-center justify-center py-6 text-yellow-400">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    Select alert categories and scan for alerts
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert Statistics -->
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="glass rounded-lg p-2 text-center">
+                                <div class="text-yellow-400 font-bold" id="warningCount">0</div>
+                                <div class="text-ocean-300">Warnings</div>
+                            </div>
+                            <div class="glass rounded-lg p-2 text-center">
+                                <div class="text-red-400 font-bold" id="criticalCount">0</div>
+                                <div class="text-ocean-300">Critical</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1728,6 +1852,187 @@
             }
         }
 
+        // Sample maritime alerts data
+        const sampleAlerts = [
+            // Weather Alerts
+            {
+                id: 1,
+                type: "Weather Warning",
+                category: "weather",
+                severity: "high",
+                description: "Strong winds (35-40 knots) expected in route corridor",
+                area: "Arabian Sea, 15°N-18°N",
+                time: "14:30 UTC",
+                icon: "fa-cloud-bolt",
+                action: "Consider route adjustment"
+            },
+            {
+                id: 7,
+                type: "Rough Sea State",
+                category: "weather",
+                severity: "medium",
+                description: "Wave heights 4-6 meters expected in next 6 hours",
+                area: "Route segment 2-3",
+                time: "13:20 UTC",
+                icon: "fa-water",
+                action: "Secure loose items"
+            },
+            {
+                id: 8,
+                type: "Storm Warning",
+                category: "weather", 
+                severity: "critical",
+                description: "Tropical storm forming, winds 50+ knots expected",
+                area: "Bay of Bengal, 200nm E of Chennai",
+                time: "15:00 UTC",
+                icon: "fa-hurricane",
+                action: "Immediate course alteration required"
+            },
+            
+            // Navigation Alerts
+            {
+                id: 2,
+                type: "Traffic Congestion", 
+                category: "navigation",
+                severity: "medium",
+                description: "High vessel density reported near Mumbai port approach",
+                area: "Mumbai Harbor Entrance",
+                time: "13:45 UTC",
+                icon: "fa-ship",
+                action: "Maintain safe distance"
+            },
+            {
+                id: 11,
+                type: "Navigation Hazard",
+                category: "navigation",
+                severity: "high",
+                description: "Floating debris field detected on shipping route",
+                area: "10nm SW of Mumbai Light",
+                time: "14:00 UTC",
+                icon: "fa-exclamation-triangle",
+                action: "Navigate around hazard area"
+            },
+            {
+                id: 12,
+                type: "Channel Restriction",
+                category: "navigation",
+                severity: "medium",
+                description: "Dredging operations limiting channel width",
+                area: "JNPT approach",
+                time: "10:15 UTC",
+                icon: "fa-road",
+                action: "Request pilot assistance"
+            },
+            {
+                id: 18,
+                type: "Port Emergency",
+                category: "navigation",
+                severity: "critical",
+                description: "Port closure due to emergency incident",
+                area: "Kandla Port",
+                time: "15:30 UTC",
+                icon: "fa-ban",
+                action: "Divert to alternate port"
+            },
+            
+            // Security Alerts
+            {
+                id: 3,
+                type: "Security Alert",
+                category: "security", 
+                severity: "critical",
+                description: "Piracy risk area - maintain heightened vigilance",
+                area: "Somalia Coast, 200nm offshore",
+                time: "12:00 UTC",
+                icon: "fa-shield-alt",
+                action: "Implement BMP5 measures"
+            },
+            {
+                id: 13,
+                type: "Suspicious Activity",
+                category: "security",
+                severity: "high",
+                description: "Unidentified fast craft approaching vessels",
+                area: "Gulf of Aden, 50nm E of Djibouti",
+                time: "13:30 UTC",
+                icon: "fa-exclamation-circle",
+                action: "Increase watch, report"
+            },
+            {
+                id: 14,
+                type: "Security Zone",
+                category: "security",
+                severity: "medium",
+                description: "Military exercise area - restricted navigation",
+                area: "Arabian Sea",
+                time: "09:00 UTC",
+                icon: "fa-ban",
+                action: "Route around area"
+            },
+            
+            // Mechanical Alerts
+            {
+                id: 15,
+                type: "Fuel System Warning",
+                category: "mechanical",
+                severity: "high",
+                description: "Fuel filter pressure exceeding limits",
+                area: "Engine Room",
+                time: "13:10 UTC",
+                icon: "fa-gas-pump",
+                action: "Replace filter immediately"
+            },
+            {
+                id: 4,
+                type: "Engine Temperature",
+                category: "mechanical",
+                severity: "medium",
+                description: "Main engine cooling system temperature elevated",
+                area: "Engine Room",
+                time: "14:15 UTC", 
+                icon: "fa-thermometer-half",
+                action: "Monitor coolant levels"
+            },
+            {
+                id: 16,
+                type: "Navigation Equipment",
+                category: "mechanical",
+                severity: "medium",
+                description: "GPS backup system intermittent signal loss",
+                area: "Bridge",
+                time: "12:30 UTC",
+                icon: "fa-satellite",
+                action: "Check antenna connections"
+            },
+            {
+                id: 19,
+                type: "Main Engine Failure",
+                category: "mechanical",
+                severity: "critical",
+                description: "Main engine emergency shutdown activated",
+                area: "Engine Room",
+                time: "15:45 UTC",
+                icon: "fa-exclamation-triangle",
+                action: "Switch to auxiliary power"
+            }
+        ];
+
+        // Get selected alert categories
+        function getSelectedAlertCategories() {
+            const categories = [];
+            const alertButtons = ['weatherAlerts', 'navigationAlerts', 'securityAlerts', 'mechanicalAlerts'];
+            
+            alertButtons.forEach(buttonId => {
+                const button = document.getElementById(buttonId);
+                if (button && button.classList.contains('selected-alert')) {
+                    const category = button.getAttribute('data-type');
+                    categories.push(category);
+                }
+            });
+            
+            return categories;
+        }
+
         // Enhanced alerts with different types
         async function loadAlerts() {
             const button = document.getElementById('loadAlerts');
@@ -1738,8 +2043,39 @@
             button.disabled = true;
 
             try {
-                const response = await fetch(`${API_BASE}/alerts`);
-                const data = await response.json();
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Get selected alert categories
+                const selectedCategories = getSelectedAlertCategories();
+                
+                // If no categories are selected, show a message
+                if (selectedCategories.length === 0) {
+                    resultDiv.innerHTML = `
+                        <div class="flex items-center justify-center py-6 text-yellow-400">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Please select alert categories to scan
+                        </div>
+                    `;
+                    document.getElementById('alertCount').textContent = '0';
+                    document.getElementById('warningCount').textContent = '0';
+                    document.getElementById('criticalCount').textContent = '0';
+                    alertBadge.textContent = 'Select Categories';
+                    alertBadge.className = 'text-xs px-2 py-1 bg-yellow-500/20 rounded-full border border-yellow-400/30 text-yellow-400';
+                    
+                    const scrollHint = document.getElementById('alertsScrollHint');
+                    if (scrollHint) {
+                        scrollHint.classList.add('hidden');
+                    }
+                    return;
+                }
+                
+                // Filter alerts based on selected categories
+                const filteredAlerts = sampleAlerts.filter(alert => 
+                    selectedCategories.includes(alert.category)
+                );
+                
+                const data = { alerts: filteredAlerts };
                 
                 if (data.alerts && data.alerts.length > 0) {
                     const alertsHtml = data.alerts.map(alert => {
@@ -1752,16 +2088,19 @@
                         const color = severityColors[alert.severity.toLowerCase()] || 'yellow';
                         
                         return `
-                        <div class="bg-${color}-900/30 border-l-4 border-${color}-400 p-3 mb-2 rounded">
-                            <div class="flex items-center justify-between">
+                        <div class="bg-${color}-900/30 border-l-4 border-${color}-400 p-3 mb-2 rounded hover:bg-${color}-900/40 transition-colors cursor-pointer alert-item" onclick="showAlertNotification('${alert.type}', '${alert.description}', '${alert.severity}')">
+                            <div class="flex items-center justify-between no-select">
                                 <div class="flex items-center">
-                                    <i class="fas fa-exclamation-triangle text-${color}-400 mr-2"></i>
+                                    <i class="fas ${alert.icon} text-${color}-400 mr-2"></i>
                                     <span class="font-semibold">${alert.type}</span>
                                 </div>
                                 <span class="text-xs bg-${color}-500/20 px-2 py-1 rounded">${alert.severity.toUpperCase()}</span>
                             </div>
-                            <div class="text-xs text-${color}-200 mt-1">${alert.description}</div>
-                            <div class="text-xs text-${color}-300 mt-1">Area: ${alert.area || 'Route area'}</div>
+                            <div class="text-xs text-${color}-200 mt-1 no-select">${alert.description}</div>
+                            <div class="flex justify-between text-xs text-${color}-400 mt-1 no-select">
+                                <span>${alert.area}</span>
+                                <span>${alert.time}</span>
+                            </div>
                         </div>
                     `;}).join('');
                     
@@ -1772,11 +2111,71 @@
                     
                     alertBadge.textContent = `${data.alerts.length} Active Alert${data.alerts.length !== 1 ? 's' : ''}`;
                     alertBadge.className = 'text-xs px-2 py-1 bg-red-500/20 rounded-full border border-red-400/30 text-red-400';
+                    
+                    // Update scroll hint based on content height
+                    const scrollHint = document.getElementById('alertsScrollHint');
+                    if (scrollHint) {
+                        if (data.alerts.length > 3) {
+                            scrollHint.textContent = `${data.alerts.length} alerts - scroll to view all`;
+                            scrollHint.classList.remove('hidden');
+                        } else {
+                            scrollHint.classList.add('hidden');
+                        }
+                    }
+                    
+                    // Show critical, high, and medium alerts as notifications
+                    const criticalAlerts = data.alerts.filter(alert => alert.severity === 'critical');
+                    const highAlerts = data.alerts.filter(alert => alert.severity === 'high');
+                    const mediumAlerts = data.alerts.filter(alert => alert.severity === 'medium');
+                    
+                    // Show critical alerts immediately
+                    criticalAlerts.forEach((alert, index) => {
+                        setTimeout(() => {
+                            showAlertNotification(alert.type, alert.description, alert.severity);
+                        }, 1500 + (index * 700));
+                    });
+                    
+                    // Show high alerts after critical ones
+                    highAlerts.forEach((alert, index) => {
+                        setTimeout(() => {
+                            showAlertNotification(alert.type, alert.description, alert.severity);
+                        }, 2200 + (criticalAlerts.length * 700) + (index * 600));
+                    });
+                    
+                    // Show medium alerts after high ones (with shorter delay)
+                    mediumAlerts.forEach((alert, index) => {
+                        setTimeout(() => {
+                            showAlertNotification(alert.type, alert.description, alert.severity);
+                        }, 2800 + (criticalAlerts.length * 700) + (highAlerts.length * 600) + (index * 500));
+                    });
+                    
+                    // Show completion message only if no alerts were found
+                    if (data.alerts.length > 0 && criticalAlerts.length === 0 && highAlerts.length === 0 && mediumAlerts.length === 0) {
+                        setTimeout(() => {
+                            showAlertNotification(
+                                'Scan Complete', 
+                                `Found ${data.alerts.length} alert${data.alerts.length !== 1 ? 's' : ''} - all low priority`, 
+                                'low'
+                            );
+                        }, 2000);
+                    }
+                    
                 } else {
+                    // No alerts found for selected categories
+                    const categoryNames = selectedCategories.map(cat => {
+                        const nameMap = {
+                            'weather': 'Weather',
+                            'navigation': 'Navigation', 
+                            'security': 'Security',
+                            'mechanical': 'Mechanical'
+                        };
+                        return nameMap[cat] || cat;
+                    }).join(', ');
+                    
                     resultDiv.innerHTML = `
                         <div class="flex items-center justify-center py-6 text-green-400">
                             <i class="fas fa-check-circle mr-2"></i>
-                            No active alerts detected
+                            No ${categoryNames.toLowerCase()} alerts detected
                         </div>
                     `;
                     document.getElementById('alertCount').textContent = '0';
@@ -1784,6 +2183,21 @@
                     document.getElementById('criticalCount').textContent = '0';
                     alertBadge.textContent = 'All Clear';
                     alertBadge.className = 'text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400';
+                    
+                    // Hide scroll hint when no alerts
+                    const scrollHint = document.getElementById('alertsScrollHint');
+                    if (scrollHint) {
+                        scrollHint.classList.add('hidden');
+                    }
+                    
+                    // Show notification when no alerts found
+                    setTimeout(() => {
+                        showAlertNotification(
+                            'Scan Complete', 
+                            `No ${categoryNames.toLowerCase()} alerts detected - all systems clear`, 
+                            'low'
+                        );
+                    }, 2000);
                 }
             } catch (error) {
                 resultDiv.innerHTML = `
@@ -2204,6 +2618,226 @@
             }, 3000);
         }
 
+        // Enhanced alert notification system with FIFO queue
+        let alertNotificationCounter = 0;
+        let notificationQueue = [];
+        let dismissTimer = null;
+        
+        function showAlertNotification(title, message, severity = 'medium', position = null) {
+            alertNotificationCounter++;
+            const notificationId = `alert-notification-${alertNotificationCounter}`;
+            const usePosition = position || alertPosition; // Use provided position or global setting
+            
+            // Add to FIFO queue
+            notificationQueue.push({
+                id: notificationId,
+                title,
+                message,
+                severity,
+                timestamp: Date.now()
+            });
+            
+            // Create or get notification container
+            let container = document.getElementById('alert-notifications-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'alert-notifications-container';
+                container.className = getAlertContainerClass(usePosition);
+                document.body.appendChild(container);
+            } else {
+                // Update container position if needed
+                container.className = getAlertContainerClass(usePosition);
+            }
+            
+            // Create alert notification
+            const notification = document.createElement('div');
+            notification.id = notificationId;
+            
+            const severityConfig = {
+                'critical': {
+                    bg: 'bg-red-600',
+                    border: 'border-red-400',
+                    icon: 'fa-exclamation-circle',
+                    iconColor: 'text-red-200',
+                    sound: true
+                },
+                'high': {
+                    bg: 'bg-red-500', 
+                    border: 'border-red-300',
+                    icon: 'fa-exclamation-triangle',
+                    iconColor: 'text-red-200',
+                    sound: true
+                },
+                'medium': {
+                    bg: 'bg-orange-500',
+                    border: 'border-orange-300', 
+                    icon: 'fa-exclamation-triangle',
+                    iconColor: 'text-orange-200',
+                    sound: false
+                },
+                'low': {
+                    bg: 'bg-yellow-500',
+                    border: 'border-yellow-300',
+                    icon: 'fa-info-circle', 
+                    iconColor: 'text-yellow-200',
+                    sound: false
+                }
+            };
+            
+            const config = severityConfig[severity] || severityConfig['medium'];
+            
+            notification.className = `${config.bg} text-white p-3 rounded-lg shadow-2xl border-l-3 ${config.border} max-w-80 transform translate-x-full transition-all duration-300 hover:scale-105 cursor-pointer`;
+            
+            notification.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start space-x-2.5">
+                        <div class="flex-shrink-0">
+                            <i class="fas ${config.icon} ${config.iconColor} text-base ${severity === 'critical' ? 'animate-pulse' : ''}"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-semibold text-sm flex items-center">
+                                ${title}
+                                <span class="ml-2 text-xs px-1.5 py-0.5 bg-white/20 rounded">${severity.charAt(0).toUpperCase()}</span>
+                            </div>
+                            <div class="text-xs mt-1 opacity-90 leading-relaxed">${message}</div>
+                        </div>
+                    </div>
+                    <button onclick="dismissAlert('${notificationId}')" class="ml-2 text-white/60 hover:text-white transition-colors">
+                        <i class="fas fa-times text-sm"></i>
+                    </button>
+                </div>
+                ${severity === 'critical' || severity === 'high' ? `
+                <div class="mt-2.5 flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <button onclick="acknowledgeAlert('${notificationId}')" class="text-xs px-2.5 py-1 bg-white/20 hover:bg-white/30 rounded transition-colors">
+                            Acknowledge
+                        </button>
+                        <button onclick="viewAlertDetails('${title}')" class="text-xs px-2.5 py-1 bg-white/20 hover:bg-white/30 rounded transition-colors">
+                            Details
+                        </button>
+                    </div>
+                    <div class="text-xs opacity-70">${new Date().toLocaleTimeString()}</div>
+                </div>
+                ` : `
+                <div class="mt-1.5 text-xs opacity-70">${new Date().toLocaleTimeString()}</div>
+                `}
+            `;
+            
+            container.appendChild(notification);
+            
+            // Play sound for critical/high alerts
+            if (config.sound) {
+                playAlertSound(severity);
+            }
+            
+            // Slide in animation
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Start FIFO auto-dismiss timer if not already running
+            if (!dismissTimer) {
+                startAutoDismissTimer();
+            }
+        }
+        
+        function startAutoDismissTimer() {
+            // Clear any existing timer
+            if (dismissTimer) {
+                clearTimeout(dismissTimer);
+                dismissTimer = null;
+            }
+            
+            if (notificationQueue.length === 0) {
+                return;
+            }
+            
+            // Get the oldest notification (first in queue)
+            const oldestNotification = notificationQueue[0];
+            const dismissTime = oldestNotification.severity === 'critical' ? 5000 : 
+                               oldestNotification.severity === 'high' ? 3500 : 2500;
+            
+            dismissTimer = setTimeout(() => {
+                if (notificationQueue.length > 0 && document.getElementById(oldestNotification.id)) {
+                    dismissAlert(oldestNotification.id);
+                    // After dismissing, wait a moment then check for next notification
+                    setTimeout(() => {
+                        if (notificationQueue.length > 0) {
+                            startAutoDismissTimer();
+                        }
+                    }, 400);
+                } else {
+                    // If notification not found, just restart timer for next one
+                    dismissTimer = null;
+                    startAutoDismissTimer();
+                }
+            }, dismissTime);
+        }
+        
+        function dismissAlert(notificationId) {
+            const notification = document.getElementById(notificationId);
+            if (notification) {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    notification.remove();
+                    
+                    // Remove from queue
+                    const wasFirstInQueue = notificationQueue.length > 0 && notificationQueue[0].id === notificationId;
+                    notificationQueue = notificationQueue.filter(n => n.id !== notificationId);
+                    
+                    // Clean up container if empty
+                    const container = document.getElementById('alert-notifications-container');
+                    if (container && container.children.length === 0) {
+                        container.remove();
+                        // Clear timer if no notifications left
+                        if (dismissTimer) {
+                            clearTimeout(dismissTimer);
+                            dismissTimer = null;
+                        }
+                    } else if (wasFirstInQueue && !dismissTimer) {
+                        // If we just removed the first item and no timer is running, start the timer for the next item
+                        startAutoDismissTimer();
+                    }
+                }, 300);
+            }
+        }
+        
+        function acknowledgeAlert(notificationId) {
+            const notification = document.getElementById(notificationId);
+            if (notification) {
+                notification.style.opacity = '0.7';
+                notification.innerHTML += '<div class="text-xs mt-2 text-green-200"><i class="fas fa-check mr-1"></i>Acknowledged</div>';
+                setTimeout(() => dismissAlert(notificationId), 2000);
+            }
+        }
+        
+        function viewAlertDetails(title) {
+            showLayerNotification('Alert Details', `Detailed information for ${title} would be displayed in a full alert management panel.`, 'info');
+        }
+        
+        function playAlertSound(severity) {
+            // Create audio context for alert sounds (simplified)
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(severity === 'critical' ? 800 : 600, audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (error) {
+                console.log('Audio not supported or blocked');
+            }
+        }
+
         // Speed slider update
         function updateSpeedSlider() {
             const slider = document.getElementById('speedLimit');
@@ -2352,7 +2986,7 @@
                             button.classList.remove('selected-alert', 'font-bold', 'border-2');
                             checkmark.classList.add('hidden');
                         }
-                        loadAlerts();
+                        // Removed loadAlerts() call - only scan when user clicks "Scan for Alerts"
                     });
                 }
             });
@@ -2374,6 +3008,146 @@
             
             console.log('Weather Engine Maritime - Initialization complete');
         });
+
+        // Demo alert function for testing notifications
+        let alertPosition = 'top-right'; // Default position
+        
+        function toggleAlertPosition() {
+            const positions = ['top-right', 'bottom-right', 'top-left', 'bottom-left'];
+            const currentIndex = positions.indexOf(alertPosition);
+            const nextIndex = (currentIndex + 1) % positions.length;
+            alertPosition = positions[nextIndex];
+            
+            // Update button text
+            const positionText = document.getElementById('positionText');
+            if (positionText) {
+                const displayNames = {
+                    'top-right': 'Top Right',
+                    'bottom-right': 'Bottom Right', 
+                    'top-left': 'Top Left',
+                    'bottom-left': 'Bottom Left'
+                };
+                positionText.textContent = displayNames[alertPosition];
+            }
+            
+            // Update existing container if it exists
+            const container = document.getElementById('alert-notifications-container');
+            if (container) {
+                container.className = getAlertContainerClass(alertPosition);
+            }
+            
+            // Show a demo notification in the new position
+            showAlertNotification('Position Changed', `Alerts will now appear in ${displayNames[alertPosition]}`, 'low', alertPosition);
+        }
+        
+        function getAlertContainerClass(position) {
+            const baseClass = 'fixed z-50 space-y-2';
+            switch(position) {
+                case 'top-right':
+                    return `${baseClass} top-20 right-6`;
+                case 'bottom-right':
+                    return `${baseClass} bottom-6 right-6`;
+                case 'top-left':
+                    return `${baseClass} top-20 left-6`;
+                case 'bottom-left':
+                    return `${baseClass} bottom-6 left-6`;
+                default:
+                    return `${baseClass} top-20 right-6`;
+            }
+        }
+        
+        function demoAlert(severity = 'medium') {
+            const demoAlerts = {
+                critical: [
+                    {
+                        title: "CRITICAL: Engine Failure",
+                        description: "Main engine has shut down unexpectedly. Switching to auxiliary power.",
+                        severity: "critical"
+                    },
+                    {
+                        title: "CRITICAL: Security Breach",
+                        description: "Unauthorized vessel approaching at high speed from port side.",
+                        severity: "critical"
+                    },
+                    {
+                        title: "CRITICAL: Man Overboard",
+                        description: "Emergency signal activated from deck 3. All hands on deck.",
+                        severity: "critical"
+                    }
+                ],
+                high: [
+                    {
+                        title: "HIGH: Severe Weather",
+                        description: "Category 2 storm approaching from southeast. Winds 60+ knots expected.",
+                        severity: "high"
+                    },
+                    {
+                        title: "HIGH: Navigation Hazard",
+                        description: "Uncharted debris field detected 2nm ahead on current course.",
+                        severity: "high"
+                    }
+                ],
+                medium: [
+                    {
+                        title: "WARNING: Fuel Level Low",
+                        description: "Fuel reserves at 25%. Consider refueling at next available port.",
+                        severity: "medium"
+                    },
+                    {
+                        title: "WARNING: Equipment Maintenance",
+                        description: "Radar system showing intermittent performance issues.",
+                        severity: "medium"
+                    },
+                    {
+                        title: "WARNING: Traffic Congestion",
+                        description: "High vessel density reported in shipping lane ahead.",
+                        severity: "medium"
+                    }
+                ],
+                low: [
+                    {
+                        title: "INFO: Port Update",
+                        description: "Destination port reports normal operations and no delays.",
+                        severity: "low"
+                    },
+                    {
+                        title: "INFO: Weather Update",
+                        description: "Favorable winds expected for next 12 hours.",
+                        severity: "low"
+                    }
+                ]
+            };
+            
+            const alerts = demoAlerts[severity] || demoAlerts['medium'];
+            const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
+            
+            showAlertNotification(randomAlert.title, randomAlert.description, randomAlert.severity, alertPosition);
+        }
+        
+        // Demo alert sequence - shows multiple alerts with delays
+        function demoAlertSequence() {
+            const sequence = [
+                { severity: 'low', delay: 0 },
+                { severity: 'medium', delay: 2000 },
+                { severity: 'high', delay: 4000 },
+                { severity: 'critical', delay: 6000 },
+                { severity: 'medium', delay: 8000 }
+            ];
+            
+            sequence.forEach(alert => {
+                setTimeout(() => {
+                    demoAlert(alert.severity);
+                }, alert.delay);
+            });
+            
+            // Show info notification about the sequence
+            showAlertNotification(
+                'Alert Sequence Started', 
+                'Demonstrating 5 alerts over 10 seconds with different severity levels', 
+                'low', 
+                alertPosition
+            );
+        }
 
         // Enhanced floating particles
         function createFloatingElement() {
