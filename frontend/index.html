@@ -51,53 +51,43 @@
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
         }
-        
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
         /* Glow Effects */
         .glow-cyan {
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
             border: 1px solid rgba(0, 212, 255, 0.3);
         }
-        
         .glow-green {
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
             border: 1px solid rgba(0, 255, 136, 0.3);
         }
-        
         .text-glow-cyan {
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
         }
-        
         .text-glow-green {
             text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
         }
-        
         /* Floating Animation */
         .float {
             animation: float 6s ease-in-out infinite;
         }
-        
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
         }
-        
         /* Pulse Animation */
         .pulse-slow {
             animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-        
         /* Wave Animation */
         .wave {
             position: relative;
             overflow: hidden;
         }
-        
         .wave::before {
             content: '';
             position: absolute;
@@ -107,21 +97,18 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
             animation: wave 2s infinite;
-        }
-        
+        }  
         @keyframes wave {
             0% { left: -100%; }
             100% { left: 100%; }
-        }
-        
+        }       
         /* Particle Effect */
         .particle {
             position: absolute;
             border-radius: 50%;
             background: rgba(0, 212, 255, 0.6);
             animation: particle 4s infinite ease-in-out;
-        }
-        
+        }        
         @keyframes particle {
             0%, 100% { 
                 transform: translateY(0) scale(1);
@@ -131,37 +118,30 @@
                 transform: translateY(-50px) scale(1.2);
                 opacity: 1;
             }
-        }
-        
+        }        
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
-        }
-        
+        }        
         ::-webkit-scrollbar-track {
             background: #001122;
-        }
-        
+        }       
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(to bottom, #00D4FF, #00FF88);
             border-radius: 4px;
-        }
-        
+        }      
         /* Skills Section Marquee Animation */
         @keyframes marquee {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
-        }
-        
+        }      
         .animate-marquee {
             display: flex;
             animation: marquee 15s linear infinite;
-        }
-        
+        }       
         .animate-marquee:hover {
             animation-play-state: paused;
-        }
-        
+        }      
         /* Skill Card Styling */
         .skill-card {
             width: 144px; /* w-36 */
@@ -176,12 +156,10 @@
             border-radius: 8px;
             position: relative;
             cursor: pointer;
-        }
-        
+        }     
         .skill-card:hover {
             transform: scale(1.15);
-        }
-        
+        }      
         .skill-card-inner {
             height: 100%;
             width: 100%;
@@ -190,24 +168,20 @@
             background: #11152c;
             box-shadow: none;
             transition: all 0.5s ease;
-        }
-        
+        }       
         .skill-card:hover .skill-card-inner {
             border-color: #8b5cf6; /* violet-500 */
-        }
-        
+        }   
         .skill-card-gradient {
             display: flex;
             transform: translateY(-1px);
             justify-content: center;
         }
-        
         .skill-card-gradient-line {
             width: 75%;
             height: 1px;
             background: linear-gradient(to right, transparent, #8b5cf6, transparent);
         }
-        
         .skill-card-content {
             display: flex;
             flex-direction: column;
@@ -216,38 +190,32 @@
             gap: 12px;
             padding: 24px;
         }
-        
         .skill-icon-container {
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
         .skill-icon {
             height: 100%;
             width: auto;
             border-radius: 8px;
             font-size: 2rem;
         }
-        
         .skill-name-text {
             color: white;
             font-size: 0.875rem;
             text-align: center;
             font-weight: 500;
         }
-        
         @media (min-width: 640px) {
             .skill-icon-container {
                 height: 48px;
             }
-            
             .skill-name-text {
                 font-size: 1.125rem;
             }
         }
-        
         /* Button Hover Effects */
         .btn-primary {
             background: linear-gradient(45deg, #00D4FF, #00FF88);
@@ -255,60 +223,50 @@
             position: relative;
             overflow: hidden;
         }
-        
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
         }
-        
         .btn-secondary {
             background: linear-gradient(45deg, #FF6B35, #9932CC);
             transition: all 0.3s ease;
         }
-        
         .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
         }
-        
         /* Card Hover Effects */
         .feature-card {
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 212, 255, 0.2);
         }
-        
         .feature-card:hover {
             transform: translateY(-10px);
             border-color: rgba(0, 212, 255, 0.5);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-        
         /* Stats Counter Animation */
         .counter {
             font-weight: 700;
             color: #00FF88;
         }
-        
         /* Loading Animation */
         .loading-dots::after {
             content: '';
             animation: loading 1.5s infinite;
         }
-        
         @keyframes loading {
             0%, 33% { content: '.'; }
             34%, 66% { content: '..'; }
             67%, 100% { content: '...'; }
         }
-        
         /* Enhanced Hover Effects */
         .enhanced-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
-        
         .enhanced-card::before {
             content: '';
             position: absolute;
@@ -319,31 +277,25 @@
             background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
             transition: left 0.6s ease;
         }
-        
         .enhanced-card:hover::before {
             left: 100%;
         }
-        
         .enhanced-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 25px 50px rgba(0, 212, 255, 0.2);
         }
-        
         /* Flash Animation */
         .flash-effect {
             animation: flash 2s infinite;
         }
-        
         @keyframes flash {
             0%, 50%, 100% { opacity: 1; }
             25%, 75% { opacity: 0.7; }
         }
-        
         /* Glitch Effect */
         .glitch {
             animation: glitch 2s infinite;
         }
-        
         @keyframes glitch {
             0%, 100% { transform: translate(0); }
             20% { transform: translate(-2px, 2px); }
@@ -351,7 +303,6 @@
             60% { transform: translate(2px, 2px); }
             80% { transform: translate(2px, -2px); }
         }
-        
         /* Project Scope Cards */
         .scope-card {
             background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
