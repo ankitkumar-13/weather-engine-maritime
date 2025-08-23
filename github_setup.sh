@@ -1,8 +1,6 @@
 #!/bin/bash
-
 echo "🚢 Weather Engine Maritime - GitHub Setup"
 echo "========================================"
-
 echo "Step 1: Go to GitHub.com and create a new repository:"
 echo "   1. Visit: https://github.com/new"
 echo "   2. Repository name: weather-engine-maritime"
@@ -10,7 +8,6 @@ echo "   3. Description: Maritime Weather Intelligence & Route Optimization for 
 echo "   4. Keep it Public (for hackathon judges)"
 echo "   5. DON'T initialize with README (we already have one)"
 echo "   6. Click 'Create repository'"
-
 echo ""
 echo "Step 2: Copy the GitHub repository URL and run these commands:"
 echo ""
@@ -18,18 +15,15 @@ echo "# Replace YOUR_GITHUB_USERNAME with your actual username"
 echo "git remote add origin https://github.com/YOUR_GITHUB_USERNAME/weather-engine-maritime.git"
 echo "git branch -M main"
 echo "git push -u origin main"
-
 echo ""
 echo "Step 3: After pushing, your repository will be available at:"
 echo "https://github.com/YOUR_GITHUB_USERNAME/weather-engine-maritime"
-
 echo ""
 echo "📋 For MariTHON Submission:"
 echo "- Repository URL: https://github.com/YOUR_GITHUB_USERNAME/weather-engine-maritime"
 echo "- Demo Instructions: See README.md"
 echo "- Live Demo: Clone → Run backend → Open frontend/demo.html"
 echo "- Tech Stack: FastAPI + Python + HTML5 + TailwindCSS"
-
 echo ""
 echo "🎯 Repository Contents:"
 echo "✅ Complete MVP source code"
