@@ -185,29 +185,54 @@ chmod +x test_api.sh
 
 <div align="center">
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=savetree-1&bg_color=001122&color=00D4FF&line=00FF88&point=FF6B35&area=true&hide_border=true&title_color=FFFFFF"/>
+### 📈 **Development Statistics**
+
+<table>
+<tr>
+<td align="center">
+
+**🚀 Project Stats**
+- **Languages**: Python, JavaScript, HTML
+- **Framework**: FastAPI + TailwindCSS  
+- **Database**: SQLite + JSON
+- **API Endpoints**: 4 core endpoints
+- **Response Time**: <100ms average
+
+</td>
+<td align="center">
+
+**⚡ Performance Metrics**
+- **Fuel Optimization**: 15% savings
+- **Route Accuracy**: 99.9% precision
+- **Forecast Range**: 10-day horizon
+- **Demo Duration**: 60-90 seconds
+- **MVP Status**: ✅ Complete
+
+</td>
+</tr>
+</table>
 
 ### 🏆 **Project Achievements**
 
 <table>
 <tr>
 <td align="center">
-<img src="https://img.shields.io/badge/⚡-API_Response-<100ms-00D4FF?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/⚡_API_Response-Under_100ms-00D4FF?style=for-the-badge"/>
 <br>
 <b>Lightning Fast</b>
 </td>
 <td align="center">
-<img src="https://img.shields.io/badge/⛽-Fuel_Savings-15%25-00FF88?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/⛽_Fuel_Savings-Up_to_15%25-00FF88?style=for-the-badge"/>
 <br>
 <b>Eco Friendly</b>
 </td>
 <td align="center">
-<img src="https://img.shields.io/badge/🎯-Route_Accuracy-99.9%25-FF6B35?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/🎯_Route_Accuracy-99.9%25-FF6B35?style=for-the-badge"/>
 <br>
 <b>Precision Navigation</b>
 </td>
 <td align="center">
-<img src="https://img.shields.io/badge/📊-Forecast_Horizon-10_Days-9932CC?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/📊_Forecast_Horizon-10_Days-9932CC?style=for-the-badge"/>
 <br>
 <b>Extended Planning</b>
 </td>
