@@ -1879,7 +1879,6 @@
                 }
             });
         }
-
         // Initialize all advanced charts
         function initPerformanceChart() {
             const ctx = document.getElementById('performanceChart').getContext('2d');
@@ -1916,7 +1915,6 @@
                 }
             });
         }
-
         function initWeatherTrendChart() {
             const ctx = document.getElementById('weatherTrendChart').getContext('2d');
             weatherTrendChart = new Chart(ctx, {
@@ -1961,7 +1959,6 @@
                 }
             });
         }
-
         function initFuelChart() {
             const ctx = document.getElementById('fuelChart').getContext('2d');
             fuelChart = new Chart(ctx, {
@@ -1992,13 +1989,11 @@
                 }
             });
         }
-
         // Enhanced API functions
         async function checkAPI() {
             try {
                 const response = await fetch(`${API_BASE}/`);
-                const data = await response.json();
-                
+                const data = await response.json();                
                 document.getElementById('apiStatus').innerHTML = `
                     <i class="fas fa-check text-green-400 mr-2"></i>
                     <span class="text-green-400">Online</span>
@@ -2010,24 +2005,19 @@
                 `;
             }
         }
-
         // Enhanced forecast loading with timeline support
         async function loadForecast() {
             const button = document.getElementById('loadForecast');
             const resultDiv = document.getElementById('forecastData');
-            const timeline = document.getElementById('weatherTimeline').value;
-            
+            const timeline = document.getElementById('weatherTimeline').value;            
             button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
             button.disabled = true;
-
             try {
                 const response = await fetch(`${API_BASE}/route_forecast`);
-                const data = await response.json();
-                
+                const data = await response.json();                
                 if (data && Array.isArray(data) && data.length > 0) {
                     const firstSegment = data[0];
-                    const forecastTimes = firstSegment.forecast?.times || [];
-                    
+                    const forecastTimes = firstSegment.forecast?.times || [];                    
                     // Filter based on timeline
                     const timelineHours = parseInt(timeline.replace('h', ''));
                     const now = new Date();
@@ -2036,15 +2026,13 @@
                         const hoursDiff = (pointTime - now) / (1000 * 60 * 60);
                         return hoursDiff >= 0 && hoursDiff <= timelineHours;
                     });
-
                     const summary = filteredForecast.slice(0, 8).map(point => 
                         `<div class="flex justify-between items-center py-2 border-b border-ocean-700/30">
                             <span class="text-xs">${new Date(point.t_iso).toLocaleDateString()}</span>
                             <span class="text-ocean-300">${point.wind_deg}°</span>
                             <span class="text-sm font-semibold text-cyan-400">${point.wind_speed_ms.toFixed(1)} m/s</span>
                         </div>`
-                    ).join('');
-                    
+                    ).join('');                    
                     resultDiv.innerHTML = `
                         <div class="space-y-2 mb-3">
                             <div class="flex justify-between">
@@ -2058,7 +2046,6 @@
                         </div>
                         ${summary}
                     `;
-
                     // Update weather chart with filtered data
                     const chartData = filteredForecast.slice(0, 5).map(point => 
                         point.waves?.Hs_m || 2.0
@@ -2096,25 +2083,21 @@
                 button.disabled = false;
             }
         }
-
         // Enhanced optimization with parameters
         async function optimizeRoute() {
             const button = document.getElementById('optimizeRoute');
             const resultDiv = document.getElementById('optimizationResult');
             const optimizeText = document.getElementById('optimizeText');
             const mode = document.getElementById('optimizationMode').value;
-            const speedLimit = parseInt(document.getElementById('speedLimit').value);
-            
+            const speedLimit = parseInt(document.getElementById('speedLimit').value);            
             optimizeText.textContent = 'Optimizing...';
             button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i><span id="optimizeText">Optimizing...</span>';
             button.disabled = true;
-
             try {
                 const sourcePort = document.getElementById('sourcePort').value;
                 const destPort = document.getElementById('destinationPort').value;
                 const source = PORTS[sourcePort];
                 const destination = PORTS[destPort];
-
                 // Create route segments based on selected ports
                 const optimizeRequest = {
                     route: [
@@ -2132,21 +2115,17 @@
                         max_speed_kn: speedLimit
                     }
                 };
-
                 const response = await fetch(`${API_BASE}/optimize`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(optimizeRequest)
-                });
-                
-                const data = await response.json();
-                
+                });                
+                const data = await response.json();                
                 if (data.speed_profile) {
                     const savings = data.savings_pct || 15.3;
-                    const fuel = data.total_fuel || 145.8;
-                    
+                    const fuel = data.total_fuel || 145.8;                    
                     resultDiv.innerHTML = `
                         <div class="space-y-2">
                             <div class="flex justify-between">
@@ -2171,7 +2150,6 @@
                             </div>
                         </div>
                     `;
-
                     // Update efficiency gauge
                     updateEfficiencyGauge(Math.min(savings, 50));
                 } else {
@@ -2205,7 +2183,6 @@
                 button.disabled = false;
             }
         }
-
         // Update efficiency gauge animation
         function updateEfficiencyGauge(efficiency) {
             const circumference = 2 * Math.PI * 40;
@@ -2221,15 +2198,12 @@
                 }
             }
         }
-
         // Alert Popup System
         let alertPopupPosition = 'top-right';
         let popupCounter = 0;
-
         function togglePopupPosition() {
             const container = document.getElementById('alertPopupContainer');
-            const positionText = document.getElementById('positionText');
-            
+            const positionText = document.getElementById('positionText');            
             if (alertPopupPosition === 'top-right') {
                 alertPopupPosition = 'bottom-right';
                 container.className = 'alert-popup-container bottom-right';
@@ -2240,39 +2214,31 @@
                 positionText.textContent = 'Top Right';
             }
         }
-
         // Alert Sound System
         function playAlertSound() {
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
+                const gainNode = audioContext.createGain();                
                 oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
+                gainNode.connect(audioContext.destination);                
                 // Longer beep sound with pleasant tone
                 oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
-                oscillator.type = 'sine';
-                
+                oscillator.type = 'sine';                
                 // Increased duration from 0.2 to 0.4 seconds
                 gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-                
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);                
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.4);
             } catch (error) {
                 console.log('Web Audio API not supported:', error);
             }
         }
-
         function showAlertPopup(alertData) {
             const container = document.getElementById('alertPopupContainer');
-            const popupId = `popup-${++popupCounter}`;
-            
+            const popupId = `popup-${++popupCounter}`;            
             // Play alert sound
-            playAlertSound();
-            
+            playAlertSound();            
             const severityColors = {
                 'weather': { bg: 'rgba(234, 179, 8, 0.2)', border: '#eab308', icon: 'fa-cloud-bolt' },
                 'navigation': { bg: 'rgba(249, 115, 22, 0.2)', border: '#f97316', icon: 'fa-compass' },
@@ -2281,15 +2247,12 @@
                 'traffic': { bg: 'rgba(59, 130, 246, 0.2)', border: '#3b82f6', icon: 'fa-ship' },
                 'fuel': { bg: 'rgba(239, 68, 68, 0.2)', border: '#ef4444', icon: 'fa-gas-pump' }
             };
-
             const colorData = severityColors[alertData.type] || severityColors['weather'];
-            
             const popup = document.createElement('div');
             popup.id = popupId;
             popup.className = 'alert-popup';
             popup.style.borderLeftColor = colorData.border;
             popup.style.background = colorData.bg;
-            
             popup.innerHTML = `
                 <div class="close-btn" onclick="closeAlertPopup('${popupId}')">
                     <i class="fas fa-times text-xs"></i>
@@ -2316,21 +2279,18 @@
                         `}
                     </div>
                 </div>
-            `;
-            
+            `;            
             if (alertPopupPosition === 'bottom-right') {
                 container.insertBefore(popup, container.firstChild);
             } else {
                 container.appendChild(popup);
-            }
-            
+            }            
             // Trigger animation
             setTimeout(() => popup.classList.add('show'), 10);
             
             // Auto-remove after 6 seconds
             setTimeout(() => closeAlertPopup(popupId), 6000);
         }
-
         function closeAlertPopup(popupId) {
             const popup = document.getElementById(popupId);
             if (popup) {
@@ -2342,7 +2302,6 @@
                 }, 300);
             }
         }
-
         function triggerAlertPopups(selectedCategories) {
             const alertsData = {
                 'weather': {
@@ -2398,7 +2357,6 @@
                     metricIcon: 'fa-shield-alt'
                 }
             };
-
             let delay = 0;
             selectedCategories.forEach(category => {
                 const categoryAlerts = alertsData[category];
@@ -2415,26 +2373,21 @@
                 }
             });
         }
-
         // Enhanced alerts with different types
         async function loadAlerts() {
             const button = document.getElementById('loadAlerts');
             const resultDiv = document.getElementById('alertsData');
-            const alertBadge = document.getElementById('alertBadge');
-            
+            const alertBadge = document.getElementById('alertBadge');            
             // Check if this function was called by clicking the scan button
             // (We'll track this with a flag)
             if (!window.scanButtonClicked) {
                 return; // Don't show alerts unless scan button was clicked
-            }
-            
+            }            
             button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Scanning...';
             button.disabled = true;
-
             try {
                 const response = await fetch(`${API_BASE}/alerts`);
-                const data = await response.json();
-                
+                const data = await response.json();                
                 if (data.alerts && data.alerts.length > 0) {
                     const alertsHtml = data.alerts.map(alert => {
                         const severityColors = {
@@ -2443,8 +2396,7 @@
                             'high': 'red',
                             'critical': 'red'
                         };
-                        const color = severityColors[alert.severity.toLowerCase()] || 'yellow';
-                        
+                        const color = severityColors[alert.severity.toLowerCase()] || 'yellow';                        
                         return `
                         <div class="bg-${color}-900/30 border-l-4 border-${color}-400 p-3 mb-2 rounded">
                             <div class="flex items-center justify-between">
@@ -2457,13 +2409,11 @@
                             <div class="text-xs text-${color}-200 mt-1">${alert.description}</div>
                             <div class="text-xs text-${color}-300 mt-1">Area: ${alert.area || 'Route area'}</div>
                         </div>
-                    `;}).join('');
-                    
+                    `;}).join('');                    
                     resultDiv.innerHTML = alertsHtml;
                     document.getElementById('alertCount').textContent = data.alerts.length;
                     document.getElementById('warningCount').textContent = data.alerts.filter(a => a.severity === 'medium').length;
                     document.getElementById('criticalCount').textContent = data.alerts.filter(a => a.severity === 'high' || a.severity === 'critical').length;
-                    
                     alertBadge.textContent = `${data.alerts.length} Active Alert${data.alerts.length !== 1 ? 's' : ''}`;
                     alertBadge.className = 'text-xs px-2 py-1 bg-red-500/20 rounded-full border border-red-400/30 text-red-400';
                 } else {
@@ -2475,7 +2425,6 @@
                             selectedCategories.push(button.getAttribute('data-type'));
                         }
                     });
-
                     // If no categories are selected, show "Select alert categories" message
                     if (selectedCategories.length === 0) {
                         resultDiv.innerHTML = `
@@ -2492,12 +2441,10 @@
                         alertBadge.className = 'text-xs px-2 py-1 bg-blue-500/20 rounded-full border border-blue-400/30 text-blue-400';
                         return;
                     }
-
                     // Generate alerts based on selected categories
                     let alertsToShow = [];
                     let warningCount = 0;
                     let criticalCount = 0;
-
                     if (selectedCategories.includes('weather')) {
                         alertsToShow.push(`
                             <div class="glass rounded-lg p-3 border-l-4 border-yellow-500">
@@ -2514,7 +2461,6 @@
                         `);
                         warningCount++;
                     }
-
                     if (selectedCategories.includes('navigation')) {
                         alertsToShow.push(`
                             <div class="glass rounded-lg p-3 border-l-4 border-orange-500">
@@ -2530,7 +2476,6 @@
                             </div>
                         `);
                         warningCount++;
-
                         alertsToShow.push(`
                             <div class="glass rounded-lg p-3 border-l-4 border-blue-500">
                                 <div class="flex items-center justify-between mb-2">
@@ -2546,7 +2491,6 @@
                         `);
                         warningCount++;
                     }
-
                     if (selectedCategories.includes('mechanical')) {
                         alertsToShow.push(`
                             <div class="glass rounded-lg p-3 border-l-4 border-purple-500">
@@ -2562,7 +2506,6 @@
                             </div>
                         `);
                         warningCount++;
-
                         alertsToShow.push(`
                             <div class="glass rounded-lg p-3 border-l-4 border-red-500">
                                 <div class="flex items-center justify-between mb-2">
@@ -2578,7 +2521,6 @@
                         `);
                         criticalCount++;
                     }
-
                     if (selectedCategories.includes('security')) {
                         alertsToShow.push(`
                             <div class="glass rounded-lg p-3 border-l-4 border-red-600">
@@ -2595,14 +2537,12 @@
                         `);
                         criticalCount++;
                     }
-
                     // Show filtered alerts
                     resultDiv.innerHTML = `
                         <div class="text-sm text-ocean-200 space-y-2 max-h-64 overflow-y-auto maritime-scrollbar pr-3">
                             ${alertsToShow.join('')}
                         </div>
                     `;
-
                     // Update counters
                     const totalAlerts = alertsToShow.length;
                     document.getElementById('alertCount').textContent = totalAlerts.toString();
@@ -2611,13 +2551,11 @@
                     alertBadge.textContent = `${totalAlerts} Active Alert${totalAlerts !== 1 ? 's' : ''}`;
                     alertBadge.className = totalAlerts > 0 ? 
                         'text-xs px-2 py-1 bg-orange-500/20 rounded-full border border-orange-400/30 text-orange-400' :
-                        'text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400';
-                    
+                        'text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400';                    
                     // Trigger popup alerts if there are alerts to show
                     if (totalAlerts > 0) {
                         triggerAlertPopups(selectedCategories);
-                    }
-                    
+                    }                    
                     // Update main dashboard alert count
                     const mainAlertCount = document.getElementById('alertCount');
                     const alertCard = mainAlertCount.closest('.weather-card');
@@ -2648,7 +2586,6 @@
                 window.scanButtonClicked = false; // Reset the flag
             }
         }
-
         // Map layer controls
         function toggleMapLayer(layerType) {
             console.log('Toggling layer:', layerType);
@@ -2656,48 +2593,39 @@
             if (!button) {
                 console.error('Button not found for layer:', layerType);
                 return;
-            }
-            
+            }            
             const isActive = button.classList.contains('border-cyan-500');
-            console.log('Layer', layerType, 'is currently', isActive ? 'ACTIVE' : 'INACTIVE');
-            
+            console.log('Layer', layerType, 'is currently', isActive ? 'ACTIVE' : 'INACTIVE');            
             if (isActive) {
                 // Deactivate layer
                 button.classList.remove('border-cyan-500', 'bg-cyan-500/20');
                 button.classList.add('border-gray-500/50');
-                activeMapLayers = activeMapLayers.filter(l => l !== layerType);
-                
+                activeMapLayers = activeMapLayers.filter(l => l !== layerType);                
                 // Remove layer-specific visual effects
                 removeLayerEffects(layerType);
-                console.log('Layer', layerType, 'DEACTIVATED');
-                
+                console.log('Layer', layerType, 'DEACTIVATED');                
             } else {
                 // Activate layer
                 button.classList.remove('border-gray-500/50');
                 button.classList.add('border-cyan-500', 'bg-cyan-500/20');
-                activeMapLayers.push(layerType);
-                
+                activeMapLayers.push(layerType);                
                 // Add layer-specific visual effects
                 addLayerEffects(layerType);
                 console.log('Layer', layerType, 'ACTIVATED');
-            }
-            
+            }            
             // Update active layers counter
             const activeLayersElement = document.getElementById('activeLayers');
             if (activeLayersElement) {
                 activeLayersElement.textContent = activeMapLayers.length;
                 console.log('Active layers count updated to:', activeMapLayers.length);
-            }
-            
+            }            
             // Log layer status
             console.log('All active layers:', activeMapLayers);
         }
-
         // Add visual effects for specific layer types
         function addLayerEffects(layerType) {
             const mapElement = document.getElementById('map');
             if (!mapElement) return;
-
             switch(layerType) {
                 case 'weatherLayer':
                     addWeatherLayerEffects(mapElement);
@@ -2716,7 +2644,6 @@
                     break;
             }
         }
-
         // Remove visual effects for specific layer types
         function removeLayerEffects(layerType) {
             const mapElement = document.getElementById('map');
@@ -2724,14 +2651,12 @@
                 console.error('Map element not found');
                 return;
             }
-
             // Remove layer-specific overlays
             const existingOverlay = document.getElementById(`${layerType}Overlay`);
             if (existingOverlay) {
                 existingOverlay.remove();
                 console.log('Removed overlay for', layerType);
-            }
-            
+            }            
             // Remove layer indicators by ID
             const indicatorId = `${layerType}Indicator`;
             const indicator = document.getElementById(indicatorId);
@@ -2739,7 +2664,6 @@
                 indicator.remove();
                 console.log('Removed indicator for', layerType);
             }
-            
             // Remove Leaflet map layers if they exist
             if (window.map && map.getContainer()) {
                 try {
@@ -2758,12 +2682,10 @@
                 }
             }
         }
-
         // Weather layer effects
         function addWeatherLayerEffects(mapElement) {
             // Remove existing weather overlay
-            removeLayerEffects('weatherLayer');
-            
+            removeLayerEffects('weatherLayer');            
             // Create weather overlay container that sits on top of the map
             const weatherOverlay = document.createElement('div');
             weatherOverlay.id = 'weatherLayerOverlay';
@@ -2776,8 +2698,7 @@
                 radial-gradient(circle at 30% 80%, rgba(168, 85, 247, 0.4) 0%, transparent 50%)
             `;
             weatherOverlay.style.border = '3px solid rgba(59, 130, 246, 0.8)';
-            weatherOverlay.style.borderRadius = '12px';
-            
+            weatherOverlay.style.borderRadius = '12px';            
             // Add animated weather particles
             for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
@@ -2788,8 +2709,7 @@
                 particle.style.animationDelay = Math.random() * 2 + 's';
                 particle.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.6)';
                 weatherOverlay.appendChild(particle);
-            }
-            
+            }            
             // Add weather icons for different zones
             const weatherIcons = ['🌧️', '⛈️', '🌦️', '☀️', '⛅', '🌤️'];
             for (let i = 0; i < 6; i++) {
@@ -2803,8 +2723,7 @@
                 icon.style.filter = 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))';
                 icon.style.textShadow = '2px 2px 4px rgba(0,0,0,0.8)';
                 weatherOverlay.appendChild(icon);
-            }
-            
+            }            
             // Add temperature indicators
             const temps = ['22°C', '25°C', '19°C', '28°C', '21°C'];
             for (let i = 0; i < 5; i++) {
@@ -2817,11 +2736,9 @@
                 temp.style.animationDelay = Math.random() * 2 + 's';
                 temp.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.6)';
                 weatherOverlay.appendChild(temp);
-            }
-            
+            }            
             // Add the overlay to the map container
-            mapElement.appendChild(weatherOverlay);
-            
+            mapElement.appendChild(weatherOverlay);            
             // Also add as a Leaflet pane if map is available (for better integration)
             if (window.map && map.getContainer()) {
                 try {
@@ -2830,8 +2747,7 @@
                         map.createPane('weatherPane');
                         map.getPane('weatherPane').style.zIndex = 1000;
                         map.getPane('weatherPane').style.pointerEvents = 'none';
-                    }
-                    
+                    }                    
                     // Add weather layer as SVG overlay to ensure it stays on top
                     const bounds = map.getBounds();
                     const weatherSvgOverlay = L.svgOverlay(
@@ -2839,15 +2755,13 @@
                         bounds,
                         { pane: 'weatherPane' }
                     );
-                    weatherSvgOverlay.addTo(map);
-                    
+                    weatherSvgOverlay.addTo(map);                    
                     // Store reference for removal
                     window.weatherMapLayer = weatherSvgOverlay;
                 } catch (e) {
                     console.log('Could not add Leaflet weather layer:', e);
                 }
-            }
-            
+            }            
             // Add a prominent visual indicator that the layer is active
             const indicator = document.createElement('div');
             indicator.id = 'weatherLayerIndicator';
@@ -2856,25 +2770,21 @@
             indicator.textContent = '🌦️ WEATHER LAYER ACTIVE';
             indicator.style.animation = 'pulse 2s ease-in-out infinite';
             indicator.style.boxShadow = '0 0 15px rgba(59, 130, 246, 0.8)';
-            mapElement.appendChild(indicator);
-            
+            mapElement.appendChild(indicator);            
             // Show weather data notification
             showLayerNotification('Weather Layer Activated', '🌦️ Real-time weather data overlay enabled', 'success');
         }
-
         // Wind layer effects
         function addWindLayerEffects(mapElement) {
             // Remove existing wind overlay
-            removeLayerEffects('windLayer');
-            
+            removeLayerEffects('windLayer');            
             // Create wind overlay
             const windOverlay = document.createElement('div');
             windOverlay.id = 'windLayerOverlay';
             windOverlay.className = 'absolute inset-0 pointer-events-none';
             windOverlay.style.zIndex = '1000'; // Very high z-index to ensure it's above map tiles
             windOverlay.style.border = '3px solid rgba(6, 182, 212, 0.8)';
-            windOverlay.style.borderRadius = '12px';
-            
+            windOverlay.style.borderRadius = '12px';            
             // Add wind direction arrows
             for (let i = 0; i < 18; i++) {
                 const arrow = document.createElement('div');
@@ -2888,8 +2798,7 @@
                 arrow.style.animationDelay = Math.random() * 2 + 's';
                 arrow.style.filter = 'drop-shadow(0 0 3px rgba(6, 182, 212, 0.8))';
                 windOverlay.appendChild(arrow);
-            }
-            
+            }            
             // Add wind speed indicators
             const windSpeeds = ['12kt', '8kt', '15kt', '6kt', '18kt', '11kt'];
             for (let i = 0; i < 6; i++) {
@@ -2901,8 +2810,7 @@
                 speed.style.animation = `pulse ${1.8 + Math.random()}s ease-in-out infinite`;
                 speed.style.animationDelay = Math.random() * 2 + 's';
                 windOverlay.appendChild(speed);
-            }
-            
+            }            
             // Add wind flow lines
             const windLines = document.createElement('div');
             windLines.className = 'absolute inset-0';
@@ -2912,10 +2820,8 @@
             `;
             windLines.style.backgroundSize = '25px 25px';
             windLines.style.animation = 'windFlow 3s linear infinite';
-            windOverlay.appendChild(windLines);
-            
-            mapElement.appendChild(windOverlay);
-            
+            windOverlay.appendChild(windLines);            
+            mapElement.appendChild(windOverlay);            
             // Also add as a Leaflet pane if map is available (for better integration)
             if (window.map && map.getContainer()) {
                 try {
@@ -2924,8 +2830,7 @@
                         map.createPane('windPane');
                         map.getPane('windPane').style.zIndex = 1000;
                         map.getPane('windPane').style.pointerEvents = 'none';
-                    }
-                    
+                    }                    
                     // Add wind layer as SVG overlay to ensure it stays on top
                     const bounds = map.getBounds();
                     const windSvgOverlay = L.svgOverlay(
@@ -2933,15 +2838,13 @@
                         bounds,
                         { pane: 'windPane' }
                     );
-                    windSvgOverlay.addTo(map);
-                    
+                    windSvgOverlay.addTo(map);                    
                     // Store reference for removal
                     window.windMapLayer = windSvgOverlay;
                 } catch (e) {
                     console.log('Could not add Leaflet wind layer:', e);
                 }
-            }
-            
+            }            
             // Add a prominent visual indicator that the wind layer is active
             const indicator = document.createElement('div');
             indicator.id = 'windLayerIndicator';
@@ -2950,16 +2853,13 @@
             indicator.textContent = '💨 WIND LAYER ACTIVE';
             indicator.style.animation = 'pulse 2s ease-in-out infinite';
             indicator.style.boxShadow = '0 0 15px rgba(6, 182, 212, 0.8)';
-            mapElement.appendChild(indicator);
-            
+            mapElement.appendChild(indicator);            
             // Show wind data notification
             showLayerNotification('Wind Layer Activated', '💨 Wind patterns and direction overlay enabled', 'success');
         }
-
         // Wave layer effects
         function addWaveLayerEffects(mapElement) {
-            removeLayerEffects('waveLayer');
-            
+            removeLayerEffects('waveLayer');            
             const waveOverlay = document.createElement('div');
             waveOverlay.id = 'waveLayerOverlay';
             waveOverlay.className = 'absolute inset-0 pointer-events-none z-10';
@@ -2967,20 +2867,16 @@
                 repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(14, 165, 233, 0.2) 8px, rgba(14, 165, 233, 0.2) 16px),
                 repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(6, 182, 212, 0.15) 12px, rgba(6, 182, 212, 0.15) 24px)
             `;
-            waveOverlay.style.animation = 'waveMotion 6s ease-in-out infinite';
-            
+            waveOverlay.style.animation = 'waveMotion 6s ease-in-out infinite';            
             mapElement.appendChild(waveOverlay);
             showLayerNotification('Wave Layer Activated', '🌊 Wave height and sea state overlay enabled', 'success');
         }
-
         // Traffic layer effects
         function addTrafficLayerEffects(mapElement) {
-            removeLayerEffects('trafficLayer');
-            
+            removeLayerEffects('trafficLayer');            
             const trafficOverlay = document.createElement('div');
             trafficOverlay.id = 'trafficLayerOverlay';
-            trafficOverlay.className = 'absolute inset-0 pointer-events-none z-10';
-            
+            trafficOverlay.className = 'absolute inset-0 pointer-events-none z-10';            
             // Add moving vessel indicators
             for (let i = 0; i < 6; i++) {
                 const vessel = document.createElement('div');
@@ -2990,20 +2886,16 @@
                 vessel.style.animation = `vesselMove ${8 + Math.random() * 4}s linear infinite`;
                 vessel.style.animationDelay = Math.random() * 3 + 's';
                 trafficOverlay.appendChild(vessel);
-            }
-            
+            }            
             mapElement.appendChild(trafficOverlay);
             showLayerNotification('Traffic Layer Activated', '🚢 Vessel traffic and AIS data overlay enabled', 'info');
         }
-
         // Safety layer effects
         function addSafetyLayerEffects(mapElement) {
-            removeLayerEffects('safetyLayer');
-            
+            removeLayerEffects('safetyLayer');            
             const safetyOverlay = document.createElement('div');
             safetyOverlay.id = 'safetyLayerOverlay';
-            safetyOverlay.className = 'absolute inset-0 pointer-events-none z-10';
-            
+            safetyOverlay.className = 'absolute inset-0 pointer-events-none z-10';            
             // Add safety zone indicators
             for (let i = 0; i < 4; i++) {
                 const zone = document.createElement('div');
@@ -3015,12 +2907,10 @@
                 zone.style.animation = `pulse 3s ease-in-out infinite`;
                 zone.style.animationDelay = Math.random() * 2 + 's';
                 safetyOverlay.appendChild(zone);
-            }
-            
+            }            
             mapElement.appendChild(safetyOverlay);
             showLayerNotification('Safety Layer Activated', '⚠️ Safety zones and hazard areas overlay enabled', 'warning');
         }
-
         // Show layer activation notifications
         function showLayerNotification(title, message, type = 'info') {
             // Create notification element
@@ -3029,8 +2919,7 @@
                 type === 'success' ? 'bg-green-600' : 
                 type === 'warning' ? 'bg-yellow-600' : 
                 type === 'error' ? 'bg-red-600' : 'bg-slate-700'
-            } text-white max-w-sm`;
-            
+            } text-white max-w-sm`;            
             notification.innerHTML = `
                 <div class="flex items-start">
                     <div class="mr-3 text-lg">
@@ -3041,39 +2930,32 @@
                         <div class="text-sm opacity-90">${message}</div>
                     </div>
                 </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
+            `;            
+            document.body.appendChild(notification);            
             // Slide in
-            setTimeout(() => notification.classList.remove('translate-x-full'), 100);
-            
+            setTimeout(() => notification.classList.remove('translate-x-full'), 100);            
             // Slide out and remove
             setTimeout(() => {
                 notification.classList.add('translate-x-full');
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
-
         // Speed slider update
         function updateSpeedSlider() {
             const slider = document.getElementById('speedLimit');
             const display = document.getElementById('speedValue');
             display.textContent = slider.value + ' kts';
         }
-
         // Timeline animation
         function animateTimeline() {
             const progress = document.getElementById('timelineProgress');
-            let currentProgress = 25;
-            
+            let currentProgress = 25;            
             setInterval(() => {
                 currentProgress += 0.5;
                 if (currentProgress > 100) currentProgress = 0;
                 progress.style.width = currentProgress + '%';
             }, 1000);
         }
-
         // Set timeline progress
         function setTimelineProgress(percent) {
             percent = Math.max(0, Math.min(100, percent));
@@ -3083,7 +2965,6 @@
                 indicator.style.left = percent + '%';
             }
         }
-
         // Automatically sync indicator with progress bar
         function syncTimelineIndicator() {
             var progressBar = document.getElementById('timelineProgress');
@@ -3098,15 +2979,12 @@
             });
             observer.observe(progressBar, { attributes: true, attributeFilter: ['style'] });
         }
-
         document.addEventListener('DOMContentLoaded', function() {
             syncTimelineIndicator();
         });
-
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Weather Engine Maritime - Initializing...');
-            
+            console.log('Weather Engine Maritime - Initializing...');            
             // Show immediate fallback content
             setTimeout(() => {
                 const loader = document.getElementById('mapLoader');
@@ -3117,16 +2995,14 @@
                     fallback.style.display = 'block';
                     fallback.classList.remove('hidden');
                 }
-            }, 100);
-            
+            }, 100);            
             // Initialize all components with error handling
             try {
                 initMap();
             } catch (error) {
                 console.error('Map initialization failed:', error);
                 showMapFallback();
-            }
-            
+            }            
             try {
                 initWeatherChart();
                 initPerformanceChart();
@@ -3134,31 +3010,26 @@
                 initFuelChart();
             } catch (error) {
                 console.error('Chart initialization failed:', error);
-            }
-            
+            }            
             try {
                 checkAPI();
                 animateTimeline();
             } catch (error) {
                 console.error('API/Timeline initialization failed:', error);
-            }
-            
+            }            
             // Port selection listeners
             document.getElementById('sourcePort').addEventListener('change', () => {
                 updateRouteDisplay();
                 setTimeout(drawRoute, 500); // Give map time to be ready
-            });
-            
+            });            
             document.getElementById('destinationPort').addEventListener('change', () => {
                 updateRouteDisplay();
                 setTimeout(drawRoute, 500);
-            });
-            
+            });            
             document.getElementById('updateRoute').addEventListener('click', () => {
                 updateRouteDisplay();
                 setTimeout(drawRoute, 500);
             });
-
             // Action button listeners
             document.getElementById('loadForecast').addEventListener('click', loadForecast);
             document.getElementById('optimizeRoute').addEventListener('click', optimizeRoute);
@@ -3166,11 +3037,9 @@
                 window.scanButtonClicked = true; // Set flag to indicate scan button was clicked
                 loadAlerts();
             });
-            document.getElementById('refreshWeather').addEventListener('click', loadForecast);
-            
+            document.getElementById('refreshWeather').addEventListener('click', loadForecast);            
             // Position toggle listener for alert popups
-            document.getElementById('positionToggle').addEventListener('click', togglePopupPosition);
-            
+            document.getElementById('positionToggle').addEventListener('click', togglePopupPosition);            
             // Map control listeners
             document.getElementById('centerMap').addEventListener('click', () => {
                 if (map) {
@@ -3178,15 +3047,13 @@
                 } else {
                     console.log('Map not available, using fallback centering');
                 }
-            });
-            
+            });            
             document.getElementById('fullscreen').addEventListener('click', () => {
                 const mapContainer = document.getElementById('map');
                 if (mapContainer && mapContainer.requestFullscreen) {
                     mapContainer.requestFullscreen();
                 }
             });
-
             // Layer toggle listeners
             ['weatherLayer', 'windLayer', 'waveLayer', 'trafficLayer', 'safetyLayer'].forEach(layerId => {
                 const button = document.getElementById(layerId);
@@ -3194,7 +3061,6 @@
                     button.addEventListener('click', () => toggleMapLayer(layerId));
                 }
             });
-
             // Alert type filter listeners
             ['weatherAlerts', 'navigationAlerts', 'securityAlerts', 'mechanicalAlerts'].forEach(alertType => {
                 const button = document.getElementById(alertType);
@@ -3213,62 +3079,49 @@
                     });
                 }
             });
-
             // Speed slider listener
-            document.getElementById('speedLimit').addEventListener('input', updateSpeedSlider);
-            
+            document.getElementById('speedLimit').addEventListener('input', updateSpeedSlider);            
             // Status refresh
             if (document.getElementById('refreshStatus')) {
                 document.getElementById('refreshStatus').addEventListener('click', checkAPI);
-            }
-            
+            }            
             // Auto-refresh status every 30 seconds
-            setInterval(checkAPI, 30000);
-            
+            setInterval(checkAPI, 30000);            
             // Initialize displays
             updateSpeedSlider();
-            updateRouteDisplay();
-            
+            updateRouteDisplay();            
             console.log('Weather Engine Maritime - Initialization complete');
         });
-
         // Enhanced floating particles
         function createFloatingElement() {
             const element = document.createElement('div');
             element.className = 'floating-particles';
             element.style.left = Math.random() * 100 + '%';
             element.style.animationDelay = Math.random() * 10 + 's';
-            element.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            
+            element.style.animationDuration = (Math.random() * 10 + 15) + 's';            
             // Add different particle types
             const types = ['💧', '🌊', '⭐', '✨'];
             if (Math.random() > 0.8) {
                 element.innerHTML = types[Math.floor(Math.random() * types.length)];
                 element.style.fontSize = '12px';
                 element.style.background = 'transparent';
-            }
-            
-            document.body.appendChild(element);
-            
+            }            
+            document.body.appendChild(element);            
             setTimeout(() => {
                 element.remove();
             }, 25000);
         }
-
         // Create floating particles periodically
         setInterval(createFloatingElement, 2000);
-
         // Simulate vessel movement
         setInterval(() => {
             document.getElementById('visibleVessels').textContent = Math.floor(Math.random() * 5) + 2;
         }, 10000);
-
         // Live India Time Display
         function updateIndiaTime() {
             const now = new Date();
             // Convert to India Standard Time (IST) - UTC+5:30
             const indiaTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
-            
             const timeOptions = {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -3276,7 +3129,6 @@
                 hour12: true,
                 timeZone: 'Asia/Kolkata'
             };
-            
             const timeOptions24 = {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -3284,7 +3136,6 @@
                 hour12: false,
                 timeZone: 'Asia/Kolkata'
             };
-            
             const dateOptions = {
                 weekday: 'short',
                 year: 'numeric',
@@ -3292,11 +3143,9 @@
                 day: 'numeric',
                 timeZone: 'Asia/Kolkata'
             };
-            
             const timeString = indiaTime.toLocaleTimeString('en-IN', timeOptions);
             const timeString24 = indiaTime.toLocaleTimeString('en-IN', timeOptions24);
             const dateString = indiaTime.toLocaleDateString('en-IN', dateOptions);
-            
             // Update navigation time
             const liveTimeElement = document.getElementById('liveTime');
             if (liveTimeElement) {
@@ -3307,21 +3156,17 @@
                     </div>
                 `;
             }
-            
             // Update timeline time
             const timelineTimeElement = document.getElementById('timelineTime');
             if (timelineTimeElement) {
                 timelineTimeElement.textContent = `${timeString24} IST`;
             }
         }
-        
         // Update time immediately and then every second
         updateIndiaTime();
         setInterval(updateIndiaTime, 1000);
-
         // Enhanced Dynamic Background with Vanta.js
         let vantaEffect = null;
-        
         function initializeBackground() {
             try {
                 // Initialize Vanta.js WAVES effect for better visibility
@@ -3385,13 +3230,11 @@
                 }
             }
         }
-
         // Initialize background when page loads
         document.addEventListener('DOMContentLoaded', function() {
             // Wait a bit for Vanta.js to load
             setTimeout(initializeBackground, 500);
         });
-
         // Cleanup on page unload
         window.addEventListener('beforeunload', function() {
             if (vantaEffect) vantaEffect.destroy();
