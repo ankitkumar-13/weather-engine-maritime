@@ -769,10 +769,10 @@
                 </span>
             </p>
             <div>
-                <div id="mockBanner" class="mt-6 glass px-8 py-4 rounded-2xl inline-block animate-glow">
+                <div id="mockBanner" class="mt-6 bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 px-8 py-4 rounded-2xl inline-block">
                     <div class="flex flex-row items-center space-x-6">
                         <div class="flex flex-col">
-                            <span class="text-md text-ocean-300 text-left block">PostgreSQL</span>
+                            <span class="text-md text-yellow-300 text-left block">PostgreSQL</span>
                             <span class="text-lg font-semibold mr-2">Connectivity Status</span>
                         </div>
                         <span class="text-lg text-green-400 flex items-center" id="dbStatus">
@@ -785,7 +785,7 @@
         </div>
         <!-- Live Metrics Dashboard -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="premium-card interactive-card rounded-2xl p-6 text-center weather-card bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-4xl mb-2">🌊</div>
                 <div class="text-2xl font-bold metric-counter premium-text" id="waveHeight">2.4m</div>
                 <div class="text-ocean-300 elegant-subtext">Wave Height</div>
@@ -793,7 +793,7 @@
                     <i class="fas fa-arrow-down mr-1"></i>Decreasing
                 </div>
             </div>
-            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="premium-card interactive-card rounded-2xl p-6 text-center weather-card bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30" data-aos="fade-up" data-aos-delay="200">
                 <div class="text-4xl mb-2">💨</div>
                 <div class="text-2xl font-bold metric-counter premium-text" id="windSpeed">12.8 kts</div>
                 <div class="text-ocean-300 elegant-subtext">Wind Speed</div>
@@ -801,7 +801,7 @@
                     <i class="fas fa-arrow-right mr-1"></i>Stable
                 </div>
             </div>
-            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="premium-card interactive-card rounded-2xl p-6 text-center weather-card bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30" data-aos="fade-up" data-aos-delay="300">
                 <div class="text-4xl mb-2">⛽</div>
                 <div class="text-2xl font-bold metric-counter premium-text text-green-400" id="fuelSavings">15.3%</div>
                 <div class="text-ocean-300 elegant-subtext">Fuel Savings</div>
@@ -809,7 +809,7 @@
                     <i class="fas fa-arrow-up mr-1"></i>Optimized
                 </div>
             </div>
-            <div class="premium-card neo-glass interactive-card glow-effect rounded-2xl p-6 text-center weather-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="premium-card interactive-card rounded-2xl p-6 text-center weather-card bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30" data-aos="fade-up" data-aos-delay="400">
                 <div class="text-4xl mb-2">🚨</div>
                 <div class="text-2xl font-bold metric-counter premium-text" id="alertCount">0</div>
                 <div class="text-ocean-300 elegant-subtext">Active Alerts</div>
@@ -819,7 +819,7 @@
             </div>
         </div>
         <!-- API Status Panel -->
-        <div class="premium-card neo-glass rounded-2xl p-6 mb-12" data-aos="fade-up">
+        <div class="premium-card bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-6 mb-12" data-aos="fade-up">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold flex items-center">
                     <i class="fas fa-server mr-3 text-ocean-400"></i>
@@ -830,27 +830,27 @@
                 </button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="flex items-center justify-between p-4 glass rounded-xl">
+                <div class="flex items-center justify-between p-4 bg-slate-800 border border-yellow-400/30 rounded-xl">
                     <div>
-                        <div class="text-sm text-ocean-300">Backend API</div>
+                        <div class="text-sm text-yellow-300">Backend API</div>
                         <div class="text-lg font-semibold">Port 8000</div>
                     </div>
                     <div id="apiStatus" class="text-red-400 flex items-center">
                         <i class="fas fa-spinner fa-spin mr-2"></i>Checking...
                     </div>
                 </div>
-                <div class="flex items-center justify-between p-4 glass rounded-xl">
+                <div class="flex items-center justify-between p-4 bg-slate-800 border border-yellow-400/30 rounded-xl">
                     <div>
-                        <div class="text-sm text-ocean-300">Route Data</div>
+                        <div class="text-sm text-yellow-300">Route Data</div>
                         <div class="text-lg font-semibold">Mumbai → Kochi</div>
                     </div>
                     <div id="routeStatus" class="text-green-400 flex items-center">
                         <i class="fas fa-check mr-2"></i>Loaded
                     </div>
                 </div>
-                <div class="flex items-center justify-between p-4 glass rounded-xl">
+                <div class="flex items-center justify-between p-4 bg-slate-800 border border-yellow-400/30 rounded-xl">
                     <div>
-                        <div class="text-sm text-ocean-300">Weather Data</div>
+                        <div class="text-sm text-yellow-300">Weather Data</div>
                         <div class="text-lg font-semibold">10-day Forecast</div>
                     </div>
                     <div id="weatherStatus" class="text-green-400 flex items-center">
@@ -860,9 +860,9 @@
             </div>
         </div>
         <!-- Port Selection Panel -->
-        <div class="glass rounded-2xl p-6 mb-8" data-aos="zoom-in">
+        <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-6 mb-8" data-aos="zoom-in">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-anchor mr-3 text-ocean-400"></i>
+                <i class="fas fa-anchor mr-3 text-yellow-400"></i>
                 Route Configuration
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -924,10 +924,10 @@
         <!-- Main Dashboard -->
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <!-- Interactive Map Panel -->
-            <div class="xl:col-span-2 glass rounded-2xl p-6" data-aos="fade-right">
+            <div class="xl:col-span-2 bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-6" data-aos="fade-right">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold flex items-center">
-                        <i class="fas fa-map mr-3 text-ocean-400"></i>
+                        <i class="fas fa-map mr-3 text-yellow-400"></i>
                         Interactive Route Map
                         <span id="currentRoute" class="ml-3 text-sm px-3 py-1 bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-full border border-green-400/30">
                             Mumbai → Kochi
@@ -1052,7 +1052,7 @@
                 </div>
                 <hr class="my-6 pb-6">
                 <!-- Advanced Weather Panel -->
-                <div class="glass rounded-2xl mt-6 p-6 weather-card" data-aos="fade-left" data-aos-delay="100">
+                <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl mt-6 p-6 weather-card" data-aos="fade-left" data-aos-delay="100">
                     <h3 class="text-xl font-bold mb-4 flex items-center justify-between">
                         <span class="flex items-center">
                             <i class="fas fa-cloud-sun mr-3 text-yellow-400"></i>
@@ -1113,10 +1113,10 @@
             <!-- Control Panel -->
             <div class="space-y-6">
                 <!-- Advanced Speed Optimization Panel -->
-                <div class="glass rounded-2xl p-6 weather-card" data-aos="fade-left" data-aos-delay="200">
+                <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-6 weather-card" data-aos="fade-left" data-aos-delay="200">
                     <h3 class="text-xl font-bold mb-4 flex items-center justify-between">
                         <span class="flex items-center">
-                            <i class="fas fa-tachometer-alt mr-3 text-green-400"></i>
+                            <i class="fas fa-tachometer-alt mr-3 text-yellow-400"></i>
                             Route Optimization
                         </span>
                         <div class="text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30">
@@ -1204,10 +1204,10 @@
                     </div>
                 </div>
                 <!-- Enhanced Alerts Panel -->
-                <div class="glass rounded-2xl p-6 weather-card" data-aos="fade-left" data-aos-delay="300">
+                <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-6 weather-card" data-aos="fade-left" data-aos-delay="300">
                     <h3 class="text-xl font-bold mb-4 flex items-center justify-between">
                         <span class="flex items-center">
-                            <i class="fas fa-shield-alt mr-3 text-red-400"></i>
+                            <i class="fas fa-shield-alt mr-3 text-yellow-400"></i>
                             Safety & Alerts
                         </span>
                         <div id="alertBadge" class="text-xs px-2 py-1 bg-green-500/20 rounded-full border border-green-400/30 text-green-400">
@@ -1268,9 +1268,9 @@
                     </div>
                 </div>                
                 <!-- Real-time Vessel Status -->
-                <div class="glass rounded-2xl p-6 weather-card" data-aos="fade-left" data-aos-delay="400">
+                <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-6 weather-card" data-aos="fade-left" data-aos-delay="400">
                     <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-ship mr-3 text-cyan-400"></i>
+                        <i class="fas fa-ship mr-3 text-yellow-400"></i>
                         Vessel Status
                     </h3>                    
                     <div class="space-y-3">
@@ -1321,9 +1321,9 @@
         <!-- Advanced Analytics and Visualization Section -->
         <div class="mt-12 space-y-8">
             <!-- Real-time Data Dashboard -->
-            <div class="glass rounded-2xl p-8" data-aos="fade-up">
+            <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-8" data-aos="fade-up">
                 <h2 class="text-3xl font-bold mb-8 flex items-center">
-                    <i class="fas fa-chart-area mr-4 text-purple-400"></i>
+                    <i class="fas fa-chart-area mr-4 text-yellow-400"></i>
                     <span class="gradient-text">Advanced Analytics Dashboard</span>
                 </h2>           
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -1360,9 +1360,9 @@
                 </div>
             </div>            
             <!-- Interactive Timeline -->
-            <div class="glass rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+            <div class="bg-slate-900 border-2 border-yellow-400 shadow-md shadow-yellow-400/30 rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
                 <h3 class="text-2xl font-bold mb-6 flex items-center">
-                    <i class="fas fa-timeline mr-3 text-indigo-400"></i>
+                    <i class="fas fa-timeline mr-3 text-yellow-400"></i>
                     Interactive Route Timeline
                 </h3>           
                 <!-- Timeline Controls -->
