@@ -6,8 +6,8 @@ import json
 import os
 from datetime import datetime
 
-from ingest import get_weather_data
-from optimizer import optimize_route
+from src.ingest import get_weather_data
+from src.optimizer import optimize_route
 
 app = FastAPI(title="Weather Engine Maritime API", version="1.0.0")
 

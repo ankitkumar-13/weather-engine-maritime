@@ -3,11 +3,14 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy backend requirements and install dependencies
-COPY backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt ./backend/
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Copy backend source code
-COPY backend/ ./backend/
+# Copy entire project structure
+COPY . .
+
+# Set Python path
+ENV PYTHONPATH=/app/backend
 
 # Expose port
 EXPOSE 8000
