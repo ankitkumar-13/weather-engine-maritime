@@ -35,8 +35,11 @@
 </div>
 
 ---
-⚠️ Critical Industry Problem  
-<img src="https://readme-typing-svg.herokuapp.com/api?font=Orbitron&weight=600&size=24&duration=3000&pause=1000&color=FF6B35&center=true&vCenter=true&width=800&lines=Maritime+Industry+Faces+Critical+Challenges;$15B+Annual+Weather-Related+Losses;Fuel+Inefficiency+%26+Safety+Risks" />
+<h2 align="center">⚠️ Critical Industry Problem</h2>
+<div align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=24&duration=3000&pause=1000&color=FF6B35&center=true&vCenter=true&width=800&lines=Maritime+Industry+Faces+Critical+Challenges;$15B+Annual+Weather-Related+Losses;Fuel+Inefficiency+%26+Safety+Risks" alt="Critical Industry Problem Animation"/>
+</div>
+
 
 🔍 Problem Statement  
 The global maritime industry faces unprecedented challenges in weather-driven navigation, resulting in catastrophic economic and safety impacts:
