@@ -1,0 +1,9 @@
+backend/
+data/
+tests/
+*.md
+*.sh
+*.py
+package.json
+package-lock.json
+node_modules/
