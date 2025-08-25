@@ -1509,18 +1509,24 @@
             const time = Date.now();            
             // Wave height (1.8 - 3.2m)
             const waveHeight = (2.0 + Math.sin(time / 10000) * 0.6 + Math.random() * 0.4).toFixed(1);
-            document.getElementById('waveHeight').textContent = waveHeight + 'm';
-            document.getElementById('currentWaves').textContent = waveHeight + 'm';            
+            const waveHeightEl = document.getElementById('waveHeight');
+            if (waveHeightEl) waveHeightEl.textContent = waveHeight + 'm';
+            const currentWavesEl = document.getElementById('currentWaves');
+            if (currentWavesEl) currentWavesEl.textContent = waveHeight + 'm';            
             // Wind speed (8 - 18 kts)
             const windSpeed = (13 + Math.cos(time / 8000) * 3 + Math.random() * 2).toFixed(1);
-            document.getElementById('windSpeed').textContent = windSpeed + ' kts';
-            document.getElementById('currentWind').textContent = windSpeed + ' kts';            
+            const windSpeedEl = document.getElementById('windSpeed');
+            if (windSpeedEl) windSpeedEl.textContent = windSpeed + ' kts';
+            const currentWindEl = document.getElementById('currentWind');
+            if (currentWindEl) currentWindEl.textContent = windSpeed + ' kts';            
             // Fuel savings (12 - 20%)
             const fuelSavings = (15 + Math.sin(time / 12000) * 2.5 + Math.random() * 1).toFixed(1);
-            document.getElementById('fuelSavings').textContent = fuelSavings + '%';            
+            const fuelSavingsEl = document.getElementById('fuelSavings');
+            if (fuelSavingsEl) fuelSavingsEl.textContent = fuelSavings + '%';            
             // Visibility (10 - 25 km)
             const visibility = (15 + Math.cos(time / 15000) * 5 + Math.random() * 3).toFixed(1);
-            document.getElementById('currentVisibility').textContent = visibility + ' km';            
+            const currentVisibilityEl = document.getElementById('currentVisibility');
+            if (currentVisibilityEl) currentVisibilityEl.textContent = visibility + ' km';            
             // Update optimization results
             document.getElementById('fuelSavings').textContent = fuelSavings + '%';
             document.getElementById('timeSaved').textContent = (2 + Math.random() * 1).toFixed(0) + 'h ' + (Math.random() * 59).toFixed(0) + 'm';

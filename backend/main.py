@@ -44,10 +44,33 @@ async def root():
 async def get_route_forecast(route_id: int = 1):
     """Get weather forecast for route points"""
     try:
-        # Load sample route
-        route_path = os.path.join("routes", "sample_route.json")
-        with open(route_path, 'r') as f:
-            route_data = json.load(f)
+        # Load sample route - try multiple paths for deployment compatibility
+        possible_paths = [
+            os.path.join(os.path.dirname(__file__), "routes", "sample_route.json"),
+            os.path.join("backend", "routes", "sample_route.json"),
+            os.path.join("routes", "sample_route.json"),
+            "backend/routes/sample_route.json"
+        ]
+        
+        route_data = None
+        for route_path in possible_paths:
+            try:
+                if os.path.exists(route_path):
+                    with open(route_path, 'r') as f:
+                        route_data = json.load(f)
+                    break
+            except:
+                continue
+        
+        if not route_data:
+            # Fallback to hardcoded route data
+            route_data = {
+                "route_points": [
+                    {"segment_id": 1, "lat": 19.0760, "lon": 72.8777, "dist_nm": 120, "name": "Mumbai Port"},
+                    {"segment_id": 2, "lat": 15.3173, "lon": 75.7139, "dist_nm": 150, "name": "Mid-point Goa"},
+                    {"segment_id": 3, "lat": 9.9312, "lon": 76.2673, "dist_nm": 180, "name": "Kochi Port"}
+                ]
+            }
         
         route_points = route_data.get("route_points", [])
         
@@ -105,10 +128,33 @@ async def optimize_speed(request: OptimizeRequest):
 async def get_alerts(route_id: int = 1):
     """Get weather alerts for route"""
     try:
-        # Load sample route
-        route_path = os.path.join("routes", "sample_route.json")
-        with open(route_path, 'r') as f:
-            route_data = json.load(f)
+        # Load sample route - try multiple paths for deployment compatibility
+        possible_paths = [
+            os.path.join(os.path.dirname(__file__), "routes", "sample_route.json"),
+            os.path.join("backend", "routes", "sample_route.json"),
+            os.path.join("routes", "sample_route.json"),
+            "backend/routes/sample_route.json"
+        ]
+        
+        route_data = None
+        for route_path in possible_paths:
+            try:
+                if os.path.exists(route_path):
+                    with open(route_path, 'r') as f:
+                        route_data = json.load(f)
+                    break
+            except:
+                continue
+        
+        if not route_data:
+            # Fallback to hardcoded route data
+            route_data = {
+                "route_points": [
+                    {"segment_id": 1, "lat": 19.0760, "lon": 72.8777, "dist_nm": 120, "name": "Mumbai Port"},
+                    {"segment_id": 2, "lat": 15.3173, "lon": 75.7139, "dist_nm": 150, "name": "Mid-point Goa"},
+                    {"segment_id": 3, "lat": 9.9312, "lon": 76.2673, "dist_nm": 180, "name": "Kochi Port"}
+                ]
+            }
         
         route_points = route_data.get("route_points", [])
         
