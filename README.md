@@ -2,8 +2,6 @@
 <div align="center">
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=700&size=32&duration=3000&pause=1000&color=00D4FF&background=001122FF&center=true&vCenter=true&multiline=true&width=900&height=120&lines=%F0%9F%9A%A2+Maritime+Weather+Intelligence;%E2%9A%A1+AI-Powered+Route+Optimization;%F0%9F%8C%8A+MariTHON+Hackathon+Winner!)](https://git.io/typing-svg)
-![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,6,26,30&height=300&section=header&text=Weather%20Engine%20Maritime&fontSize=50&fontColor=ffffff&animation=twinkling&fontAlignY=35&desc=Real-time%20Maritime%20Intelligence%20%26%20Route%20Optimization&descAlignY=55&descAlign=62)
-
 
 ![Version](https://img.shields.io/badge/Version-1.0.0-00D4FF?style=for-the-badge&logo=semver&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-MVP%20Complete-00FF88?style=for-the-badge&logo=checkmarx&logoColor=white)
@@ -37,6 +35,93 @@
 </div>
 
 ---
+⚠️ Critical Industry Problem  
+<img src="https://readme-typing-svg.herokuapp.com/api?font=Orbitron&weight=600&size=24&duration=3000&pause=1000&color=FF6B35&center=true&vCenter=true&width=800&lines=Maritime+Industry+Faces+Critical+Challenges;$15B+Annual+Weather-Related+Losses;Fuel+Inefficiency+%26+Safety+Risks" />
+
+🔍 Problem Statement  
+The global maritime industry faces unprecedented challenges in weather-driven navigation, resulting in catastrophic economic and safety impacts:
+
+<table>
+<tr>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/$15B_Annual_Losses-FF4444?style=for-the-badge&logo=dollar&logoColor=white"/>
+<br>
+<b>Weather-Related Damages</b>
+<br>
+<i>Shipping delays, fuel waste, and cargo damage</i>
+</td>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/30%25_Fuel_Waste-FF6B35?style=for-the-badge"/>
+<br>
+<b>Inefficient Routing</b>
+<br>
+<i>Suboptimal speed profiles and route planning</i>
+</td>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/2000+_Incidents-CC0000?style=for-the-badge"/>
+<br>
+<b>Annual Safety Risks</b>
+<br>
+<i>Weather-related maritime accidents</i>
+</td>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/Limited_Forecasting-666666?style=for-the-badge"/>
+<br>
+<b>Poor Weather Intelligence</b>
+<br>
+<i>Lack of integrated maritime forecasting</i>
+</td>
+</tr>
+</table>
+
+The maritime industry desperately needs:
+- Real-time weather intelligence integrated with navigation systems  
+- Predictive route optimization that considers weather patterns  
+- AI-powered fuel efficiency algorithms for cost reduction  
+- Proactive safety alerts to prevent weather-related incidents  
+- Extended forecast horizons for long-haul voyage planning  
+
+💡 Our Game-Changing Solution  
+<div align="center">
+<img src="https://readme-typing-svg.herokuapp.com/api?font=Orbitron&weight=700&size=26&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=800&lines=Weather+Engine+Maritime;AI-Powered+Maritime+Intelligence;Revolutionary+Route+Optimization" />
+</div>
+
+Weather Engine Maritime transforms maritime navigation through intelligent weather integration and AI-powered optimization:
+
+<table>
+<tr>
+<td align="center" width="50%">
+🧠 Intelligent Weather Integration  
+<ul>
+<li>10-day maritime forecasting with wind, wave, and current analysis</li>
+<li>Real-time alert system for dangerous weather conditions</li>
+<li>Advanced physics-based modeling for accurate predictions</li>
+<li>Multi-parameter optimization considering vessel specifications</li>
+</ul>
+</td>
+<td align="center" width="50%">
+⚡ AI-Powered Route Optimization  
+<ul>
+<li>Up to 15% fuel savings through intelligent speed profiling</li>
+<li>Dynamic route adjustment based on weather patterns</li>
+<li>Safety-first navigation with proactive hazard avoidance</li>
+<li>Interactive visualization for real-time decision making</li>
+</ul>
+</td>
+</tr>
+</table>
+
+🎯 Revolutionary Impact  
+<div align="center">
+<img src="https://img.shields.io/badge/Solution_Impact-00D4FF?style=for-the-badge&logo=target&logoColor=white"/>
+</div>
+
+Our solution directly addresses the $15 billion annual weather-related maritime losses by providing:
+- 💰 Cost Reduction: Intelligent fuel optimization saves up to 15% in operational costs  
+- 🛡️ Enhanced Safety: Proactive weather alerts prevent accidents and protect crew  
+- ⏱️ Time Efficiency: Optimized routing reduces voyage times and improves scheduling  
+- 🌍 Environmental Impact: Reduced fuel consumption lowers carbon emissions  
+- 📊 Data-Driven Decisions: Real-time intelligence empowers captains with actionable insights
 
 ## 🎯 **Project Overview**
 
