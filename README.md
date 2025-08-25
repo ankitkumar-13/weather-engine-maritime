@@ -83,8 +83,9 @@ The maritime industry desperately needs:
 
 💡 Our Game-Changing Solution  
 <div align="center">
-<img src="https://readme-typing-svg.herokuapp.com/api?font=Orbitron&weight=700&size=26&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=800&lines=Weather+Engine+Maritime;AI-Powered+Maritime+Intelligence;Revolutionary+Route+Optimization" />
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=26&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=800&lines=Weather+Engine+Maritime;AI-Powered+Maritime+Intelligence;Revolutionary+Route+Optimization" />
 </div>
+
 
 Weather Engine Maritime transforms maritime navigation through intelligent weather integration and AI-powered optimization:
 
