@@ -2,7 +2,7 @@
 <div align="center">
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=700&size=32&duration=3000&pause=1000&color=00D4FF&background=001122FF&center=true&vCenter=true&multiline=true&width=900&height=120&lines=%F0%9F%9A%A2+Maritime+Weather+Intelligence;%E2%9A%A1+AI-Powered+Route+Optimization;%F0%9F%8C%8A+MariTHON+Hackathon+Winner!)](https://git.io/typing-svg)
-![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,6,26,30&height=300&section=header&text=Weather%20Engine%20Maritime&fontSize=50&fontColor=ffffff&animation=twinkling&fontAlignY=35&desc=Real-time%20Maritime%20Intelligence%20%26%20Route%20Optimization&descAlignY=55&descAlign=62)
+<img src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;customColorList=0,2,6,26,30&amp;height=300&amp;section=header&amp;text=Weather%20Engine%20Maritime&amp;fontSize=50&amp;fontColor=ffffff&amp;animation=twinkling&amp;fontAlignY=35&amp;desc=Real-time%20Maritime%20Intelligence%20%26%20Route%20Optimization&amp;descAlignY=55&amp;descAlign=62"/>
 
 ![Version](https://img.shields.io/badge/Version-1.0.0-00D4FF?style=for-the-badge&logo=semver&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-MVP%20Complete-00FF88?style=for-the-badge&logo=checkmarx&logoColor=white)
