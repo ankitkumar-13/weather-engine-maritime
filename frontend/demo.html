@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚓ Weather Engine Maritime - Dynamic Intelligence Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="real_data_integration.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -1485,7 +1486,14 @@
         let weatherTrendChart;
         let fuelChart;
         let activeMapLayers = [];
-        const API_BASE = 'https://weather-engine-maritime-production.up.railway.app';        
+        
+        // Smart API base URL detection
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.port === '8080';
+        const API_BASE = isLocalhost ? 'http://localhost:8000' : 'https://weather-engine-maritime-production.up.railway.app';
+        
+        console.log('Environment detected:', isLocalhost ? 'Local Development' : 'Production');
+        console.log('API Base URL:', API_BASE);
+        
         // Port coordinates database
         const PORTS = {
             mumbai: { name: 'Mumbai Port (INMUN)', coords: [19.0760, 72.8777], country: '🇮🇳', code: 'INMUN' },
@@ -1506,25 +1514,37 @@
         // Live time display
         // Enhanced metrics animation with more realistic values
         function animateMetrics() {
+            // Skip animation if real data integration is active
+            if (window.DashboardUpdater) {
+                return;
+            }
+            
             const time = Date.now();            
             // Wave height (1.8 - 3.2m)
             const waveHeight = (2.0 + Math.sin(time / 10000) * 0.6 + Math.random() * 0.4).toFixed(1);
-            document.getElementById('waveHeight').textContent = waveHeight + 'm';
-            document.getElementById('currentWaves').textContent = waveHeight + 'm';            
+            const waveEl = document.getElementById('waveHeight');
+            if (waveEl) waveEl.textContent = waveHeight + 'm';
+            const currentWavesEl = document.getElementById('currentWaves');
+            if (currentWavesEl) currentWavesEl.textContent = waveHeight + 'm';            
             // Wind speed (8 - 18 kts)
             const windSpeed = (13 + Math.cos(time / 8000) * 3 + Math.random() * 2).toFixed(1);
-            document.getElementById('windSpeed').textContent = windSpeed + ' kts';
-            document.getElementById('currentWind').textContent = windSpeed + ' kts';            
+            const windEl = document.getElementById('windSpeed');
+            if (windEl) windEl.textContent = windSpeed + ' kts';
+            const currentWindEl = document.getElementById('currentWind');
+            if (currentWindEl) currentWindEl.textContent = windSpeed + ' kts';            
             // Fuel savings (12 - 20%)
             const fuelSavings = (15 + Math.sin(time / 12000) * 2.5 + Math.random() * 1).toFixed(1);
-            document.getElementById('fuelSavings').textContent = fuelSavings + '%';            
+            const fuelSavingsEl = document.getElementById('fuelSavings');
+            if (fuelSavingsEl) fuelSavingsEl.textContent = fuelSavings + '%';            
             // Visibility (10 - 25 km)
             const visibility = (15 + Math.cos(time / 15000) * 5 + Math.random() * 3).toFixed(1);
-            document.getElementById('currentVisibility').textContent = visibility + ' km';            
+            const visibilityEl = document.getElementById('currentVisibility');
+            if (visibilityEl) visibilityEl.textContent = visibility + ' km';            
             // Update optimization results
-            document.getElementById('fuelSavings').textContent = fuelSavings + '%';
-            document.getElementById('timeSaved').textContent = (2 + Math.random() * 1).toFixed(0) + 'h ' + (Math.random() * 59).toFixed(0) + 'm';
-            document.getElementById('costSaved').textContent = '$' + (3500 + Math.random() * 1000).toFixed(0);
+            const timeSavedEl = document.getElementById('timeSaved');
+            if (timeSavedEl) timeSavedEl.textContent = (2 + Math.random() * 1).toFixed(0) + 'h ' + (Math.random() * 59).toFixed(0) + 'm';
+            const costSavedEl = document.getElementById('costSaved');
+            if (costSavedEl) costSavedEl.textContent = '$' + (3500 + Math.random() * 1000).toFixed(0);
         }
         setInterval(animateMetrics, 2000);
         animateMetrics();
@@ -1971,6 +1991,9 @@
             button.disabled = true;
             try {
                 const response = await fetch(`${API_BASE}/route_forecast`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();                
                 if (data && Array.isArray(data) && data.length > 0) {
                     const firstSegment = data[0];
@@ -2078,7 +2101,12 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(optimizeRequest)
-                });                
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();                
                 if (data.speed_profile) {
                     const savings = data.savings_pct || 15.3;
@@ -2344,9 +2372,12 @@
             button.disabled = true;
             try {
                 const response = await fetch(`${API_BASE}/alerts`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();                
-                if (data.alerts && data.alerts.length > 0) {
-                    const alertsHtml = data.alerts.map(alert => {
+                if (Array.isArray(data) && data.length > 0) {
+                    const alertsHtml = data.map(alert => {
                         const severityColors = {
                             'low': 'yellow',
                             'medium': 'orange', 
@@ -2363,15 +2394,20 @@
                                 </div>
                                 <span class="text-xs bg-${color}-500/20 px-2 py-1 rounded">${alert.severity.toUpperCase()}</span>
                             </div>
-                            <div class="text-xs text-${color}-200 mt-1">${alert.description}</div>
-                            <div class="text-xs text-${color}-300 mt-1">Area: ${alert.area || 'Route area'}</div>
+                            <div class="text-xs text-${color}-200 mt-1">${alert.message}</div>
+                            <div class="text-xs text-${color}-300 mt-1">Segment: ${alert.segment_id}</div>
                         </div>
                     `;}).join('');                    
                     resultDiv.innerHTML = alertsHtml;
-                    document.getElementById('alertCount').textContent = data.alerts.length;
-                    document.getElementById('warningCount').textContent = data.alerts.filter(a => a.severity === 'medium').length;
-                    document.getElementById('criticalCount').textContent = data.alerts.filter(a => a.severity === 'high' || a.severity === 'critical').length;
-                    alertBadge.textContent = `${data.alerts.length} Active Alert${data.alerts.length !== 1 ? 's' : ''}`;
+                    const alertCountEl = document.getElementById('alertCount');
+                    const warningCountEl = document.getElementById('warningCount');
+                    const criticalCountEl = document.getElementById('criticalCount');
+                    
+                    if (alertCountEl) alertCountEl.textContent = data.length;
+                    if (warningCountEl) warningCountEl.textContent = data.filter(a => a.severity === 'medium').length;
+                    if (criticalCountEl) criticalCountEl.textContent = data.filter(a => a.severity === 'high' || a.severity === 'HIGH').length;
+                    
+                    alertBadge.textContent = `${data.length} Active Alert${data.length !== 1 ? 's' : ''}`;
                     alertBadge.className = 'text-xs px-2 py-1 bg-red-500/20 rounded-full border border-red-400/30 text-red-400';
                 } else {
                     // Check which alert categories are selected
