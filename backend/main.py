@@ -44,14 +44,10 @@ async def root():
 async def get_route_forecast(route_id: int = 1):
     """Get weather forecast for route points"""
     try:
-        # Use hardcoded route data for reliable deployment
-        route_data = {
-            "route_points": [
-                {"segment_id": 1, "lat": 19.0760, "lon": 72.8777, "dist_nm": 120, "name": "Mumbai Port"},
-                {"segment_id": 2, "lat": 15.3173, "lon": 75.7139, "dist_nm": 150, "name": "Mid-point Goa"},
-                {"segment_id": 3, "lat": 9.9312, "lon": 76.2673, "dist_nm": 180, "name": "Kochi Port"}
-            ]
-        }
+        # Load sample route
+        route_path = os.path.join("routes", "sample_route.json")
+        with open(route_path, 'r') as f:
+            route_data = json.load(f)
         
         route_points = route_data.get("route_points", [])
         
@@ -109,14 +105,10 @@ async def optimize_speed(request: OptimizeRequest):
 async def get_alerts(route_id: int = 1):
     """Get weather alerts for route"""
     try:
-        # Use hardcoded route data for reliable deployment
-        route_data = {
-            "route_points": [
-                {"segment_id": 1, "lat": 19.0760, "lon": 72.8777, "dist_nm": 120, "name": "Mumbai Port"},
-                {"segment_id": 2, "lat": 15.3173, "lon": 75.7139, "dist_nm": 150, "name": "Mid-point Goa"},
-                {"segment_id": 3, "lat": 9.9312, "lon": 76.2673, "dist_nm": 180, "name": "Kochi Port"}
-            ]
-        }
+        # Load sample route
+        route_path = os.path.join("routes", "sample_route.json")
+        with open(route_path, 'r') as f:
+            route_data = json.load(f)
         
         route_points = route_data.get("route_points", [])
         
